@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
+    <ProjectReference Include="..\..\OpenGL\Nusantara.OpenGL\Nusantara.OpenGL.csproj" />
+    <ProjectReference Include="..\Nusantara.Core\Nusantara.Core.csproj" />
+  </ItemGroup>
+
+</Project>
