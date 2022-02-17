@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
 
+using Nusantara.Maths;
+
 namespace Nusantara.Core;
 
 public interface ITransformable
@@ -21,23 +23,12 @@ public interface ITransformable
 
 	Matrix4x4 GetMatrix()
 	{
-		Matrix4x4 matrix = Matrix4x4.Identity;
-
-		Vector4 scale = Scale;
-		Vector3 scale_normalized = new(
-			scale.X / scale.W,
-			scale.Y / scale.W,
-			scale.Z / scale.W);
-
-		Vector4 translation = Translation;
-		Vector3 translation_normalized = new(
-			translation.X / translation.W,
-			translation.Y / translation.W,
-			translation.Z / translation.W);
-
-		matrix *= Matrix4x4.CreateScale(scale_normalized);
+		// Scaling
+		Matrix4x4 matrix = Matrix4x4.CreateScale(MathHelper.NormalizeHomogenous(Scale));
+		// Rotating
 		Matrix4x4.Transform(matrix, Rotation);
-		matrix.Translation = translation_normalized;
+		// Translating
+		matrix.Translation = MathHelper.NormalizeHomogenous(Translation);
 
 		return matrix;
 	}
