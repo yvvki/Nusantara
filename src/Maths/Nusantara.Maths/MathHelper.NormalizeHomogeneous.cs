@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 using Silk.NET.Maths;
 
-namespace Nusantara.Numerics;
+namespace Nusantara.Maths;
 
 public static partial class MathHelper
 {
