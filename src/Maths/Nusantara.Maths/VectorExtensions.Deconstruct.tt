@@ -1,0 +1,74 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Linq" #>
+<#@ output extension=".cs" #>
+<#
+char[] _symbols = { 'X', 'Y', 'Z', 'W' };
+
+char[] GetSymbols(char[] symbols, int index, int count)
+{
+	char[] result = new char[count];
+	Array.Copy(symbols, index, result, 0, count);
+
+	return result;
+}
+
+void Print(int count, char[] outputSymbols = null)
+{
+	char[] componentSymbols = GetSymbols(_symbols, 0, count);
+
+	outputSymbols =
+		outputSymbols is null ?
+		componentSymbols :
+		GetSymbols(outputSymbols, 0, count);
+#>
+	public static void Deconstruct(
+		this Vector<#= count #> @this,
+		<#= string.Join(@",
+		", outputSymbols.Select(symbol => "out float " + symbol.ToString().ToLower())) #>)
+	{
+<#
+		foreach ((char o, char c) in outputSymbols.Zip(componentSymbols, (o, c) => (o, c)))
+		{
+#>
+		<#= o.ToString().ToLower() #> = @this.<#= c #>;
+<#
+		}
+#>
+	}
+
+	public static void Deconstruct<T>(
+		this Vector<#= count #>D<T> @this,
+		<#= string.Join(@",
+		", outputSymbols.Select(symbol => "out T " + symbol.ToString().ToLower())) #>)
+		where T : unmanaged, IEquatable<T>, IComparable<T>, IFormattable
+	{
+<#
+		foreach ((char o, char c) in outputSymbols.Zip(componentSymbols, (o, c) => (o, c)))
+		{
+#>
+		<#= o.ToString().ToLower() #> = @this.<#= c #>;
+<#
+		}
+#>
+	}
+
+<#
+}
+#>
+using System.Numerics;
+
+using Silk.NET.Maths;
+
+namespace Nusantara.Maths;
+
+public static partial class VectorExtensions
+{
+<#
+	Print(2);
+	Print(3);
+	Print(4);
+#>
+}

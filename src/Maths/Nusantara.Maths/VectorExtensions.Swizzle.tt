@@ -1,0 +1,177 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Linq" #>
+<#@ output extension=".cs" #>
+<#
+char[] _symbols = { 'X', 'Y', 'Z', 'W' };
+
+char[] GetSymbols(char[] symbols, int index, int count)
+{
+	char[] result = new char[count];
+	Array.Copy(symbols, index, result, 0, count);
+
+	return result;
+}
+
+IEnumerable<T[]> Variate<T>(T[] array, long size)
+{
+	return Variate(array, size, new());
+
+	static IEnumerable<T[]> Variate(T[] array, long size, List<T> temp)
+	{
+		foreach (T value in array)
+		{
+			temp.Add(value);
+
+			if (size <= 1)
+			{
+				yield return temp.ToArray();
+				temp.RemoveAt(temp.Count - 1);
+			}
+			else
+			{
+				foreach (T[] result in Variate(array, size - 1, temp)) yield return result;
+				temp.RemoveAt(temp.Count - 1);
+			}
+		}
+	}
+}
+
+IEnumerable<T[]> Permutate<T>(T[] array, long k = 0)
+{
+	long length = array.LongLength;
+	if (k == length)
+	{
+		T[] result = new T[length];
+		array.CopyTo(result, 0);
+		yield return result;
+	}
+	else for (long i = k; i < length; i++)
+	{
+		(array[k], array[i]) = (array[i], array[k]);
+		foreach (T[] result in Permutate(array, k + 1)) yield return result;
+		(array[k], array[i]) = (array[i], array[k]);
+	}
+}
+
+void Print(int count, char[] outputSymbols = null)
+{
+	char[] componentSymbols = GetSymbols(_symbols, 0, count);
+
+	outputSymbols =
+		outputSymbols is null ?
+		componentSymbols :
+		GetSymbols(outputSymbols, 0, count);
+
+	for (int ioCount = 2; ioCount <= 4; ioCount++)
+	{
+		IEnumerable<char[]> outputVariation = Variate(outputSymbols, ioCount);
+		IEnumerable<char[]> componentVariation = Variate(componentSymbols, ioCount);
+
+		foreach ((char[] o, char[] c) in outputVariation.Zip(componentVariation, (o, c) => (o, c)))
+		{
+#>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Vector<#= ioCount #> <#= new string(o) #>(this Vector<#= count #> @this)
+	{
+		return new(
+			<#= string.Join(@",
+			", c.Select(symbol => $"@this.{symbol}")) #>);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Vector<#= ioCount #>D<T> <#= new string(o) #><T>(this Vector<#= count #>D<T> @this)
+		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
+	{
+		return new(
+			<#= string.Join(@",
+			", c.Select(symbol => $"@this.{symbol}")) #>);
+	}
+
+<#
+		}
+
+		for (int index = 0; index + ioCount <= count; index++)
+		{
+			IEnumerable<char[]> outputPermutation = Permutate(GetSymbols(outputSymbols, index, ioCount));
+			IEnumerable<char[]> componentPermutation = Permutate(GetSymbols(componentSymbols, index, ioCount));
+
+			foreach ((char[] o, char[] c) in outputPermutation.Zip(componentPermutation, (o, c) => (o, c)))
+			{
+#>
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	//public static void <#= new string(o) #>(this ref Vector<#= count #> @this,
+	//	<#= string.Join(@",
+	//	", o.Select(symbol => $"float {symbol.ToString().ToLower()}")) #>)
+	//{
+	//	@this = @this with
+	//	{
+	//		<#= string.Join(@",
+	//		", c.Zip(o, (c, o) => (c, o)).Select(comp => $"{comp.Item1} = {comp.Item2.ToString().ToLower()}")) #>
+	//	};
+	//}
+			
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	//public static void <#= new string(o) #><T>(this ref Vector<#= count #>D<T> @this,
+	//	<#= string.Join(@",
+	//	", o.Select(symbol => $"T {symbol.ToString().ToLower()}")) #>)
+	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
+	//{
+	//	@this = @this with
+	//	{
+	//		<#= string.Join(@",
+	//		", c.Zip(o, (c, o) => (c, o)).Select(comp => $"{comp.Item1} = {comp.Item2.ToString().ToLower()}")) #>
+	//	};
+	//}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static void <#= new string(o) #>(this ref Vector<#= count #> @this, Vector<#= ioCount #> value)
+	{
+		@this = @this with
+		{
+			<#= string.Join(@",
+			", c.Zip(componentSymbols, (v, c) => (v, c)).Select(comp => $"{comp.Item1} = value.{comp.Item2}")) #>
+		};
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static void <#= new string(o) #><T>(this ref Vector<#= count #>D<T> @this, Vector<#= ioCount #>D<T> value)
+		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
+	{
+		@this = @this with
+		{
+			<#= string.Join(@",
+			", c.Zip(componentSymbols, (v, c) => (v, c)).Select(comp => $"{comp.Item1} = value.{comp.Item2}")) #>
+		};
+	}
+
+
+<#
+			}
+		}
+
+	}
+}
+#>
+using System.Numerics;
+using System.Runtime.CompilerServices;
+
+using Silk.NET.Maths;
+
+namespace Nusantara.Maths;
+
+public static partial class VectorExtensions
+{
+<#
+	Print(2);
+	Print(3);
+	Print(4);
+
+	//char[] colorOutput = { 'R', 'G', 'B' 'A' };
+	//Print(2, colorOutput);
+	//Print(3, colorOutput);
+	//Print(4, colorOutput);
+#>
+}

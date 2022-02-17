@@ -16,4 +16,32 @@
     <ProjectReference Include="..\..\Core\Nusantara.Core\Nusantara.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="VectorExtensions.Deconstruct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>VectorExtensions.Deconstruct.cs</LastGenOutput>
+    </None>
+    <None Update="VectorExtensions.Swizzle.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>VectorExtensions.Swizzle.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="VectorExtensions.Deconstruct.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VectorExtensions.Deconstruct.tt</DependentUpon>
+    </Compile>
+    <Compile Update="VectorExtensions.Swizzle.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VectorExtensions.Swizzle.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
