@@ -22,6 +22,9 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	protected internal readonly GL _gl;
 	protected internal readonly uint _handle;
 
+	// To be derived for any glGet* methods.
+	internal abstract void Get(GLEnum pname, out int @params);
+
 	public GL GL => _gl;
 	public uint Handle => _handle;
 
