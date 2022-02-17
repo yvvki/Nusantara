@@ -2,7 +2,7 @@
 
 namespace Nusantara.Core;
 
-public record struct Transform(Vector3 Translation, Quaternion Rotation, Vector3 Scale) : ITransformable
+public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4 Scale) : ITransformable
 {
 	public Transform(ITransformable Transformable)
 		: this(
