@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Nusantara.Core\Nusantara.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="VectorExtensions.Deconstruct.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>VectorExtensions.Deconstruct.cs</LastGenOutput>
