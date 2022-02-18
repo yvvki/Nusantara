@@ -1,5 +1,6 @@
-﻿using Silk.NET.OpenGL;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+
+using Silk.NET.OpenGL;
 
 namespace Nusantara.OpenGL;
 
