@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿// <https://github.com/YvvkiRika> wrote this file.
+// As long as you retain this notice, you can do whatever you want with this stuff.
+
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 using Silk.NET.Maths;
@@ -86,7 +89,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XY<T>(this ref Vector2D<T> @this,
 	//	T x,
@@ -133,7 +136,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YX<T>(this ref Vector2D<T> @this,
 	//	T y,
@@ -821,7 +824,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XY<T>(this ref Vector3D<T> @this,
 	//	T x,
@@ -868,7 +871,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YX<T>(this ref Vector3D<T> @this,
 	//	T y,
@@ -915,7 +918,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZ<T>(this ref Vector3D<T> @this,
 	//	T y,
@@ -962,7 +965,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZY<T>(this ref Vector3D<T> @this,
 	//	T z,
@@ -1524,7 +1527,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XYZ<T>(this ref Vector3D<T> @this,
 	//	T x,
@@ -1577,7 +1580,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XZY<T>(this ref Vector3D<T> @this,
 	//	T x,
@@ -1630,7 +1633,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YXZ<T>(this ref Vector3D<T> @this,
 	//	T y,
@@ -1683,7 +1686,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZX<T>(this ref Vector3D<T> @this,
 	//	T y,
@@ -1736,7 +1739,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZYX<T>(this ref Vector3D<T> @this,
 	//	T z,
@@ -1789,7 +1792,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZXY<T>(this ref Vector3D<T> @this,
 	//	T z,
@@ -3813,7 +3816,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XY<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -3860,7 +3863,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YX<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -3907,7 +3910,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZ<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -3954,7 +3957,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZY<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -4001,7 +4004,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZW<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -4048,7 +4051,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WZ<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -5313,7 +5316,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XYZ<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -5366,7 +5369,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XZY<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -5419,7 +5422,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YXZ<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -5472,7 +5475,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZX<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -5525,7 +5528,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZYX<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -5578,7 +5581,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZXY<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -5631,7 +5634,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZW<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -5684,7 +5687,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YWZ<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -5737,7 +5740,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZYW<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -5790,7 +5793,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZWY<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -5843,7 +5846,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WZY<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -5896,7 +5899,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WYZ<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -11327,7 +11330,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XYZW<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -11386,7 +11389,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XYWZ<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -11445,7 +11448,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XZYW<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -11504,7 +11507,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XZWY<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -11563,7 +11566,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XWZY<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -11622,7 +11625,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void XWYZ<T>(this ref Vector4D<T> @this,
 	//	T x,
@@ -11681,7 +11684,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YXZW<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -11740,7 +11743,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YXWZ<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -11799,7 +11802,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZXW<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -11858,7 +11861,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YZWX<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -11917,7 +11920,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YWZX<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -11976,7 +11979,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void YWXZ<T>(this ref Vector4D<T> @this,
 	//	T y,
@@ -12035,7 +12038,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZYXW<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -12094,7 +12097,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZYWX<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -12153,7 +12156,7 @@ public static partial class VectorExtensions
 	//		W = w
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZXYW<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -12212,7 +12215,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZXWY<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -12271,7 +12274,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZWXY<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -12330,7 +12333,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void ZWYX<T>(this ref Vector4D<T> @this,
 	//	T z,
@@ -12389,7 +12392,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WYZX<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -12448,7 +12451,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WYXZ<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -12507,7 +12510,7 @@ public static partial class VectorExtensions
 	//		X = x
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WZYX<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -12566,7 +12569,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WZXY<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -12625,7 +12628,7 @@ public static partial class VectorExtensions
 	//		Y = y
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WXZY<T>(this ref Vector4D<T> @this,
 	//	T w,
@@ -12684,7 +12687,7 @@ public static partial class VectorExtensions
 	//		Z = z
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void WXYZ<T>(this ref Vector4D<T> @this,
 	//	T w,

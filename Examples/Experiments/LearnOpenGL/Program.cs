@@ -1,13 +1,14 @@
-﻿using System.Diagnostics;
+﻿// <https://github.com/YvvkiRika> wrote this file.
+// As long as you retain this notice, you can do whatever you want with this stuff.
 
+using Silk.NET.Input;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 
-using GLVertexArray = Nusantara.OpenGL.VertexArray;
 using GLBuffer = Nusantara.OpenGL.Buffer;
-using GLShader = Nusantara.OpenGL.Shader;
 using GLProgram = Nusantara.OpenGL.Program;
-using Silk.NET.Input;
+using GLShader = Nusantara.OpenGL.Shader;
+using GLVertexArray = Nusantara.OpenGL.VertexArray;
 
 float[] vertices =
 {

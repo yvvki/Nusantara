@@ -1,4 +1,7 @@
-﻿<#@ template language="C#" #>
+﻿// <https://github.com/YvvkiRika> wrote this file.
+// As long as you retain this notice, you can do whatever you want with this stuff.
+
+<#@ template language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text" #>

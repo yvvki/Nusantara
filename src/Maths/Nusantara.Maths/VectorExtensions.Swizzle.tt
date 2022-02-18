@@ -1,4 +1,7 @@
-﻿<#@ template language="C#" #>
+﻿// <https://github.com/YvvkiRika> wrote this file.
+// As long as you retain this notice, you can do whatever you want with this stuff.
+
+<#@ template language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text" #>
@@ -112,7 +115,7 @@ void Print(int count, char[] outputSymbols = null)
 	//		", c.Zip(o, (c, o) => (c, o)).Select(comp => $"{comp.Item1} = {comp.Item2.ToString().ToLower()}")) #>
 	//	};
 	//}
-			
+
 	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static void <#= new string(o) #><T>(this ref Vector<#= count #>D<T> @this,
 	//	<#= string.Join(@",

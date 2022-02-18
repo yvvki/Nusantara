@@ -1,10 +1,13 @@
-﻿using System.Diagnostics;
+﻿// <https://github.com/YvvkiRika> wrote this file.
+// As long as you retain this notice, you can do whatever you want with this stuff.
+
+using System.Diagnostics;
 
 using Silk.NET.OpenGL;
 
 namespace Nusantara.OpenGL;
 
-public class Shader: GLObject
+public class Shader : GLObject
 {
 	internal Shader(GL gl, uint handle) : base(gl, handle)
 	{
