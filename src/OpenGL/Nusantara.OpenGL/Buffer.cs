@@ -26,9 +26,10 @@ public class Buffer : GLObject
 	}
 	public void Get(BufferPNameARB pname, out int @params)
 	{
+		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		Get((GLEnum)pname, out @params);
+		_gl.GetNamedBufferParameter(_handle, pname, out @params);
 	}
 
 	protected override void Delete()

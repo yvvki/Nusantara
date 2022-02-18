@@ -33,11 +33,12 @@ public class Shader: GLObject
 
 		_gl.GetShader(_handle, pname, out param);
 	}
-	public void Get(BufferPNameARB pname, out int param)
+	public void Get(ShaderParameterName pname, out int param)
 	{
+		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		Get((GLEnum)pname, out param);
+		_gl.GetShader(_handle, pname, out param);
 	}
 
 	protected override void Delete()

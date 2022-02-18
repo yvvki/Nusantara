@@ -24,11 +24,12 @@ public class Program : GLObject
 
 		_gl.GetProgram(_handle, pname, out @params);
 	}
-	public void Get(BufferPNameARB pname, out int @params)
+	public void Get(ProgramPropertyARB pname, out int @params)
 	{
+		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		Get((GLEnum)pname, out @params);
+		_gl.GetProgram(_handle, pname, out @params);
 	}
 
 	protected override void Delete()

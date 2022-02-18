@@ -24,11 +24,12 @@ public class VertexArray : GLObject
 
 		_gl.GetVertexArray(_handle, pname, out param);
 	}
-	public void Get(BufferPNameARB pname, out int param)
+	public void Get(VertexArrayPName pname, out int param)
 	{
+		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		Get((GLEnum)pname, out param);
+		_gl.GetVertexArray(_handle, pname, out param);
 	}
 
 	protected override void Delete()
