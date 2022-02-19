@@ -12,15 +12,14 @@ using GLVertexArray = Nusantara.OpenGL.VertexArray;
 
 float[] vertices =
 {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
+	// positions         // colors
+	 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+	-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+	 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
 };
 uint[] indices =
 {
-	0, 1, 3,   // first triangle
-	1, 2, 3    // second triangle
+	0, 1, 2   // triangle
 };
 
 WindowOptions options = WindowOptions.Default with
@@ -40,8 +39,10 @@ GLProgram shader = null!;
 
 window.Load += () =>
 {
+	// Creating input.
 	input = window.CreateInput();
 
+	// Handling input.
 	input.Keyboards[0].KeyDown += (keyboard, key, times) =>
 	{
 		switch (key)
@@ -52,25 +53,30 @@ window.Load += () =>
 		}
 	};
 
+	// Creating GL.
 	gl = window.CreateOpenGL();
 	window.Center();
 
-	Init();
+	Initialize(gl);
 };
 
-void Init()
+void Initialize(GL gl)
 {
-	// Creating Buffers
+	// Creating Buffers.
 	VBO = GLBuffer.FromData<float>(gl, vertices);
 	EBO = GLBuffer.FromData<uint>(gl, indices);
 
 	// Creating VertexArray.
-	VAO = GLVertexArray.FromBuffers(gl, EBO, 0, VBO, 0, sizeof(float) * 3);
+	VAO = GLVertexArray.FromBuffers(gl, EBO, 0, VBO, 0, sizeof(float) * 6);
 
 	// Handling Attrib.
 	VAO.AttribBinding(0, 0);
 	VAO.AttribFormat(0, 3, VertexAttribType.Float, false, 0);
 	VAO.EnableAttrib(0);
+
+	VAO.AttribBinding(1, 0);
+	VAO.AttribFormat(1, 3, VertexAttribType.Float, false, sizeof(float) * 3);
+	VAO.EnableAttrib(1);
 
 	// Compiling Shaders.
 	using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, "shader.vert");
@@ -82,12 +88,25 @@ void Init()
 
 window.Render += dt =>
 {
+	// Clearing.
 	gl.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl.Clear(ClearBufferMask.ColorBufferBit);
 
+	// Uniform handling.
+
+	// Drawing.
 	gl.UseProgram(shader.Handle);
 	gl.BindVertexArray(VAO.Handle);
-	unsafe { gl.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, null); }
+	unsafe { gl.DrawElements(PrimitiveType.Triangles, (uint)indices.Length, DrawElementsType.UnsignedInt, null); }
+};
+
+window.Closing += () =>
+{
+	shader.Dispose();
+
+	EBO.Dispose();
+	VBO.Dispose();
+	VAO.Dispose();
 };
 
 window.Run();
