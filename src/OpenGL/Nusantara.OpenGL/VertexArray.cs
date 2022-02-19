@@ -36,7 +36,7 @@ public class VertexArray : GLObject
 
 	#endregion
 
-	internal override void Get(GLEnum pname, out int param)
+	internal sealed override void Get(GLEnum pname, out int param)
 	{
 		ThrowIfDisposed();
 
@@ -105,7 +105,7 @@ public class VertexArray : GLObject
 
 	#endregion
 
-	protected override void Delete()
+	protected sealed override void Delete()
 	{
 		_gl.DeleteVertexArray(_handle);
 	}

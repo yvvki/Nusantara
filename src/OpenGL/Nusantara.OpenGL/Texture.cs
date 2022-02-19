@@ -31,7 +31,7 @@ public class Texture : GLObject
 		return handle;
 	}
 
-	internal override void Get(GLEnum pname, out int @params)
+	internal sealed override void Get(GLEnum pname, out int @params)
 	{
 		ThrowIfDisposed();
 
@@ -66,7 +66,7 @@ public class Texture : GLObject
 		_gl.GetTextureParameterI(_handle, pname, out @params);
 	}
 
-	protected override void Delete()
+	protected sealed override void Delete()
 	{
 		_gl.DeleteTexture(_handle);
 	}

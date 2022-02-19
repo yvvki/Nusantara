@@ -61,7 +61,7 @@ public class Shader : GLObject
 
 	#endregion
 
-	internal override void Get(GLEnum pname, out int param)
+	internal sealed override void Get(GLEnum pname, out int param)
 	{
 		ThrowIfDisposed();
 
@@ -118,7 +118,7 @@ public class Shader : GLObject
 
 	#endregion
 
-	protected override void Delete()
+	protected sealed override void Delete()
 	{
 		_gl.DeleteShader(_handle);
 	}

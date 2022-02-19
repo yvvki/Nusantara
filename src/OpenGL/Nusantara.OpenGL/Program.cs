@@ -50,7 +50,7 @@ public partial class Program : GLObject
 
 	#endregion
 
-	internal override void Get(GLEnum pname, out int @params)
+	internal sealed override void Get(GLEnum pname, out int @params)
 	{
 		ThrowIfDisposed();
 
@@ -133,7 +133,7 @@ public partial class Program : GLObject
 
 	#endregion
 
-	protected override void Delete()
+	protected sealed override void Delete()
 	{
 		_gl.DeleteProgram(_handle);
 	}

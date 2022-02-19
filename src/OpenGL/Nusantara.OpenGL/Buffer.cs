@@ -35,7 +35,7 @@ public class Buffer : GLObject
 
 	#endregion
 
-	internal override void Get(GLEnum pname, out int @params)
+	internal sealed override void Get(GLEnum pname, out int @params)
 	{
 		ThrowIfDisposed();
 
@@ -69,7 +69,7 @@ public class Buffer : GLObject
 
 	#endregion
 
-	protected override void Delete()
+	protected sealed override void Delete()
 	{
 		_gl.DeleteBuffer(_handle);
 	}
