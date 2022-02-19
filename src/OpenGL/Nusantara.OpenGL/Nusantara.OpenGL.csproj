@@ -17,4 +17,23 @@
     <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Program.Uniform.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Program.Uniform.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Program.Uniform.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Program.Uniform.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

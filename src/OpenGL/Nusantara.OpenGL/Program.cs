@@ -8,7 +8,7 @@ using Silk.NET.OpenGL;
 
 namespace Nusantara.OpenGL;
 
-public class Program : GLObject
+public partial class Program : GLObject
 {
 	internal Program(GL gl, uint handle) : base(gl, handle)
 	{
@@ -113,6 +113,22 @@ public class Program : GLObject
 		_gl.LinkProgram(_handle);
 
 		return LinkStatus;
+	}
+
+	public int GetUniformLocation(string name)
+	{
+		ThrowIfDisposed();
+
+		int location = GetUniformLocationUnsafe(name);
+
+		return location;
+	}
+
+	private int GetUniformLocationUnsafe(string name)
+	{
+		int location = _gl.GetUniformLocation(_handle, name);
+
+		return location;
 	}
 
 	#endregion
