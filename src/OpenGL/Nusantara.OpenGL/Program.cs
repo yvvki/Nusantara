@@ -98,7 +98,7 @@ public partial class Program : GLObject
 		{
 			ThrowFailLink();
 		}
-		
+
 		[DoesNotReturn]
 		void ThrowFailLink()
 		{

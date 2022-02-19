@@ -28,7 +28,7 @@ public class Shader : GLObject
 	{
 		ThrowIfInvalidEnum(type);
 
-		return Create(gl, (GLEnum)type);
+		return gl.CreateShader(type);
 	}
 
 	#region Constructors

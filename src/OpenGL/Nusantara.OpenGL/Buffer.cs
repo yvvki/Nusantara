@@ -41,7 +41,14 @@ public class Buffer : GLObject
 
 		_gl.GetNamedBufferParameter(_handle, pname, out @params);
 	}
-	public void Get(BufferPNameARB pname, out int @params)
+	public void GetParameter(BufferPNameARB pname, out int @params)
+	{
+		ThrowIfDisposed();
+		ThrowIfInvalidEnum(pname);
+
+		_gl.GetNamedBufferParameter(_handle, pname, out @params);
+	}
+	public void GetParameter(BufferPNameARB pname, out long @params)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
