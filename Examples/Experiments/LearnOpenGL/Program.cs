@@ -60,60 +60,24 @@ window.Load += () =>
 
 void Init()
 {
-	// Creating VertexArray and Buffers
-	VAO = new(gl);
-	VBO = new(gl);
-	EBO = new(gl);
+	// Creating Buffers
+	VBO = GLBuffer.FromData<float>(gl, vertices);
+	EBO = GLBuffer.FromData<uint>(gl, indices);
 
-	// Setting Buffers storage.
-	gl.NamedBufferStorage<float>(VBO.Handle, vertices, default(BufferStorageMask));
-	gl.NamedBufferStorage<uint>(EBO.Handle, indices, default(BufferStorageMask));
+	// Creating VertexArray.
+	VAO = GLVertexArray.FromBuffers(gl, EBO, 0, VBO, 0, sizeof(float) * 3);
 
-	// Setting and binding VertexArray Buffers.
-	gl.VertexArrayVertexBuffer(VAO.Handle, 0, VBO.Handle, 0, sizeof(float) * 3);
-	gl.VertexArrayElementBuffer(VAO.Handle, EBO.Handle);
-
-	gl.VertexArrayAttribBinding(VAO.Handle, 0, 0);
-	gl.VertexArrayAttribFormat(VAO.Handle, 0, 3, VertexAttribType.Float, false, 0);
-	gl.EnableVertexArrayAttrib(VAO.Handle, 0);
+	// Handling Attrib.
+	VAO.AttribBinding(0, 0);
+	VAO.AttribFormat(0, 3, VertexAttribType.Float, false, 0);
+	VAO.EnableAttrib(0);
 
 	// Compiling Shaders.
-	using GLShader vertShader = new(gl, ShaderType.VertexShader);
-	using GLShader fragShader = new(gl, ShaderType.FragmentShader);
-
-	string vertSource = File.ReadAllText("shader.vert");
-	gl.ShaderSource(vertShader.Handle, vertSource);
-	gl.CompileShader(vertShader.Handle);
-
-	vertShader.Get(ShaderParameterName.CompileStatus, out int vertResult);
-	if (vertResult is 0)
-	{
-		throw new InvalidOperationException(gl.GetShaderInfoLog(vertShader.Handle));
-	}
-
-	string fragSource = File.ReadAllText("shader.frag");
-	gl.ShaderSource(fragShader.Handle, fragSource);
-	gl.CompileShader(fragShader.Handle);
-
-	fragShader.Get(ShaderParameterName.CompileStatus, out int fragResult);
-	if (fragResult is 0)
-	{
-		throw new InvalidOperationException(gl.GetShaderInfoLog(fragShader.Handle));
-	}
+	using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, "shader.vert");
+	using GLShader fragShader = GLShader.FromFile(gl, ShaderType.FragmentShader, "shader.frag");
 
 	// Linking Program.
-	shader = new(gl);
-	gl.AttachShader(shader.Handle, vertShader.Handle);
-	gl.AttachShader(shader.Handle, fragShader.Handle);
-	gl.LinkProgram(shader.Handle);
-	gl.DetachShader(shader.Handle, vertShader.Handle);
-	gl.DetachShader(shader.Handle, fragShader.Handle);
-
-	shader.Get(ProgramPropertyARB.LinkStatus, out int programResult);
-	if (programResult is 0)
-	{
-		throw new InvalidOperationException(gl.GetProgramInfoLog(shader.Handle));
-	}
+	shader = GLProgram.FromShaders(gl, vertShader, fragShader);
 }
 
 window.Render += dt =>

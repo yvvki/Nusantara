@@ -2,6 +2,7 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using Silk.NET.OpenGL;
 
@@ -21,6 +22,34 @@ public class Program : GLObject
 		return gl.CreateProgram();
 	}
 
+	#region Constructors
+
+	public static Program FromShaders(GL gl, params Shader[] shaders)
+	{
+		return FromShaders(gl, shaders.AsEnumerable());
+	}
+
+	public static Program FromShaders(GL gl, IEnumerable<Shader> shaders)
+	{
+		Program program = new(gl);
+
+		foreach (Shader shader in shaders)
+		{
+			program.Attach(shader);
+		}
+
+		program.Link();
+
+		foreach (Shader shader in shaders)
+		{
+			program.Detach(shader);
+		}
+
+		return program;
+	}
+
+	#endregion
+
 	internal override void Get(GLEnum pname, out int @params)
 	{
 		ThrowIfDisposed();
@@ -34,6 +63,59 @@ public class Program : GLObject
 
 		_gl.GetProgram(_handle, pname, out @params);
 	}
+
+	#region Wrapper
+
+	public bool LinkStatus
+	{
+		get
+		{
+			Get(ProgramPropertyARB.LinkStatus, out int result);
+
+			return result is not 0;
+		}
+	}
+
+	public void Attach(Shader shader)
+	{
+		ThrowIfDisposed();
+		ThrowIfNullOrInvalidGLObject(shader, false);
+
+		_gl.AttachShader(_handle, shader._handle);
+	}
+
+	public void Detach(Shader? shader)
+	{
+		ThrowIfDisposed();
+		ThrowIfNullOrInvalidGLObject(shader, false);
+
+		_gl.DetachShader(_handle, shader._handle);
+	}
+
+	public void Link()
+	{
+		if (TryLink() is false)
+		{
+			ThrowFailLink();
+		}
+		
+		[DoesNotReturn]
+		void ThrowFailLink()
+		{
+			throw new InvalidOperationException(_gl.GetProgramInfoLog(_handle));
+		}
+	}
+
+	public bool TryLink()
+	{
+		ThrowIfDisposed();
+
+		_gl.LinkProgram(_handle);
+
+		return LinkStatus;
+	}
+
+	#endregion
 
 	protected override void Delete()
 	{

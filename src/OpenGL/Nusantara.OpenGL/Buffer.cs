@@ -21,6 +21,20 @@ public class Buffer : GLObject
 		return gl.CreateBuffer();
 	}
 
+	#region Constructors
+
+	public static Buffer FromData<T>(GL gl, ReadOnlySpan<T> data)
+		where T : unmanaged
+	{
+		Buffer buffer = new(gl);
+
+		buffer.Storage(data);
+
+		return buffer;
+	}
+
+	#endregion
+
 	internal override void Get(GLEnum pname, out int @params)
 	{
 		ThrowIfDisposed();
@@ -34,6 +48,19 @@ public class Buffer : GLObject
 
 		_gl.GetNamedBufferParameter(_handle, pname, out @params);
 	}
+
+	#region Wrapper
+
+	public void Storage<T>(ReadOnlySpan<T> data, BufferStorageMask flags = default)
+		where T : unmanaged
+	{
+		ThrowIfDisposed();
+		//ThrowIfInvalidEnum(flags); // Do not throw, flags.
+
+		_gl.NamedBufferStorage(_handle, data, flags);
+	}
+
+	#endregion
 
 	protected override void Delete()
 	{
