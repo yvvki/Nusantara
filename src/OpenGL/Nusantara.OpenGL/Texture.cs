@@ -37,6 +37,24 @@ public class Texture : GLObject
 
 		_gl.GetTextureParameter(_handle, pname, out @params);
 	}
+
+	#region Wrapper
+
+	public void Parameter(TextureParameterName pname, int param)
+	{
+		ThrowIfDisposed();
+		ThrowIfInvalidEnum(pname);
+
+		_gl.TextureParameter(_handle, pname, param);
+	}
+	public void Parameter(TextureParameterName pname, float param)
+	{
+		ThrowIfDisposed();
+		ThrowIfInvalidEnum(pname);
+
+		_gl.TextureParameter(_handle, pname, param);
+	}
+
 	public void GetParameter(GetTextureParameter pname, out int @params)
 	{
 		ThrowIfDisposed();
@@ -51,20 +69,56 @@ public class Texture : GLObject
 
 		_gl.GetTextureParameter(_handle, pname, out @params);
 	}
-	public void GetParameterI(GetTextureParameter pname, out int @params)
+
+	public void Storage2D(
+		uint levels,
+		SizedInternalFormat format,
+		uint width,
+		uint height)
 	{
 		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
+		ThrowIfInvalidEnum(format);
 
-		_gl.GetTextureParameterI(_handle, pname, out @params);
+		_gl.TextureStorage2D(
+			_handle,
+			levels,
+			format,
+			width,
+			height);
 	}
-	public void GetParameterI(GetTextureParameter pname, out uint @params)
+
+	public unsafe void SubImage2D(
+		int level,
+		int xoffset,
+		int yoffset,
+		uint width,
+		uint height,
+		PixelFormat format,
+		PixelType type,
+		void* pixels)
 	{
 		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
+		ThrowIfInvalidEnum(format);
+		ThrowIfInvalidEnum(type);
 
-		_gl.GetTextureParameterI(_handle, pname, out @params);
+		_gl.TextureSubImage2D(
+			_handle,
+			level,
+			xoffset,
+			yoffset,
+			width,
+			height,
+			format,
+			type,
+			pixels);
 	}
+
+	public void GenerateMipmap()
+	{
+		_gl.GenerateTextureMipmap(_handle);
+	}
+
+	#endregion
 
 	protected sealed override void Delete()
 	{

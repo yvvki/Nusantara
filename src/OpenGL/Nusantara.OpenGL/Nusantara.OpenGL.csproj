@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Nusantara.Core\Nusantara.Core.csproj" />
     <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
   </ItemGroup>
 

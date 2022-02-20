@@ -41,6 +41,9 @@ public class Buffer : GLObject
 
 		_gl.GetNamedBufferParameter(_handle, pname, out @params);
 	}
+
+	#region Wrapper
+
 	public void GetParameter(BufferPNameARB pname, out int @params)
 	{
 		ThrowIfDisposed();
@@ -55,8 +58,6 @@ public class Buffer : GLObject
 
 		_gl.GetNamedBufferParameter(_handle, pname, out @params);
 	}
-
-	#region Wrapper
 
 	public void Storage<T>(ReadOnlySpan<T> data, BufferStorageMask flags = default)
 		where T : unmanaged
