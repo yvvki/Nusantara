@@ -5,25 +5,27 @@ using Silk.NET.Input;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 
+using SkiaSharp;
+
 using GLBuffer = Nusantara.OpenGL.Buffer;
 using GLVertexArray = Nusantara.OpenGL.VertexArray;
 using GLShader = Nusantara.OpenGL.Shader;
 using GLProgram = Nusantara.OpenGL.Program;
 using GLTexture = Nusantara.OpenGL.Texture;
-using SkiaSharp;
+using GLSKTexture = Nusantara.OpenGL.Skia.SKTexture;
 
 float[] vertices =
 {
-	// positions          // colors           // texture coords
-	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+	// Positions          // Colors           // UVs
+	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // Top right
+	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // Bottom right
+	-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // Bottom left
+	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // Top left
 };
 uint[] indices =
 {
-	0, 1, 3,   // first triangle
-	1, 2, 3    // second triangle
+	0, 1, 3,   // First triangle
+	1, 2, 3    // Second triangle
 };
 
 WindowOptions options = WindowOptions.Default with
@@ -89,59 +91,15 @@ void Initialize(GL gl)
 	VAO.AttribFormat(2, 3, VertexAttribType.Float, false, sizeof(float) * 6);
 	VAO.EnableAttrib(2);
 
-	// Loading texture data.
-	byte[] container_data = File.ReadAllBytes("container.jpg");
-	using SKBitmap container_bitmap = SKBitmap.Decode(container_data);
-
-	byte[] awesomeface_data = File.ReadAllBytes("awesomeface.png");
-	using SKBitmap awesomeface_bitmap = SKBitmap.Decode(awesomeface_data);
-
 	// Creating Texture.
-	container = new(gl, TextureTarget.Texture2D);
-
-	gl.TextureStorage2D(
-		container.Handle,
-		1,
-		SizedInternalFormat.Rgba8,
-		(uint)container_bitmap.Width,
-		(uint)container_bitmap.Height);
-	unsafe
+	using (SKBitmap container_bitmap = SKBitmap.Decode("container.jpg"))
 	{
-		gl.TextureSubImage2D(
-			container.Handle,
-			0,
-			0,
-			0,
-			(uint)container_bitmap.Width,
-			(uint)container_bitmap.Height,
-			PixelFormat.Bgra,
-			PixelType.UnsignedByte,
-			(void*)container_bitmap.GetPixels());
+		container = GLSKTexture.FromBitmap(gl,container_bitmap);
 	}
-	gl.GenerateTextureMipmap(container.Handle);
-
-	awesomeface = new(gl, TextureTarget.Texture2D);
-
-	gl.TextureStorage2D(
-		awesomeface.Handle,
-		1,
-		SizedInternalFormat.Rgba8,
-		(uint)awesomeface_bitmap.Width,
-		(uint)awesomeface_bitmap.Height);
-	unsafe
+	using (SKBitmap awesomeface_bitmap = SKBitmap.Decode("awesomeface.png"))
 	{
-		gl.TextureSubImage2D(
-			awesomeface.Handle,
-			0,
-			0,
-			0,
-			(uint)awesomeface_bitmap.Width,
-			(uint)awesomeface_bitmap.Height,
-			PixelFormat.Bgra,
-			PixelType.UnsignedByte,
-			(void*)awesomeface_bitmap.GetPixels());
+		awesomeface = GLSKTexture.FromBitmap(gl, awesomeface_bitmap);
 	}
-	gl.GenerateTextureMipmap(awesomeface.Handle);
 
 	// Compiling Shaders.
 	using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, "shader.vert");

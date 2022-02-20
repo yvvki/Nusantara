@@ -87,6 +87,30 @@ public class Texture : GLObject
 			height);
 	}
 
+	internal unsafe void SubImage2D(
+		int level,
+		int xoffset,
+		int yoffset,
+		uint width,
+		uint height,
+		GLEnum format,
+		GLEnum type,
+		void* pixels)
+	{
+		ThrowIfDisposed();
+
+		_gl.TextureSubImage2D(
+			_handle,
+			level,
+			xoffset,
+			yoffset,
+			width,
+			height,
+			format,
+			type,
+			pixels);
+	}
+
 	public unsafe void SubImage2D(
 		int level,
 		int xoffset,
