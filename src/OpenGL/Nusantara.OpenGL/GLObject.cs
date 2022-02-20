@@ -10,7 +10,6 @@ using Silk.NET.OpenGL;
 
 namespace Nusantara.OpenGL;
 
-[Serializable]
 public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 {
 	protected GLObject(GL gl, uint handle)
