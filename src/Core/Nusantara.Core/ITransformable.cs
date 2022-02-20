@@ -5,7 +5,7 @@ using System.Numerics;
 
 using Nusantara.Maths;
 
-namespace Nusantara.Core;
+namespace Nusantara;
 
 public interface ITransformable
 {

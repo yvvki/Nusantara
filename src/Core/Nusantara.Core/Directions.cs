@@ -3,7 +3,7 @@
 
 using System.Numerics;
 
-namespace Nusantara.Core;
+namespace Nusantara;
 
 /// <summary>
 ///   Represents general direction of axes.

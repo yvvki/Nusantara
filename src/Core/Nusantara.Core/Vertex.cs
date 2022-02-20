@@ -3,7 +3,7 @@
 
 using System.Numerics;
 
-namespace Nusantara.Core;
+namespace Nusantara;
 
 public record struct Vertex(Vector4 Position, Vector4 Normal, Vector2 UV)
 {
