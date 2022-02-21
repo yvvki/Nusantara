@@ -29,7 +29,7 @@ public interface ITransformable
 		// Scaling
 		Matrix4x4 matrix = Matrix4x4.CreateScale(MathHelper.NormalizeHomogenous(Scale));
 		// Rotating
-		Matrix4x4.Transform(matrix, Rotation);
+		matrix = Matrix4x4.Transform(matrix, Rotation);
 		// Translating
 		matrix.Translation = MathHelper.NormalizeHomogenous(Translation);
 
