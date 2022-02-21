@@ -18,7 +18,7 @@ public class SKTexture : Texture
 	public static SKTexture FromBitmap(
 		GL gl,
 		SKBitmap bitmap,
-		bool flip = true,
+		bool flipVertically = true,
 		TextureWrapMode wrapS = TextureWrapMode.Repeat,
 		TextureWrapMode wrapT = TextureWrapMode.Repeat,
 		TextureMinFilter minFiler = TextureMinFilter.LinearMipmapLinear,
@@ -26,7 +26,7 @@ public class SKTexture : Texture
 	{
 		ArgumentNullException.ThrowIfNull(bitmap);
 
-		if (flip)
+		if (flipVertically)
 		{
 			SKBitmap flipped = new(bitmap.Info);
 			using (SKCanvas canvas = new(flipped))
@@ -51,7 +51,7 @@ public class SKTexture : Texture
 
 		texture.GenerateMipmap();
 
-		if (flip)
+		if (flipVertically)
 		{
 			bitmap.Dispose();
 		}
