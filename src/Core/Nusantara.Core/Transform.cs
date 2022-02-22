@@ -9,14 +9,14 @@ public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4
 {
 	public Transform()
 		: this(
-			Vector4.UnitZ,
+			Vector4.UnitW,
 			Quaternion.Identity,
 			Vector4.One)
 	{ }
 
 	public Transform(Vector4? Translation = null, Quaternion? Rotation = null, Vector4? Scale = null)
 		: this(
-			Translation ?? Vector4.UnitZ,
+			Translation ?? Vector4.UnitW,
 			Rotation ?? Quaternion.Identity,
 			Scale ?? Vector4.One)
 	{ }
