@@ -17,21 +17,14 @@ public interface ITransformable
 	Vector3 Forward => Directions.Forward;
 	Vector3 Up => Directions.Up;
 
-	void Combine(ITransformable transformable)
-	{
-		Translation = Vector4.Add(Translation, transformable.Translation);
-		Rotation = Quaternion.Add(Rotation, transformable.Rotation);
-		Scale *= Vector4.Multiply(Scale, transformable.Scale);
-	}
-
-	Matrix4x4 GetMatrix()
+	static Matrix4x4 GetMatrix(ITransformable transformable)
 	{
 		// Scaling
-		Matrix4x4 matrix = Matrix4x4.CreateScale(MathHelper.NormalizeHomogenous(Scale));
+		Matrix4x4 matrix = Matrix4x4.CreateScale(MathHelper.NormalizeHomogenous(transformable.Scale));
 		// Rotating
-		matrix = Matrix4x4.Transform(matrix, Rotation);
+		matrix = Matrix4x4.Transform(matrix, transformable.Rotation);
 		// Translating
-		matrix.Translation = MathHelper.NormalizeHomogenous(Translation);
+		matrix.Translation = MathHelper.NormalizeHomogenous(transformable.Translation);
 
 		return matrix;
 	}
