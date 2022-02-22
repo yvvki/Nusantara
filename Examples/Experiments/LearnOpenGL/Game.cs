@@ -14,6 +14,7 @@ using GLProgram = Nusantara.OpenGL.Program;
 using GLTexture = Nusantara.OpenGL.Texture;
 using GLSKTexture = Nusantara.OpenGL.Skia.SKTexture;
 using System.Numerics;
+using Nusantara;
 
 namespace LearnOpenGL;
 
@@ -131,6 +132,11 @@ public class Game
 			shader = GLProgram.FromShaders(gl, vertShader, fragShader);
 		}
 
+		Transform transform = new(
+			   new(0.5f, -0.5f, 0.0f, 1.0f),
+			   Quaternion.Identity,
+			   Vector4.One);
+
 		window.Render += (dt) =>
 		{
 			// Clearing.
@@ -144,10 +150,9 @@ public class Game
 			shader.Uniform1("container", 0);
 			shader.Uniform1("awesomeface", 1);
 
-			Matrix4x4 matrix = Matrix4x4.CreateRotationZ((float)window.Time);
-			matrix.Translation = new(0.5f, -0.5f, 0.0f);
+			transform.Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, (float)window.Time);
 
-			shader.UniformMatrix4("matrix", false, matrix);
+			shader.UniformMatrix4("matrix", false, transform.GetMatrix());
 
 			// Drawing.
 			gl.UseProgram(shader.Handle);
