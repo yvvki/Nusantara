@@ -1,6 +1,5 @@
 ﻿#version 330 core
 
-in vec4 fColor;
 in vec2 fUV;
 
 uniform sampler2D container;

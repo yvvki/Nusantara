@@ -15,6 +15,8 @@ using GLTexture = Nusantara.OpenGL.Texture;
 using GLSKTexture = Nusantara.OpenGL.Skia.SKTexture;
 using System.Numerics;
 using Nusantara;
+using Nusantara.Maths;
+using Silk.NET.Maths;
 
 namespace LearnOpenGL;
 
@@ -22,21 +24,68 @@ public class Game
 {
 	static readonly float[] vertices =
 	{
-		// Positions          // Colors           // UVs
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // Top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // Bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // Bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // Top left
+		// Positions          // UVs
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-	static readonly uint[] indices =
+
+	static readonly Vector3[] cubePositions =
 	{
-		0, 1, 3,   // First triangle
-		1, 2, 3    // Second triangle
+		new( 0.0f,  0.0f,  0.0f),
+		new( 2.0f,  5.0f, -15.0f),
+		new(-1.5f, -2.2f, -2.5f),
+		new(-3.8f, -2.0f, -12.3f),
+		new( 2.4f, -0.4f, -3.5f),
+		new(-1.7f,  3.0f, -7.5f),
+		new( 1.3f, -2.0f, -2.5f),
+		new( 1.5f,  2.0f, -2.5f),
+		new( 1.5f,  0.2f, -1.5f),
+		new(-1.3f,  1.0f, -1.5f)
 	};
 
 	WindowOptions options = WindowOptions.Default with
 	{
-		Size = new(800, 600)
+		Size = new(800, 600),
+		PreferredDepthBufferBits = 24 // workaround on my end not having depth buffer bit
 	};
 	IWindow window;
 
@@ -45,7 +94,6 @@ public class Game
 
 	GLVertexArray VAO;
 	GLBuffer VBO;
-	GLBuffer EBO;
 
 	GLTexture container;
 	GLTexture awesomeface;
@@ -62,7 +110,6 @@ public class Game
 
 		VAO = null!;
 		VBO = null!;
-		EBO = null!;
 
 		container = null!;
 		awesomeface = null!;
@@ -96,10 +143,9 @@ public class Game
 		{
 			// Creating Buffers.
 			VBO = GLBuffer.FromData<float>(gl, vertices);
-			EBO = GLBuffer.FromData<uint>(gl, indices);
 
 			// Creating VertexArray.
-			VAO = GLVertexArray.FromBuffers(gl, EBO, 0, VBO, 0, sizeof(float) * 8);
+			VAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 5);
 
 			// Handling Attrib.
 			VAO.AttribBinding(0, 0);
@@ -107,12 +153,8 @@ public class Game
 			VAO.EnableAttrib(0);
 
 			VAO.AttribBinding(1, 0);
-			VAO.AttribFormat(1, 3, VertexAttribType.Float, false, sizeof(float) * 3);
+			VAO.AttribFormat(1, 2, VertexAttribType.Float, false, sizeof(float) * 3);
 			VAO.EnableAttrib(1);
-
-			VAO.AttribBinding(2, 0);
-			VAO.AttribFormat(2, 3, VertexAttribType.Float, false, sizeof(float) * 6);
-			VAO.EnableAttrib(2);
 
 			// Creating Texture.
 			using (SKBitmap container_bitmap = SKBitmap.Decode("container.jpg"))
@@ -132,16 +174,16 @@ public class Game
 			shader = GLProgram.FromShaders(gl, vertShader, fragShader);
 		}
 
-		Transform transform = new(
-			   new(0.5f, -0.5f, 0.0f, 1.0f),
-			   Quaternion.Identity,
-			   Vector4.One);
+		Transform model = new();
+		Transform view = new();
 
 		window.Render += (dt) =>
 		{
+			gl.Enable(EnableCap.DepthTest);
+
 			// Clearing.
 			gl.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			gl.Clear(ClearBufferMask.ColorBufferBit);
+			gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 			// Uniform handling.
 			gl.BindTextureUnit(0, container.Handle);
@@ -150,16 +192,34 @@ public class Game
 			shader.Uniform1("container", 0);
 			shader.Uniform1("awesomeface", 1);
 
-			transform.Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, (float)window.Time);
+			model.Rotation = Quaternion.CreateFromAxisAngle(
+				 Vector3.Normalize(new(0.5f, 1.0f, 0.0f)),
+				 (float)window.Time * MathHelper.DegreesToRadians(50.0f));
+			view.Translation = new(0.0f, 0.0f, -3.0f, 1);
+			Matrix4x4 projection = Matrix4x4.CreatePerspectiveFieldOfView(
+				MathHelper.DegreesToRadians(45.0f),
+				MathHelper.NormalizeHomogenous((Vector2D<float>)window.Size),
+				0.1f,
+				100.0f);
 
-			shader.UniformMatrix4("matrix", false, transform.GetMatrix());
+			shader.UniformMatrix4("view", false, view.GetMatrix());
+			shader.UniformMatrix4("projection", false, projection);
 
 			// Drawing.
 			gl.UseProgram(shader.Handle);
 			gl.BindVertexArray(VAO.Handle);
-			unsafe
+
+			for (int i = 0; i < cubePositions.Length; i++)
 			{
-				gl.DrawElements(PrimitiveType.Triangles, (uint)indices.Length, DrawElementsType.UnsignedInt, null);
+				model.Translation = new(cubePositions[i], 1);
+				float angle = 20.0f * i;
+				model.Rotation = Quaternion.CreateFromAxisAngle(
+					Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
+					MathHelper.DegreesToRadians(angle));
+
+				shader.UniformMatrix4("model", false, model.GetMatrix());
+
+				gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
 			}
 		};
 
@@ -167,7 +227,6 @@ public class Game
 		{
 			shader.Dispose();
 
-			EBO.Dispose();
 			VBO.Dispose();
 			VAO.Dispose();
 		};
