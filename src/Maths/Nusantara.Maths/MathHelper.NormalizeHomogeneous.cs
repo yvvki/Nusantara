@@ -43,4 +43,21 @@ public static partial class MathHelper
 
 		return result;
 	}
+
+	public static T NormalizeHomogenous<T>(Vector2D<T> value)
+		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
+	{
+		T result = Unsafe.As<Vector2D<T>, T>(ref value);
+		result = Scalar.Divide(result, value.Y);
+
+		return result;
+	}
+
+	public static float NormalizeHomogenous(Vector2 value)
+	{
+		float result = Unsafe.As<Vector2, float>(ref value);
+		result /= value.Y;
+
+		return result;
+	}
 }
