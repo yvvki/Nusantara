@@ -87,7 +87,7 @@ public class Game
 	private WindowOptions options = WindowOptions.Default with
 	{
 		Size = new(800, 600),
-		PreferredDepthBufferBits = 24 // workaround on my end not having depth buffer bit
+		PreferredDepthBufferBits = 24, // workaround on my end not having depth buffer bit
 	};
 	private readonly IWindow window;
 
@@ -118,13 +118,36 @@ public class Game
 
 		shader = null!;
 
+		Vector3 cameraPosition = new(0.0f, 0.0f, 3.0f);
+		Vector3 cameraFront = new(0.0f, 0.0f, -1.0f);
+		Vector3 cameraUp = new(0.0f, 1.0f, 0.0f);
+
+		float fov = 45.0f;
+
 		window.Load += () =>
 		{
 			// Creating input.
 			input = window.CreateInput();
 
 			// Handling input.
-			input.Keyboards[0].KeyDown += (keyboard, key, times) =>
+			float yaw = -90.0f;
+			float pitch = 0.0f;
+
+			foreach (IKeyboard keyboard in input.Keyboards)
+			{
+				keyboard.KeyDown += OnKeyDown;
+			}
+
+			input.Mice[0].Cursor.CursorMode = CursorMode.Raw;
+			input.Mice[0].Position = default;
+
+			foreach (IMouse mouse in input.Mice)
+			{
+				mouse.MouseMove += OnMouseMove;
+				mouse.Scroll += OnScroll;
+			}
+
+			void OnKeyDown(IKeyboard keyboard, Key key, int times)
 			{
 				switch (key)
 				{
@@ -132,7 +155,35 @@ public class Game
 					window.Close();
 					break;
 				}
-			};
+			}
+
+			void OnMouseMove(IMouse mouse, Vector2 position)
+			{
+				Vector2 offset = position;
+				mouse.Position = default;
+
+				const float sensitivity = 0.1f;
+				offset *= sensitivity;
+
+				yaw += offset.X;
+				pitch -= offset.Y;
+
+				pitch = Math.Clamp(pitch, -89.0f, 89.0f);
+
+				Vector3 direction = new(
+					MathF.Cos(MathHelper.DegreesToRadians(yaw)) * MathF.Cos(MathHelper.DegreesToRadians(pitch)),
+					MathF.Sin(MathHelper.DegreesToRadians(pitch)),
+					MathF.Sin(MathHelper.DegreesToRadians(yaw)) * MathF.Cos(MathHelper.DegreesToRadians(pitch)));
+
+				cameraFront = Vector3.Normalize(direction);
+			}
+
+			void OnScroll(IMouse mouse, ScrollWheel wheel)
+			{
+				fov -= wheel.Y;
+
+				fov = Math.Clamp(fov, 1.0f, 45.0f);
+			}
 
 			// Creating GL.
 			gl = window.CreateOpenGL();
@@ -176,10 +227,25 @@ public class Game
 			shader = GLProgram.FromShaders(gl, vertShader, fragShader);
 		}
 
-		Transform model = new();
-		Transform view = new();
+		window.Update += (deltaTime) =>
+		{
+			float cameraSpeed = 2.5f * (float)deltaTime;
 
-		window.Render += (dt) =>
+			IKeyboard keyboard = input.Keyboards[0];
+
+			if (keyboard.IsKeyPressed(Key.W))
+				cameraPosition += cameraSpeed * cameraFront;
+			if (keyboard.IsKeyPressed(Key.S))
+				cameraPosition -= cameraSpeed * cameraFront;
+			if (keyboard.IsKeyPressed(Key.A))
+				cameraPosition -= Vector3.Normalize(Vector3.Cross(cameraFront, cameraUp)) * cameraSpeed;
+			if (keyboard.IsKeyPressed(Key.D))
+				cameraPosition += Vector3.Normalize(Vector3.Cross(cameraFront, cameraUp)) * cameraSpeed;
+		};
+
+		Transform model = new();
+
+		window.Render += (deltaTime) =>
 		{
 			gl.Enable(EnableCap.DepthTest);
 
@@ -197,14 +263,17 @@ public class Game
 			model.Rotation = Quaternion.CreateFromAxisAngle(
 				 Vector3.Normalize(new(0.5f, 1.0f, 0.0f)),
 				 (float)window.Time * MathHelper.DegreesToRadians(50.0f));
-			view.Translation = new(0.0f, 0.0f, -3.0f, 1);
+			Matrix4x4 view = Matrix4x4.CreateLookAt(
+				cameraPosition,
+				cameraPosition + cameraFront,
+				cameraUp);
 			Matrix4x4 projection = Matrix4x4.CreatePerspectiveFieldOfView(
-				MathHelper.DegreesToRadians(45.0f),
+				MathHelper.DegreesToRadians(fov),
 				MathHelper.NormalizeHomogenous((Vector2D<float>)window.Size),
 				0.1f,
 				100.0f);
 
-			shader.UniformMatrix4("view", false, view.GetMatrix());
+			shader.UniformMatrix4("view", false, view);
 			shader.UniformMatrix4("projection", false, projection);
 
 			// Drawing.
