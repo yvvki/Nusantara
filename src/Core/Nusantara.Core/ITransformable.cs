@@ -13,10 +13,6 @@ public interface ITransformable
 	Quaternion Rotation { get; set; }
 	Vector4 Scale { get; set; }
 
-	Vector3 Right => Directions.Right;
-	Vector3 Forward => Directions.Forward;
-	Vector3 Up => Directions.Up;
-
 	static Matrix4x4 GetMatrix(ITransformable transformable)
 	{
 		// Scaling
