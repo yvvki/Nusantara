@@ -1,28 +1,30 @@
 ﻿// <https://github.com/YvvkiRika> wrote this file.
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
+using System.Numerics;
+
+using Nusantara;
+using Nusantara.Maths;
+
 using Silk.NET.Input;
+using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 
 using SkiaSharp;
 
 using GLBuffer = Nusantara.OpenGL.Buffer;
-using GLVertexArray = Nusantara.OpenGL.VertexArray;
-using GLShader = Nusantara.OpenGL.Shader;
 using GLProgram = Nusantara.OpenGL.Program;
-using GLTexture = Nusantara.OpenGL.Texture;
+using GLShader = Nusantara.OpenGL.Shader;
 using GLSKTexture = Nusantara.OpenGL.Skia.SKTexture;
-using System.Numerics;
-using Nusantara;
-using Nusantara.Maths;
-using Silk.NET.Maths;
+using GLTexture = Nusantara.OpenGL.Texture;
+using GLVertexArray = Nusantara.OpenGL.VertexArray;
 
 namespace LearnOpenGL;
 
 public class Game
 {
-	static readonly float[] vertices =
+	private static readonly float[] vertices =
 	{
 		// Positions          // UVs
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -68,7 +70,7 @@ public class Game
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	static readonly Vector3[] cubePositions =
+	private static readonly Vector3[] cubePositions =
 	{
 		new( 0.0f,  0.0f,  0.0f),
 		new( 2.0f,  5.0f, -15.0f),
@@ -82,23 +84,23 @@ public class Game
 		new(-1.3f,  1.0f, -1.5f)
 	};
 
-	WindowOptions options = WindowOptions.Default with
+	private WindowOptions options = WindowOptions.Default with
 	{
 		Size = new(800, 600),
 		PreferredDepthBufferBits = 24 // workaround on my end not having depth buffer bit
 	};
-	IWindow window;
+	private readonly IWindow window;
 
-	IInputContext input;
-	GL gl;
+	private IInputContext input;
+	private GL gl;
 
-	GLVertexArray VAO;
-	GLBuffer VBO;
+	private GLVertexArray VAO;
+	private GLBuffer VBO;
 
-	GLTexture container;
-	GLTexture awesomeface;
+	private GLTexture container;
+	private GLTexture awesomeface;
 
-	GLProgram shader;
+	private GLProgram shader;
 
 	public Game()
 	{
