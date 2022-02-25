@@ -103,7 +103,7 @@ public class Game
 	private GLProgram shader;
 
 	private Camera camera;
-	private EulerTransformable cameraEuler;
+	private EulerQuaternion cameraRotation;
 
 	public Game()
 	{
@@ -122,7 +122,6 @@ public class Game
 		shader = null!;
 
 		camera = null!;
-		cameraEuler = null!;
 
 		window.Load += () =>
 		{
@@ -138,7 +137,6 @@ public class Game
 			{
 				Position = new(0.0f, 0.0f, 3.0f, 1)
 			};
-			cameraEuler = new(camera);
 
 			foreach (IKeyboard keyboard in input.Keyboards)
 			{
@@ -168,22 +166,24 @@ public class Game
 			{
 				mouse.Position = default;
 
-				const float sensitivity = 0.02f;
+				// Lower sensitivity due calculating in radians.
+				const float sensitivity = 0.002f;
 				Vector2 offset = position * sensitivity;
 
-				cameraEuler.Yaw = (cameraEuler.Yaw + offset.X) % MathF.Tau;
-				cameraEuler.Pitch -= Math.Clamp(
-					cameraEuler.Pitch - offset.Y,
+				// Modulo around 360 degrees.
+				cameraRotation.Yaw = (cameraRotation.Yaw - offset.X) % MathF.Tau;
+				cameraRotation.Pitch = Math.Clamp(
+					cameraRotation.Pitch - offset.Y,
 					MathHelper.DegreesToRadians(-90.0f),
 					MathHelper.DegreesToRadians(90.0f));
+
+				camera.Rotation = cameraRotation;
 			}
 
 			void OnScroll(IMouse mouse, ScrollWheel wheel)
 			{
-				camera.FieldOfView -= MathHelper.DegreesToRadians(wheel.Y);
-
 				camera.FieldOfView = Math.Clamp(
-					 camera.FieldOfView,
+					 camera.FieldOfView - MathHelper.DegreesToRadians(wheel.Y),
 					 MathHelper.DegreesToRadians(1.0f),
 					 MathHelper.DegreesToRadians(45.0f));
 			}
@@ -236,14 +236,15 @@ public class Game
 
 			IKeyboard keyboard = input.Keyboards[0];
 
+			// W is 0 (homogeneous vector) since we adding the values.
 			if (keyboard.IsKeyPressed(Key.W))
-				camera.Position += cameraSpeed * new Vector4(camera.Forward, 1);
+				camera.Position += cameraSpeed * new Vector4(camera.Forward, 0);
 			if (keyboard.IsKeyPressed(Key.S))
-				camera.Position -= cameraSpeed * new Vector4(camera.Forward, 1);
+				camera.Position -= cameraSpeed * new Vector4(camera.Forward, 0);
 			if (keyboard.IsKeyPressed(Key.D))
-				camera.Position += cameraSpeed * new Vector4(camera.Right, 1);
+				camera.Position += cameraSpeed * new Vector4(camera.Right, 0);
 			if (keyboard.IsKeyPressed(Key.A))
-				camera.Position -= cameraSpeed * new Vector4(camera.Right, 1);
+				camera.Position -= cameraSpeed * new Vector4(camera.Right, 0);
 		};
 
 		Transform model = new();
