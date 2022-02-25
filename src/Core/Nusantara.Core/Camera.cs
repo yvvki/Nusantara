@@ -7,7 +7,7 @@ using Nusantara.Maths;
 
 namespace Nusantara;
 
-internal class Camera : ICamera, ITransformable
+public sealed class Camera : ICamera, ITransformable
 {
 	public Camera(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
 	{
@@ -25,11 +25,11 @@ internal class Camera : ICamera, ITransformable
 	Vector4 ITransformable.Scale { get; set; } // Unused.
 
 	// Facing down.
-	public Vector4 Right => Vector4.Transform(Directions.Right, Rotation);
-	public Vector4 Forward => Vector4.Transform(-Directions.Up, Rotation);
-	public Vector4 Up => Vector4.Transform(Directions.Forward, Rotation);
+	public Vector3 Right => Vector3.Transform(Directions.Right, Rotation);
+	public Vector3 Forward => Vector3.Transform(-Directions.Up, Rotation);
+	public Vector3 Up => Vector3.Transform(Directions.Forward, Rotation);
 
-	public Vector4 Target => Position + Forward;
+	public Vector4 Target => Position + new Vector4(Forward, 0);
 
 	private float _fieldOfView;
 	public float FieldOfView
@@ -75,26 +75,25 @@ internal class Camera : ICamera, ITransformable
 		}
 	}
 
-	protected Matrix4x4 CalculateProjection()
-	{
-		return Matrix4x4.CreatePerspectiveFieldOfView(
-			_fieldOfView,
-			_aspectRatio,
-			_nearPlaneDistance,
-			_farPlaneDistance);
-	}
-
 	public Matrix4x4 GetView()
 	{
 		return Matrix4x4.CreateLookAt(
 			MathHelper.NormalizeHomogenous(Position),
 			MathHelper.NormalizeHomogenous(Target),
-			MathHelper.NormalizeHomogenous(Up));
+			Up);
+	}
+
+	private Matrix4x4 CalculateProjection()
+	{
+		return Matrix4x4.CreatePerspectiveFieldOfView(
+			FieldOfView,
+			AspectRatio,
+			NearPlaneDistance,
+			FarPlaneDistance);
 	}
 
 	private bool _projectionNeedCalculating;
 	private Matrix4x4 _projection;
-
 	public Matrix4x4 GetProjection()
 	{
 		if (_projectionNeedCalculating)
