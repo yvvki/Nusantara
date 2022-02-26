@@ -31,6 +31,7 @@ public sealed class Camera : ICamera, ITransformable
 
 	public Vector4 Target => Position + new Vector4(Forward, 0);
 
+	// Automatically throws.
 	private float _fieldOfView;
 	public float FieldOfView
 	{
@@ -38,7 +39,7 @@ public sealed class Camera : ICamera, ITransformable
 		set
 		{
 			_fieldOfView = value;
-			_projectionNeedCalculating = true;
+			_projection = CalculateProjection();
 		}
 	}
 
@@ -49,7 +50,7 @@ public sealed class Camera : ICamera, ITransformable
 		set
 		{
 			_aspectRatio = value;
-			_projectionNeedCalculating = true;
+			_projection = CalculateProjection();
 		}
 	}
 
@@ -60,7 +61,7 @@ public sealed class Camera : ICamera, ITransformable
 		set
 		{
 			_nearPlaneDistance = value;
-			_projectionNeedCalculating = true;
+			_projection = CalculateProjection();
 		}
 	}
 
@@ -71,7 +72,7 @@ public sealed class Camera : ICamera, ITransformable
 		set
 		{
 			_farPlaneDistance = value;
-			_projectionNeedCalculating = true;
+			_projection = CalculateProjection();
 		}
 	}
 
@@ -92,16 +93,9 @@ public sealed class Camera : ICamera, ITransformable
 			FarPlaneDistance);
 	}
 
-	private bool _projectionNeedCalculating;
 	private Matrix4x4 _projection;
 	public Matrix4x4 GetProjection()
 	{
-		if (_projectionNeedCalculating)
-		{
-			_projection = CalculateProjection();
-			_projectionNeedCalculating = false;
-		}
-
 		return _projection;
 	}
 }
