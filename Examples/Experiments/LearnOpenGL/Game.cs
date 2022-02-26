@@ -27,48 +27,48 @@ public class Game
 {
 	private static readonly float[] vertices =
 	{
-		// Positions
-		-0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
+		// Positions         // Normals
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-		-0.5f, -0.5f,  0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-		-0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-		 0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-		-0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f, -0.5f,
-		 0.5f, -0.5f,  0.5f,
-		 0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-		-0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f, -0.5f,
-		 0.5f,  0.5f,  0.5f,
-		 0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 
 	//private static readonly Vector3[] cubePositions =
@@ -220,17 +220,25 @@ public class Game
 			VBO = GLBuffer.FromData<float>(gl, vertices);
 
 			// Creating VertexArray.
-			VAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 3);
-			lightVAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 3);
+			VAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 6);
+			lightVAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 6);
 
 			// Handling Attrib.
 			VAO.AttribBinding(0, 0);
 			VAO.AttribFormat(0, 3, VertexAttribType.Float, false, 0);
 			VAO.EnableAttrib(0);
 
+			VAO.AttribBinding(1, 0);
+			VAO.AttribFormat(1, 3, VertexAttribType.Float, false, sizeof(float) * 3);
+			VAO.EnableAttrib(1);
+
 			lightVAO.AttribBinding(0, 0);
 			lightVAO.AttribFormat(0, 3, VertexAttribType.Float, false, 0);
 			lightVAO.EnableAttrib(0);
+
+			lightVAO.AttribBinding(1, 0);
+			lightVAO.AttribFormat(1, 3, VertexAttribType.Float, false, sizeof(float) * 3);
+			lightVAO.EnableAttrib(1);
 
 			// Creating Texture.
 			//using (SKBitmap container_bitmap = SKBitmap.Decode("container.jpg"))
@@ -280,12 +288,14 @@ public class Game
 			Matrix4x4 view = camera.GetView();
 			Matrix4x4 projection = camera.GetProjection();
 
-			Vector3 lightPos = new(1.2f, 1.0f, 2.0f);
+			Vector3 lightPosition = new(1.2f, 1.0f, 2.0f);
 
 			// Cube:
 			// Uniform handling.
 			shader.Uniform3("ObjectColor", 1.0f, 0.5f, 0.31f);
 			shader.Uniform3("LightColor", 1.0f, 1.0f, 1.0f);
+			shader.Uniform3("LightPosition", lightPosition);
+			shader.Uniform3("CameraPosition", MathHelper.NormalizeHomogenous(camera.Position));
 
 			shader.UniformMatrix4("Model", false, Matrix4x4.Identity);
 			shader.UniformMatrix4("View", false, view);
@@ -313,7 +323,7 @@ public class Game
 			// Light:
 			// Uniform handling.
 			Transform lightModel = new(
-				new(lightPos, 1),
+				new(lightPosition, 1),
 				Quaternion.Identity,
 				new(new Vector3(0.2f), 1));
 			lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
