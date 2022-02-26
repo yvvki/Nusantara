@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="awesomeface.png" />
     <None Remove="container.jpg" />
+    <None Remove="light.frag" />
     <None Remove="shader.frag" />
     <None Remove="shader.vert" />
   </ItemGroup>
@@ -20,6 +21,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="container.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="light.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="shader.frag">

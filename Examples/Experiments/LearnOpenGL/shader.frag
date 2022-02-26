@@ -1,13 +1,11 @@
 ﻿#version 330 core
 
-in vec2 fUV;
-
-uniform sampler2D container;
-uniform sampler2D awesomeface;
+uniform vec3 ObjectColor;
+uniform vec3 LightColor;
 
 layout (location = 0) out vec4 cColor;
 
 void main()
 {
-    cColor = mix(texture(container, fUV), texture(awesomeface, fUV), 0.2);
+    cColor = vec4(LightColor * ObjectColor, 1.0);
 } 
