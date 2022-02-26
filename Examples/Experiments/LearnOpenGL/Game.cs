@@ -130,7 +130,7 @@ public class Game
 
 			// Handling input.
 			camera = new(
-				MathHelper.DegreesToRadians(45.0f),
+				MathHelper.DegreesToRadians(90), // Defaults to 90 degrees (CS:GO).
 				MathHelper.NormalizeHomogenous((Vector2D<float>)window.Size),
 				0.1f,
 				100.0f)
@@ -174,18 +174,31 @@ public class Game
 				cameraRotation.Yaw = (cameraRotation.Yaw - offset.X) % MathF.Tau;
 				cameraRotation.Pitch = Math.Clamp(
 					cameraRotation.Pitch - offset.Y,
-					MathHelper.DegreesToRadians(-90.0f),
-					MathHelper.DegreesToRadians(90.0f));
+					-MathF.PI / 2, // PI == 180 degrees
+					MathF.PI / 2);
 
 				camera.Rotation = cameraRotation;
 			}
 
 			void OnScroll(IMouse mouse, ScrollWheel wheel)
 			{
+				//// Minimum and maximum value that can be assigned.
+				//camera.FieldOfView = Math.Clamp(
+				//	 camera.FieldOfView - MathHelper.DegreesToRadians(wheel.Y),
+				//	 float.Epsilon,
+				//	 MathHelper.PIMinusEpsilon);
+
+				//// Minecraft style.
+				//camera.FieldOfView = Math.Clamp(
+				//	 camera.FieldOfView - MathHelper.DegreesToRadians(wheel.Y),
+				//	 MathHelper.DegreesToRadians(30),
+				//	 MathHelper.DegreesToRadians(110));
+
+				// Team Fortress 2 style.
 				camera.FieldOfView = Math.Clamp(
 					 camera.FieldOfView - MathHelper.DegreesToRadians(wheel.Y),
-					 MathHelper.DegreesToRadians(1.0f),
-					 MathHelper.DegreesToRadians(45.0f));
+					 MathHelper.DegreesToRadians(75),
+					 MathHelper.DegreesToRadians(90));
 			}
 
 			// Creating GL.
@@ -238,13 +251,13 @@ public class Game
 
 			// W is 0 (homogeneous vector) since we adding the values.
 			if (keyboard.IsKeyPressed(Key.W))
-				camera.Position += cameraSpeed * new Vector4(camera.Forward, 0);
+				camera.Position += new Vector4(camera.Forward * cameraSpeed, 0);
 			if (keyboard.IsKeyPressed(Key.S))
-				camera.Position -= cameraSpeed * new Vector4(camera.Forward, 0);
+				camera.Position -= new Vector4(camera.Forward * cameraSpeed, 0);
 			if (keyboard.IsKeyPressed(Key.D))
-				camera.Position += cameraSpeed * new Vector4(camera.Right, 0);
+				camera.Position += new Vector4(camera.Right * cameraSpeed, 0);
 			if (keyboard.IsKeyPressed(Key.A))
-				camera.Position -= cameraSpeed * new Vector4(camera.Right, 0);
+				camera.Position -= new Vector4(camera.Right * cameraSpeed, 0);
 		};
 
 		Transform model = new();
@@ -264,9 +277,9 @@ public class Game
 			shader.Uniform1("container", 0);
 			shader.Uniform1("awesomeface", 1);
 
-			model.Rotation = Quaternion.CreateFromAxisAngle(
-				 Vector3.Normalize(new(0.5f, 1.0f, 0.0f)),
-				 (float)window.Time * MathHelper.DegreesToRadians(50.0f));
+			//model.Rotation = Quaternion.CreateFromAxisAngle(
+			//	 Vector3.Normalize(new(0.5f, 1.0f, 0.0f)),
+			//	 (float)window.Time * MathHelper.DegreesToRadians(50.0f));
 			Matrix4x4 view = camera.GetView();
 			Matrix4x4 projection = camera.GetProjection();
 
