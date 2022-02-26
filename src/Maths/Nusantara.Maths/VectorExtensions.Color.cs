@@ -11,22 +11,32 @@ namespace Nusantara.Maths;
 public static partial class VectorExtensions
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal static Vector4D<byte> AsVector(this Color @this)
+	public static Vector4D<byte> ARGB(this Color @this)
 	{
 		int argb = @this.ToArgb();
 
+		// int as Vector4D<byte>.
 		return Unsafe.As<int, Vector4D<byte>>(ref argb);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4D<byte> ARGB(this Color @this)
+	public static Vector3D<byte> RGB(this Color @this)
 	{
-		return @this.AsVector();
+		int argb = @this.ToArgb();
+
+		// ref byte as Vector3D<byte>.
+		return Unsafe.As<byte, Vector3D<byte>>(
+			// Offset the ref by 1 so it skips the alpha (A) component.
+			ref Unsafe.Add(
+				// ARGB as ref byte.
+				ref Unsafe.As<int, byte>(ref argb),
+				1));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector4D<byte> RGBA(this Color @this)
 	{
-		return @this.AsVector().YZWX(); // amazing, an actual use, wow
+		// ARGB (XYZW) as RGBA (YZWX).
+		return @this.ARGB().YZWX(); // Amazing, an actual use, wow
 	}
 }
