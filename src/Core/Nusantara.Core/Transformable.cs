@@ -14,6 +14,18 @@ public static class Transformable
 		@this.Scale = Vector4.Multiply(@this.Scale, transformable.Scale);
 	}
 
+	public static Transform GetTransform(this ITransformable @this)
+	{
+		return new(@this);
+	}
+
+	public static void SetTransform(this ITransformable @this, Transform transform)
+	{
+		@this.Translation = transform.Translation;
+		@this.Rotation = transform.Rotation;
+		@this.Scale = transform.Scale;
+	}
+
 	public static Matrix4x4 GetMatrix(this ITransformable @this)
 	{
 		return ITransformable.GetMatrix(@this);
