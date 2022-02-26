@@ -297,9 +297,14 @@ public class Game
 			shader.Uniform3("LightPosition", lightPosition);
 			shader.Uniform3("CameraPosition", MathHelper.NormalizeHomogenous(camera.Position));
 
-			shader.UniformMatrix4("Model", false, Matrix4x4.Identity);
-			shader.UniformMatrix4("View", false, view);
-			shader.UniformMatrix4("Projection", false, projection);
+			Transform model = new();
+			Matrix4x4 modelMatrix = model.GetMatrix();
+			Matrix4x4 normal;
+			if (Matrix4x4.Invert(modelMatrix, out normal) is false) throw new InvalidOperationException();
+
+			shader.UniformMatrix4("Model", false, modelMatrix);
+			shader.UniformMatrix4("ViewProjection", false, view * projection);
+			shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
 			// Drawing.
 			gl.UseProgram(shader.Handle);
@@ -326,9 +331,10 @@ public class Game
 				new(lightPosition, 1),
 				Quaternion.Identity,
 				new(new Vector3(0.2f), 1));
+			Matrix4x4 lightModelMatrix = lightModel.GetMatrix();
+
 			lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
-			lightShader.UniformMatrix4("View", false, view);
-			lightShader.UniformMatrix4("Projection", false, projection);
+			lightShader.UniformMatrix4("ViewProjection", false, view * projection);
 
 			// Drawing.
 			gl.UseProgram(lightShader.Handle);
