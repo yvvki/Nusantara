@@ -11,6 +11,8 @@
   <ItemGroup>
     <None Remove="awesomeface.png" />
     <None Remove="container.jpg" />
+    <None Remove="container2.png" />
+    <None Remove="container2_specular.png" />
     <None Remove="light.frag" />
     <None Remove="shader.frag" />
     <None Remove="shader.vert" />
@@ -21,6 +23,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="container.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="container2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="container2_specular.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="light.frag">

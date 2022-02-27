@@ -3,6 +3,7 @@
 // In.
 layout (location = 0) in vec3 vPosition;
 layout (location = 1) in vec3 vNormal;
+layout (location = 2) in vec2 vUV;
 
 // Uniform.
 uniform mat4 Model;
@@ -12,6 +13,7 @@ uniform mat3 Normal;
 // Out.
 out vec3 fPosition;
 out vec3 fNormal;
+out vec2 fUV;
 
 void main()
 {
@@ -22,4 +24,5 @@ void main()
 
 	fPosition = vec3(position);
 	fNormal   = Normal * vNormal;
+	fUV       = vUV;
 }

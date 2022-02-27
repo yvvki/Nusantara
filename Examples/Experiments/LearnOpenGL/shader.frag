@@ -3,13 +3,13 @@
 // In.
 in vec3 fPosition;
 in vec3 fNormal;
+in vec2 fUV;
 
 // Material.
 struct MATERIAL {
-	vec3    Ambient;
-	vec3    Diffuse;
-	vec3   Specular;
-	float Shininess;
+	sampler2D  Diffuse;
+	sampler2D Specular;
+	float    Shininess;
 };
 uniform MATERIAL Material;
 
@@ -43,10 +43,14 @@ void main()
 	float   diffuseResult =     max(dot(    normal,      lightDirection), 0.0);
 	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
 
+	// Texture.
+	vec3 materialDiffuse  = vec3(texture(Material. Diffuse, fUV));
+	vec3 materialSpecular = vec3(texture(Material.Specular, fUV));
+
 	// Color.
-	vec3    ambient       = Light. Ambient * Material. Ambient;
-	vec3    diffuse       = Light. Diffuse * Material. Diffuse *  diffuseResult;
-	vec3   specular       = Light.Specular * Material.Specular * specularResult;
+	vec3         ambient  = Light. Ambient * materialDiffuse;
+	vec3         diffuse  = Light. Diffuse * materialDiffuse  *  diffuseResult;
+	vec3         specular = Light.Specular * materialSpecular * specularResult;
 
 	// Combine results.
 	vec3 result = ambient + diffuse + specular;
