@@ -22,21 +22,24 @@ public static partial class VectorExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector3D<byte> RGB(this Color @this)
 	{
-		int argb = @this.ToArgb();
+		//int argb = @this.ToArgb();
 
-		// ref byte as Vector3D<byte>.
-		return Unsafe.As<byte, Vector3D<byte>>(
-			// Offset the ref by 1 so it skips the alpha (A) component.
-			ref Unsafe.Add(
-				// ARGB as ref byte.
-				ref Unsafe.As<int, byte>(ref argb),
-				1));
+		//// ref byte as Vector3D<byte>.
+		//return Unsafe.As<byte, Vector3D<byte>>(
+		//	// Offset the ref by 1 so it skips the alpha (A) component.
+		//	ref Unsafe.Add(
+		//		// ARGB as ref byte.
+		//		ref Unsafe.As<int, byte>(ref argb),
+		//		1));
+
+		// ARGB (XYZW) as RGB (YZW).
+		return @this.ARGB().YZW();
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector4D<byte> RGBA(this Color @this)
 	{
 		// ARGB (XYZW) as RGBA (YZWX).
-		return @this.ARGB().YZWX(); // Amazing, an actual use, wow
+		return @this.ARGB().YZWX();
 	}
 }
