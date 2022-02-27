@@ -1,34 +1,54 @@
 ﻿#version 330 core
 
+// In.
 in vec3 fPosition;
 in vec3 fNormal;
 
-uniform vec3 ObjectColor;
-uniform vec3 LightColor;
-uniform vec3 LightPosition;
+// Material.
+struct MATERIAL {
+	vec3    Ambient;
+	vec3    Diffuse;
+	vec3   Specular;
+	float Shininess;
+};
+uniform MATERIAL Material;
+
+// Camera.
 uniform vec3 CameraPosition;
 
-layout (location = 0) out vec4 cColor;
+// Light.
+struct LIGHT {
+	vec3   Position;
+	
+	vec3    Ambient;
+	vec3    Diffuse;
+	vec3   Specular;
+};
+uniform LIGHT Light;
 
-float ambientStrength = 0.1;
-float specularStrength = 0.5;
+// Out.
+layout (location = 0) out vec4 cColor;
 
 void main()
 {
-	vec3 ambient = ambientStrength * LightColor;
+	// Normalize normal.
+	vec3        normal    = normalize(fNormal);
 
-	vec3 normal = normalize(fNormal);
-	vec3 lightDirection = normalize(LightPosition - fPosition);
+	// Calculate directions.
+	vec3    viewDirection = normalize(CameraPosition - fPosition);
+	vec3   lightDirection = normalize(Light.Position - fPosition);
+	vec3 reflectDirection = reflect  (-lightDirection, normal);
 
-	float diffuseResult = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuse = diffuseResult * LightColor;
+	// Calculate results.
+	float   diffuseResult =     max(dot(    normal,      lightDirection), 0.0);
+	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
 
-	vec3 viewDirection = normalize(CameraPosition - fPosition);
-	vec3 reflectDirection = reflect(-lightDirection, normal);
+	// Color.
+	vec3    ambient       = Light. Ambient * Material. Ambient;
+	vec3    diffuse       = Light. Diffuse * Material. Diffuse *  diffuseResult;
+	vec3   specular       = Light.Specular * Material.Specular * specularResult;
 
-	float specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), 32);
-	vec3 specular = specularStrength * specularResult * LightColor;
-
-	vec3 result = (ambient + diffuse + specular) * ObjectColor;
+	// Combine results.
+	vec3 result = ambient + diffuse + specular;
 	cColor = vec4(result, 1.0);
 } 

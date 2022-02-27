@@ -292,10 +292,17 @@ public class Game
 
 			// Cube:
 			// Uniform handling.
-			shader.Uniform3("ObjectColor", 1.0f, 0.5f, 0.31f);
-			shader.Uniform3("LightColor", 1.0f, 1.0f, 1.0f);
-			shader.Uniform3("LightPosition", lightPosition);
+			shader.Uniform3("Material.Ambient", 1.0f, 0.5f, 0.31f);
+			shader.Uniform3("Material.Diffuse", 1.0f, 0.5f, 0.31f);
+			shader.Uniform3("Material.Specular", 0.5f, 0.5f, 0.5f);
+			shader.Uniform1("Material.Shininess", 32.0f);
+
 			shader.Uniform3("CameraPosition", MathHelper.NormalizeHomogenous(camera.Position));
+
+			shader.Uniform3("Light.Position", lightPosition);
+			shader.Uniform3("Light.Ambient", 0.2f, 0.2f, 0.2f);
+			shader.Uniform3("Light.Diffuse", 0.5f, 0.5f, 0.5f); // darken diffuse light a bit
+			shader.Uniform3("Light.Specular", 1.0f, 1.0f, 1.0f);
 
 			Transform model = new();
 			Matrix4x4 modelMatrix = model.GetMatrix();
