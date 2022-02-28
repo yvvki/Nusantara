@@ -10,6 +10,7 @@ namespace Nusantara.Maths;
 
 public static partial class MathHelper
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector3D<T> NormalizeHomogenous<T>(Vector4D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
@@ -19,6 +20,7 @@ public static partial class MathHelper
 		return result;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector3 NormalizeHomogenous(Vector4 value)
 	{
 		Vector3 result = Unsafe.As<Vector4, Vector3>(ref value);
@@ -27,6 +29,7 @@ public static partial class MathHelper
 		return result;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector2D<T> NormalizeHomogenous<T>(Vector3D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
@@ -36,6 +39,7 @@ public static partial class MathHelper
 		return result;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector2 NormalizeHomogenous(Vector3 value)
 	{
 		Vector2 result = Unsafe.As<Vector3, Vector2>(ref value);
@@ -44,6 +48,7 @@ public static partial class MathHelper
 		return result;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static T NormalizeHomogenous<T>(Vector2D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
@@ -53,6 +58,7 @@ public static partial class MathHelper
 		return result;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static float NormalizeHomogenous(Vector2 value)
 	{
 		float result = Unsafe.As<Vector2, float>(ref value);
