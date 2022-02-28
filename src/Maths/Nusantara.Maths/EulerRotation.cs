@@ -11,11 +11,4 @@ public record struct EulerRotation(float Yaw, float Pitch, float Roll)
 	{
 		return Quaternion.CreateFromYawPitchRoll(value.Yaw, value.Pitch, value.Roll);
 	}
-
-	public static explicit operator EulerRotation(Quaternion value)
-	{
-		(float yaw, float pitch, float roll) = MathHelper.ToEulerAngles(value);
-
-		return new(yaw, pitch, roll);
-	}
 };
