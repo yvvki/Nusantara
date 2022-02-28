@@ -2,6 +2,7 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Nusantara;
 
@@ -28,6 +29,7 @@ public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4
 			Transformable.Scale)
 	{ }
 
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static Transform Negate(Transform value)
 	//{
 	//	Transform result = new(
@@ -38,6 +40,7 @@ public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4
 	//	return result;
 	//}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Transform Combine(Transform left, Transform right)
 	{
 		Transform result = left;
@@ -45,16 +48,19 @@ public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4
 		return result;
 	}
 
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static Transform operator -(Transform value)
 	//{
 	//	return Negate(value);
 	//}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Transform operator +(Transform left, Transform right)
 	{
 		return Combine(left, right);
 	}
 
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	//public static Transform operator -(Transform left, Transform right)
 	//{
 	//	return left + (-right);
