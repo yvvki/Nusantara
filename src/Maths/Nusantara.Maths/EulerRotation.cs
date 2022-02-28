@@ -5,14 +5,14 @@ using System.Numerics;
 
 namespace Nusantara.Maths;
 
-public record struct EulerQuaternion(float Yaw, float Pitch, float Roll)
+public record struct EulerRotation(float Yaw, float Pitch, float Roll)
 {
-	public static implicit operator Quaternion(EulerQuaternion value)
+	public static implicit operator Quaternion(EulerRotation value)
 	{
 		return Quaternion.CreateFromYawPitchRoll(value.Yaw, value.Pitch, value.Roll);
 	}
 
-	public static explicit operator EulerQuaternion(Quaternion value)
+	public static explicit operator EulerRotation(Quaternion value)
 	{
 		(float yaw, float pitch, float roll) = MathHelper.ToEulerAngles(value);
 
