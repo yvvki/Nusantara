@@ -62,57 +62,39 @@ public static partial class MathHelper
 	public static Vector3D<T> NormalizeHomogeneous<T>(Vector4D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
-		Vector3D<T> result = Unsafe.As<Vector4D<T>, Vector3D<T>>(ref value);
-		result = Vector3D.Divide(result, value.W);
-
-		return result;
+		return Vector3D.Divide(value.XYZ(), value.W);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector3 NormalizeHomogeneous(Vector4 value)
 	{
-		Vector3 result = Unsafe.As<Vector4, Vector3>(ref value);
-		result = Vector3.Divide(result, value.W);
-
-		return result;
+		return Vector3.Divide(value.XYZ(), value.W);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector2D<T> NormalizeHomogeneous<T>(Vector3D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
-		Vector2D<T> result = Unsafe.As<Vector3D<T>, Vector2D<T>>(ref value);
-		result = Vector2D.Divide(result, value.Z);
-
-		return result;
+		return Vector2D.Divide(value.XY(), value.Z);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector2 NormalizeHomogeneous(Vector3 value)
 	{
-		Vector2 result = Unsafe.As<Vector3, Vector2>(ref value);
-		result = Vector2.Divide(result, value.Z);
-
-		return result;
+		return Vector2.Divide(value.XY(), value.Z);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static T NormalizeHomogeneous<T>(Vector2D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
-		T result = Unsafe.As<Vector2D<T>, T>(ref value);
-		result = Scalar.Divide(result, value.Y);
-
-		return result;
+		return Scalar.Divide(value.X, value.Y);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static float NormalizeHomogeneous(Vector2 value)
 	{
-		float result = Unsafe.As<Vector2, float>(ref value);
-		result /= value.Y;
-
-		return result;
+		return value.X / value.Y;
 	}
 
 	#endregion
