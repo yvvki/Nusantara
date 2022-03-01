@@ -8,8 +8,4 @@
 		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Nusantara.OpenGL\Nusantara.OpenGL.csproj" />
-	</ItemGroup>
-
 </Project>
