@@ -8,6 +8,10 @@ namespace Nusantara.Maths;
 // Based on: https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 public record struct EulerRotation(float Yaw, float Pitch, float Roll)
 {
+	public float Yaw = Yaw;
+	public float Pitch = Pitch;
+	public float Roll = Roll;
+
 	// wikipedia
 	public static Quaternion ToQuaternionZYX(EulerRotation euler)
 	{
@@ -38,7 +42,7 @@ public record struct EulerRotation(float Yaw, float Pitch, float Roll)
 	// wikipedia
 	public static EulerRotation CreateFromQuaternionZYX(Quaternion q)
 	{
-		EulerRotation euler = default;
+		EulerRotation euler;
 
 		// roll (x-axis rotation)
 		float sinr_cosp = 2 * (q.W * q.X + q.Y * q.Z);
