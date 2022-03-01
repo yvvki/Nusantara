@@ -11,50 +11,44 @@ namespace Nusantara;
 public static class Transformable
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Negate(this ITransformable @this)
+	public static void Normalize<T>(ref T transformable)
+		where T : ITransformable
 	{
-		@this.Translation = CalculateTranslation(@this.Translation);
-		@this.Rotation = Quaternion.Negate(@this.Rotation);
-		@this.Scale = Vector4.Divide(Vector4.One, @this.Scale);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		static Vector4 CalculateTranslation(Vector4 value)
-		{
-			Vector4 result = value;
-			Vector3 vector = Unsafe.As<Vector4, Vector3>(ref result);
-
-			vector = Vector3.Negate(vector);
-			result.XYZ(vector);
-
-			return result;
-		}
+		transformable.Translation = Vector4.Divide(transformable.Translation, transformable.Translation.W);
+		transformable.Rotation = Quaternion.Normalize(transformable.Rotation);
+		transformable.Scale = Vector4.Divide(transformable.Scale, transformable.Scale.W);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Combine(this ITransformable @this, ITransformable other)
+	public static void Negate<T>(ref T transformable)
+		where T : ITransformable
 	{
-		@this.Translation = Vector4.Add(@this.Translation, other.Translation);
-		@this.Rotation = Quaternion.Add(@this.Rotation, other.Rotation);
-		@this.Scale = Vector4.Multiply(@this.Scale, other.Scale);
+		transformable.Translation = MathHelper.NegateHomogeneous(transformable.Translation);
+		transformable.Rotation = Quaternion.Inverse(transformable.Rotation);
+		transformable.Scale = Vector4.Divide(Vector4.One, transformable.Scale);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Transform GetTransform(this ITransformable @this)
+	public static void Concatenate<T>(ref T transformable, ITransformable other)
+		where T : ITransformable
 	{
-		return new(@this);
+		transformable.Translation = MathHelper.AddHomogeneous(transformable.Translation, other.Translation);
+		transformable.Rotation = Quaternion.Concatenate(transformable.Rotation, other.Rotation);
+		transformable.Scale = Vector4.Multiply(transformable.Scale, other.Scale);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void SetTransform(this ITransformable @this, Transform transform)
+	public static Matrix4x4 CreateMatrix(ITransformable transformable)
 	{
-		@this.Translation = transform.Translation;
-		@this.Rotation = transform.Rotation;
-		@this.Scale = transform.Scale;
+		return MathHelper.CreateTransform(
+			transformable.Translation,
+			transformable.Rotation,
+			transformable.Scale);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Matrix4x4 GetMatrix(this ITransformable @this)
 	{
-		return MathHelper.CreateTransformMatrix(@this.Translation, @this.Rotation, @this.Scale);
+		return CreateMatrix(@this);
 	}
 }

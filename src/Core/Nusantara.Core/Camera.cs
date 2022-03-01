@@ -79,8 +79,8 @@ public sealed class Camera : ICamera, ITransformable
 	public Matrix4x4 GetView()
 	{
 		return Matrix4x4.CreateLookAt(
-			MathHelper.NormalizeHomogenous(Position),
-			MathHelper.NormalizeHomogenous(Target),
+			MathHelper.NormalizeHomogeneous(Position),
+			MathHelper.NormalizeHomogeneous(Target),
 			Up);
 	}
 

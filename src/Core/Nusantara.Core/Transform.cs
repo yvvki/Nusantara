@@ -4,10 +4,14 @@
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
+using Nusantara.Maths;
+
 namespace Nusantara;
 
 public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4 Scale) : ITransformable
 {
+	public static Transform Identity => new();
+
 	public Transform()
 		: this(
 			Vector4.UnitW,
@@ -29,40 +33,51 @@ public record struct Transform(Vector4 Translation, Quaternion Rotation, Vector4
 			Transformable.Scale)
 	{ }
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static Transform Negate(Transform value)
-	//{
-	//	Transform result = new(
-	//		Vector4.Negate(value.Translation),
-	//		Quaternion.Negate(value.Rotation),
-	//		Vector4.Divide(Vector4.One, value.Scale));
-
-	//	return result;
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Transform Combine(Transform left, Transform right)
+	public static Transform Normalize(Transform value)
 	{
-		Transform result = left;
-		result.Combine(right);
+		Transform result = value;
+		Transformable.Normalize(ref result);
 		return result;
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static Transform operator -(Transform value)
-	//{
-	//	return Negate(value);
-	//}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Transform Negate(Transform value)
+	{
+		Transform result = value;
+		Transformable.Negate(ref result);
+		return result;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Transform Concatenate(Transform left, Transform right)
+	{
+		Transform result = left;
+		Transformable.Concatenate(ref result, right);
+		return result;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Transform operator +(Transform value)
+	{
+		return Normalize(value);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Transform operator -(Transform value)
+	{
+		return Negate(value);
+	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Transform operator +(Transform left, Transform right)
 	{
-		return Combine(left, right);
+		return Concatenate(left, right);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static Transform operator -(Transform left, Transform right)
-	//{
-	//	return left + (-right);
-	//}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Transform operator -(Transform left, Transform right)
+	{
+		return left + (-right);
+	}
 };
