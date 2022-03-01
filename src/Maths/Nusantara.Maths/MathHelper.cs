@@ -59,7 +59,7 @@ public static partial class MathHelper
 	#region Homogeneous Vector
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4 AddHomogenous(Vector4 left, Vector4 right)
+	public static Vector4 AddHomogeneous(Vector4 left, Vector4 right)
 	{
 		return new(
 			left.X + right.X,
@@ -69,7 +69,7 @@ public static partial class MathHelper
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4 SubtractHomogenous(Vector4 left, Vector4 right)
+	public static Vector4 SubtractHomogeneous(Vector4 left, Vector4 right)
 	{
 		return new(
 			left.X - right.X,
@@ -79,9 +79,9 @@ public static partial class MathHelper
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4 NegateHomogenous(Vector4 value)
+	public static Vector4 NegateHomogeneous(Vector4 value)
 	{
-		return SubtractHomogenous(Vector4.UnitW, value);
+		return SubtractHomogeneous(Vector4.UnitW, value);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
