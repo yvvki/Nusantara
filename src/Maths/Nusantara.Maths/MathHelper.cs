@@ -56,7 +56,33 @@ public static partial class MathHelper
 
 	#endregion
 
-	#region Normalize Homogeneous
+	#region Homogeneous Vector
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Vector4 AddHomogenous(Vector4 left, Vector4 right)
+	{
+		return new(
+			left.X + right.X,
+			left.Y + right.Y,
+			left.Z + right.Z,
+			left.W * right.W);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Vector4 SubtractHomogenous(Vector4 left, Vector4 right)
+	{
+		return new(
+			left.X - right.X,
+			left.Y - right.Y,
+			left.Z - right.Z,
+			left.W / right.W);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Vector4 NegateHomogenous(Vector4 value)
+	{
+		return SubtractHomogenous(Vector4.UnitW, value);
+	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector3D<T> NormalizeHomogeneous<T>(Vector4D<T> value)
@@ -128,30 +154,46 @@ public static partial class MathHelper
 
 	#endregion
 
-	#region Create Transformation Matrix
+	#region Create Matrix
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Matrix4x4 CreateTransformMatrix(Vector3 translation, Quaternion rotation, Vector3 scale)
+	/// <inheritdoc cref="Matrix4x4.CreateScale(Vector3)"/>
+	public static Matrix4x4 CreateScale(Vector4 scales)
 	{
-		// Scaling
-		Matrix4x4 matrix = Matrix4x4.CreateScale(scale);
-		// Rotating
-		matrix = Matrix4x4.Transform(matrix, rotation);
-		// Translating
-		matrix.Translation = translation;
-
-		return matrix;
+		Matrix4x4 result = Matrix4x4.Identity;
+		result.M11 = scales.X;
+		result.M22 = scales.Y;
+		result.M33 = scales.Z;
+		result.M44 = scales.W;
+		return result;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Matrix4x4 CreateTransformMatrix(Vector4 translation, Quaternion rotation, Vector4 scale)
+	/// <inheritdoc cref="Matrix4x4.CreateTranslation(Vector3)"/>
+	public static Matrix4x4 CreateTranslation(Vector4 position)
 	{
-		Matrix4x4 matrix = CreateTransformMatrix(
-			NormalizeHomogeneous(translation),
-			rotation,
-			NormalizeHomogeneous(scale));
+		Matrix4x4 result = Matrix4x4.Identity;
+		result.M41 = position.X;
+		result.M42 = position.Y;
+		result.M43 = position.Z;
+		result.M44 = position.W;
+		return result;
+	}
 
-		return matrix;
+	public static Matrix4x4 CreateTransform(Vector4 translation, Quaternion rotation, Vector4 scale)
+	{
+		Matrix4x4 result;
+
+		// Scale
+		Matrix4x4 m_scale = CreateScale(scale);
+		// Rotation
+		Matrix4x4 m_rotation = Matrix4x4.CreateFromQuaternion(rotation);
+
+		result = Matrix4x4.Multiply(m_scale, m_rotation);
+
+		// Translation
+		result.Translation = translation.XYZ();
+		result.M44 *= translation.W;
+
+		return result;
 	}
 
 	#endregion
