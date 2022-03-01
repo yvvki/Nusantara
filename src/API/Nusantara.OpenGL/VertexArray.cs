@@ -103,6 +103,11 @@ public class VertexArray : GLObject
 		_gl.EnableVertexArrayAttrib(_handle, index);
 	}
 
+	public void Bind()
+	{
+		_gl.BindVertexArray(_handle);
+	}
+
 	#endregion
 
 	protected sealed override void Delete()
