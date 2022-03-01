@@ -71,19 +71,19 @@ public class Game
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
 
-	//private static readonly Vector3[] cubePositions =
-	//{
-	//	new( 0.0f,  0.0f,  0.0f),
-	//	new( 2.0f,  5.0f, -15.0f),
-	//	new(-1.5f, -2.2f, -2.5f),
-	//	new(-3.8f, -2.0f, -12.3f),
-	//	new( 2.4f, -0.4f, -3.5f),
-	//	new(-1.7f,  3.0f, -7.5f),
-	//	new( 1.3f, -2.0f, -2.5f),
-	//	new( 1.5f,  2.0f, -2.5f),
-	//	new( 1.5f,  0.2f, -1.5f),
-	//	new(-1.3f,  1.0f, -1.5f)
-	//};
+	private static readonly Vector3[] cubePositions =
+	{
+		new( 0.0f,  0.0f,  0.0f),
+		new( 2.0f,  5.0f, -15.0f),
+		new(-1.5f, -2.2f, -2.5f),
+		new(-3.8f, -2.0f, -12.3f),
+		new( 2.4f, -0.4f, -3.5f),
+		new(-1.7f,  3.0f, -7.5f),
+		new( 1.3f, -2.0f, -2.5f),
+		new( 1.5f,  2.0f, -2.5f),
+		new( 1.5f,  0.2f, -1.5f),
+		new(-1.3f,  1.0f, -1.5f)
+	};
 
 	private WindowOptions options = WindowOptions.Default with
 	{
@@ -106,7 +106,7 @@ public class Game
 	private GLProgram lightShader;
 
 	private Camera camera;
-	private EulerQuaternion cameraRotation;
+	private EulerRotation cameraRotation;
 
 	public Game()
 	{
@@ -137,7 +137,7 @@ public class Game
 			// Handling input.
 			camera = new(
 				MathHelper.DegreesToRadians(90), // Defaults to 90 degrees (CS:GO).
-				MathHelper.NormalizeHomogenous((Vector2D<float>)window.Size),
+				MathHelper.NormalizeHomogeneous((Vector2D<float>)window.Size),
 				0.1f,
 				100.0f)
 			{
@@ -289,6 +289,7 @@ public class Game
 			Matrix4x4 projection = camera.GetProjection();
 
 			Vector3 lightPosition = new(1.2f, 1.0f, 2.0f);
+			float time = (float)window.Time;
 
 			// Cube:
 			// Uniform handling.
@@ -299,57 +300,63 @@ public class Game
 			shader.Uniform1("Material.Specular", 1);
 			shader.Uniform1("Material.Shininess", 32.0f);
 
-			shader.Uniform3("CameraPosition", MathHelper.NormalizeHomogenous(camera.Position));
-
-			shader.Uniform3("Light.Position", lightPosition);
-			shader.Uniform3("Light.Ambient", 0.2f, 0.2f, 0.2f);
-			shader.Uniform3("Light.Diffuse", 0.5f, 0.5f, 0.5f); // darken diffuse light a bit
-			shader.Uniform3("Light.Specular", 1.0f, 1.0f, 1.0f);
-
-			Transform model = new();
-			Matrix4x4 modelMatrix = model.GetMatrix();
-			Matrix4x4 normal;
-			if (Matrix4x4.Invert(modelMatrix, out normal) is false) throw new InvalidOperationException();
-
-			shader.UniformMatrix4("Model", false, modelMatrix);
 			shader.UniformMatrix4("ViewProjection", false, view * projection);
-			shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
+
+			Vector3 cameraPosition = MathHelper.NormalizeHomogeneous(camera.Position);
+
+			shader.Uniform3("CameraPosition", cameraPosition);
+
+			shader.Uniform3("Light.Position", cameraPosition);
+			shader.Uniform3("Light.Direction", camera.Forward);
+			shader.Uniform3("Light.Ambient", 0.2f, 0.2f, 0.2f);
+			shader.Uniform3("Light.Diffuse", 0.5f, 0.5f, 0.5f); // darken diffuses light a bit
+			shader.Uniform3("Light.Specular", 1.0f, 1.0f, 1.0f);
+			shader.Uniform1("Light.Constant", 1.0f);
+			shader.Uniform1("Light.Linear", 0.09f);
+			shader.Uniform1("Light.Quadratic", 0.032f);
+			shader.Uniform1("Light.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
+			shader.Uniform1("Light.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
+
 
 			// Drawing.
 			gl.UseProgram(shader.Handle);
 			gl.BindVertexArray(VAO.Handle);
 
-			gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			for (int i = 0; i < cubePositions.Length; i++)
+			{
+				Transform model = Transform.Identity;
+				model.Translation = new(cubePositions[i], 1);
+				float angle = 20.0f * i;
+				model.Rotation = Quaternion.CreateFromAxisAngle(
+					Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
+					MathHelper.DegreesToRadians(angle));
 
-			//for (int i = 0; i < cubePositions.Length; i++)
-			//{
-			//	model.Translation = new(cubePositions[i], 1);
-			//	float angle = 20.0f * i;
-			//	model.Rotation = Quaternion.CreateFromAxisAngle(
-			//		Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
-			//		MathHelper.DegreesToRadians(angle));
+				Matrix4x4 modelMatrix = model.GetMatrix();
+				Matrix4x4 normal;
+				if (Matrix4x4.Invert(modelMatrix, out normal) is false) throw new InvalidOperationException();
 
-			//	shader.UniformMatrix4("Model", false, model.GetMatrix());
+				shader.UniformMatrix4("Model", false, modelMatrix);
+				shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
-			//	gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
-			//}
+				gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
+			}
 
 			// Light:
 			// Uniform handling.
-			Transform lightModel = new(
-				new(lightPosition, 1),
-				Quaternion.Identity,
-				new(new Vector3(0.2f), 1));
-			Matrix4x4 lightModelMatrix = lightModel.GetMatrix();
+			//Transform lightModel = new(
+			//	new(lightPosition, 1),
+			//	Quaternion.Identity,
+			//	new(new Vector3(0.2f), 1));
+			//Matrix4x4 lightModelMatrix = lightModel.GetMatrix();
 
-			lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
-			lightShader.UniformMatrix4("ViewProjection", false, view * projection);
+			//lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
+			//lightShader.UniformMatrix4("ViewProjection", false, view * projection);
 
 			// Drawing.
-			gl.UseProgram(lightShader.Handle);
-			gl.BindVertexArray(lightVAO.Handle);
+			//gl.UseProgram(lightShader.Handle);
+			//gl.BindVertexArray(lightVAO.Handle);
 
-			gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			//gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
 		};
 
 		window.Closing += () =>
