@@ -27,6 +27,11 @@ public class SKTexture : Texture
 		SKTexture texture = new(gl);
 		ArgumentNullException.ThrowIfNull(bitmap);
 
+		ThrowIfInvalidEnum(wrapS);
+		ThrowIfInvalidEnum(wrapT);
+		ThrowIfInvalidEnum(minFiler);
+		ThrowIfInvalidEnum(magFiler);
+
 		if (flipVertically)
 		{
 			SKBitmap flipped = new(bitmap.Info);
