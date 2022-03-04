@@ -57,35 +57,47 @@ struct   SPOT_LIGHT {
 vec3 calculate(in SPOT_LIGHT light);
 
 // Light uniforms.
-uniform  SPOT_LIGHT Light;
+
+#define POINT_LIGHT_COUNT 4
+
+uniform  DIRECTIONAL_LIGHT Sun;
+uniform  POINT_LIGHT       Lamps[POINT_LIGHT_COUNT];
+uniform  SPOT_LIGHT        Torch;
 
 // Out.
 layout (location = 0) out vec4 cColor;
 
+// Internal members.
+vec3 normal           = normalize(fNormal);
+vec3 viewDirection    = normalize(CameraPosition - fPosition);
+
+vec3 materialDiffuse  = vec3(texture(Material.Diffuse,  fUV));
+vec3 materialSpecular = vec3(texture(Material.Specular, fUV));
+
 void main()
 {
-	vec3 result = calculate(Light);
+	vec3 result;
+
+	result += calculate(Sun);
+	for (int i = 0; i < POINT_LIGHT_COUNT; i++)
+	{
+		result += calculate(Lamps[i]);
+	}
+	result += calculate(Torch);
+
 	cColor = vec4(result, 1.0);
 }
 
 // Method implementations.
 vec3 calculate(in DIRECTIONAL_LIGHT light)
 {
-	// Normalize normal.
-	vec3 normal           = normalize(fNormal);
-
 	// Calculate directions.
-	vec3    viewDirection = normalize(CameraPosition - fPosition);
 	vec3   lightDirection = normalize(-light.Direction);
 	vec3 reflectDirection = reflect  (-lightDirection, normal);
 
 	// Calculate results.
 	float   diffuseResult =     max(dot(normal,          lightDirection), 0.0);
 	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
-
-	// Texture.
-	vec3 materialDiffuse  = vec3(texture(Material.Diffuse,  fUV));
-	vec3 materialSpecular = vec3(texture(Material.Specular, fUV));
 
 	// Color.
 	vec3         ambient  = light.Ambient                   * materialDiffuse;
@@ -99,21 +111,13 @@ vec3 calculate(in DIRECTIONAL_LIGHT light)
 
 vec3 calculate(in POINT_LIGHT light)
 {
-	// Normalize normal.
-	vec3 normal           = normalize(fNormal);
-
 	// Calculate directions.
-	vec3    viewDirection = normalize(CameraPosition - fPosition);
 	vec3   lightDirection = normalize(light.Position - fPosition);
 	vec3 reflectDirection = reflect  (-lightDirection, normal);
 
 	// Calculate results.
 	float   diffuseResult =     max(dot(normal,          lightDirection), 0.0);
 	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
-
-	// Texture.
-	vec3 materialDiffuse  = vec3(texture(Material.Diffuse,  fUV));
-	vec3 materialSpecular = vec3(texture(Material.Specular, fUV));
 
 	// Attenuation.
 	float distance        = length   (light.Position - fPosition);
@@ -131,21 +135,13 @@ vec3 calculate(in POINT_LIGHT light)
 
 vec3 calculate(in SPOT_LIGHT light)
 {
-	// Normalize normal.
-	vec3 normal           = normalize(fNormal);
-
 	// Calculate directions.
-	vec3    viewDirection = normalize(CameraPosition - fPosition);
 	vec3   lightDirection = normalize(light.Position - fPosition);
 	vec3 reflectDirection = reflect  (-lightDirection, normal);
 
 	// Calculate results.
 	float   diffuseResult =     max(dot(normal,          lightDirection), 0.0);
 	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
-
-	// Texture.
-	vec3 materialDiffuse  = vec3(texture(Material.Diffuse,  fUV));
-	vec3 materialSpecular = vec3(texture(Material.Specular, fUV));
 
 	// Attenuation.
 	float distance        = length   (light.Position - fPosition);

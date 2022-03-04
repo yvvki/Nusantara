@@ -277,6 +277,14 @@ public class Game
 				camera.Position -= new Vector4(camera.Right * cameraSpeed, 0);
 		};
 
+		Vector3[] LampPositions =
+		{
+			new Vector3( 0.7f,  0.2f,  2.0f),
+			new Vector3( 2.3f, -3.3f, -4.0f),
+			new Vector3(-4.0f,  2.0f, -12.0f),
+			new Vector3( 0.0f,  0.0f, -3.0f)
+		};
+
 		window.Render += (deltaTime) =>
 		{
 			gl.Enable(EnableCap.DepthTest);
@@ -303,20 +311,41 @@ public class Game
 			shader.UniformMatrix4("ViewProjection", false, view * projection);
 
 			Vector3 cameraPosition = MathHelper.NormalizeHomogeneous(camera.Position);
-
 			shader.Uniform3("CameraPosition", cameraPosition);
 
-			shader.Uniform3("Light.Position", cameraPosition);
-			shader.Uniform3("Light.Direction", camera.Forward);
-			shader.Uniform3("Light.Ambient", 0.2f, 0.2f, 0.2f);
-			shader.Uniform3("Light.Diffuse", 0.5f, 0.5f, 0.5f); // darken diffuses light a bit
-			shader.Uniform3("Light.Specular", 1.0f, 1.0f, 1.0f);
-			shader.Uniform1("Light.Constant", 1.0f);
-			shader.Uniform1("Light.Linear", 0.09f);
-			shader.Uniform1("Light.Quadratic", 0.032f);
-			shader.Uniform1("Light.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
-			shader.Uniform1("Light.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
+			// Sun.
+			shader.Uniform3("Sun.Direction", -0.2f, -1.0f, -0.3f);
+			shader.Uniform3("Sun.Ambient", 0.05f, 0.05f, 0.05f);
+			shader.Uniform3("Sun.Diffuse", 0.4f, 0.4f, 0.4f);
+			shader.Uniform3("Sun.Specular", 0.5f, 0.5f, 0.5f);
 
+			const float constant = 1.0f;
+			const float linear = 0.09f;
+			const float quadratic = 0.032f;
+
+			// Lamps.
+			for (int i = 0; i < 4; i++)
+			{
+				shader.Uniform3($"Lamps[{i}].Position", LampPositions[i]);
+				shader.Uniform3($"Lamps[{i}].Ambient", 0.05f, 0.05f, 0.05f);
+				shader.Uniform3($"Lamps[{i}].Position", 0.8f, 0.8f, 0.8f);
+				shader.Uniform3($"Lamps[{i}].Specular", 1.0f, 1.0f, 1.0f);
+				shader.Uniform1($"Lamps[{i}].Constant", constant);
+				shader.Uniform1($"Lamps[{i}].Linear", linear);
+				shader.Uniform1($"Lamps[{i}].Quadratic", quadratic);
+			}
+
+			// Torch.
+			shader.Uniform3("Torch.Position", cameraPosition);
+			shader.Uniform3("Torch.Direction", camera.Forward);
+			shader.Uniform3("Torch.Ambient", 0.0f, 0.0f, 0.0f);
+			shader.Uniform3("Torch.Diffuse", 1.0f, 1.0f, 1.0f);
+			shader.Uniform3("Torch.Specular", 1.0f, 1.0f, 1.0f);
+			shader.Uniform1("Torch.Constant", constant);
+			shader.Uniform1("Torch.Linear", linear);
+			shader.Uniform1("Torch.Quadratic", quadratic);
+			shader.Uniform1("Torch.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
+			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
 
 			// Drawing.
 			gl.UseProgram(shader.Handle);
