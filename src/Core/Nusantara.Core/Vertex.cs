@@ -5,8 +5,12 @@ using System.Numerics;
 
 namespace Nusantara;
 
-public record struct Vertex(Vector4 Position, Vector4 Normal, Vector2 UV)
+public readonly record struct Vertex(Vector4 Position, Vector4 Normal, Vector2 UV)
 {
+	public readonly Vector4 Position = Position;
+	public readonly Vector4 Normal = Normal;
+	public readonly Vector2 UV = UV;
+
 	public Vertex(Vector3 Position, Vector3 Normal, Vector2 UV)
 		: this(
 			new Vector4(Position, 1),
