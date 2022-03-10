@@ -2,19 +2,25 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 using Silk.NET.Maths;
-
-using VertexAttribType = Silk.NET.OpenGL.VertexAttribType;
+using Silk.NET.OpenGL;
 
 namespace Nusantara.Engine.OpenGL;
 
-public record Attrib(int Size, VertexAttribType Type)
+public static class AttribHelper
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static VertexAttribType ParseType([NotNull] Type type!!)
+	public static VertexAttribType GetEnum<T>()
+		where T : struct
+	{
+		return GetEnum(typeof(T));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static VertexAttribType GetEnum([NotNull] Type type!!)
 	{
 		return
 			  type == typeof(sbyte)
