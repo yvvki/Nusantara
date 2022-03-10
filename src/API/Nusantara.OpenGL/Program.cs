@@ -84,7 +84,7 @@ public partial class Program : GLObject
 		_gl.AttachShader(_handle, shader._handle);
 	}
 
-	public void Detach(Shader? shader)
+	public void Detach(Shader shader)
 	{
 		ThrowIfDisposed();
 		ThrowIfNullOrInvalidGLObject(shader, false);
