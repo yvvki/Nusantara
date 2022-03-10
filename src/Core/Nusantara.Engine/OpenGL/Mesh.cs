@@ -40,6 +40,7 @@ public class Mesh
 		VertexArray.EnableAttribBindingFormat(
 			0,
 			0,
+			// Vector4
 			4,
 			Silk.NET.OpenGL.VertexAttribType.Float,
 			false,
@@ -49,6 +50,7 @@ public class Mesh
 		VertexArray.EnableAttribBindingFormat(
 			0,
 			0,
+			// Vector4
 			4,
 			Silk.NET.OpenGL.VertexAttribType.Float,
 			false,
@@ -58,6 +60,7 @@ public class Mesh
 		VertexArray.EnableAttribBindingFormat(
 			0,
 			0,
+			// Vector2
 			2,
 			Silk.NET.OpenGL.VertexAttribType.Float,
 			false,
