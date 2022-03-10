@@ -3,10 +3,13 @@
 
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
+
+using Silk.NET.Maths;
 
 namespace Nusantara.Maths;
 
@@ -29,7 +32,7 @@ public interface IVector<TSelf, TNumber> :
 
 	IFormattable
 
-	where TSelf : unmanaged, IVector<TSelf, TNumber>
+	where TSelf : struct, IVector<TSelf, TNumber>
 	where TNumber : unmanaged, INumber<TNumber>
 {
 	static new abstract int Count { get; }
@@ -146,26 +149,35 @@ public interface IVector<TSelf, TNumber> :
 
 	#region Helper Methods
 
-	internal static TNumber GetElement(TSelf vector, int index)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TNumber GetElement(TSelf vector, int index)
 	{
-		if ((uint)index >= TSelf.Count)
-		{
-			throw new IndexOutOfRangeException();
-		}
+		ThrowIfIndexOutOfCountRange(index);
 
 		return GetElementReferenceUnsafe(ref vector, index);
 	}
-
-	internal static TSelf WithElement(TSelf vector, int index, TNumber value)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TSelf WithElement(TSelf vector, int index, TNumber value)
 	{
-		if ((uint)index >= TSelf.Count)
-		{
-			throw new IndexOutOfRangeException();
-		}
+		ThrowIfIndexOutOfCountRange(index);
 
 		TSelf result = vector;
 		GetElementReferenceUnsafe(ref result, index) = value;
 		return result;
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static void ThrowIfIndexOutOfCountRange(int index)
+	{
+		if ((uint)index >= TSelf.Count)
+		{
+			ThrowIndexOutOfRangeException();
+		}
+
+		[DoesNotReturn]
+		static void ThrowIndexOutOfRangeException()
+		{
+			throw new IndexOutOfRangeException();
+		}
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -188,6 +200,14 @@ public interface IVector<TSelf, TNumber> :
 		ReadOnlySpan<TNumber> span = AsSpan(ref from);
 
 		span.CopyTo(destination);
+	}
+
+	internal static Vector<TNumber> AsVectorUnsafe(TSelf vector)
+	{
+		Span<TNumber> values = stackalloc TNumber[Vector<TNumber>.Count];
+		AsSpan(ref vector).CopyTo(values);
+
+		return new(values);
 	}
 
 	#endregion
@@ -242,47 +262,47 @@ public interface IVector<TSelf, TNumber> :
 
 	int IList.Add(object? obj)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 		return default;
 	}
 	void IList.Clear()
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 	void IList.Insert(int index, object? obj)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 	void IList.Remove(object? value)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 	void IList.RemoveAt(int index)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 
 	void ICollection<TNumber>.Add(TNumber item)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 	void ICollection<TNumber>.Clear()
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 	bool ICollection<TNumber>.Remove(TNumber item)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 		return default;
 	}
 
 	void IList<TNumber>.Insert(int index, TNumber item)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 	void IList<TNumber>.RemoveAt(int index)
 	{
-		ThrowNotSupportedException();
+		ThrowFixedCollectionException();
 	}
 
 	void ICollection.CopyTo(Array array, int index)
@@ -319,7 +339,7 @@ public interface IVector<TSelf, TNumber> :
 	}
 
 	[DoesNotReturn]
-	private static void ThrowNotSupportedException()
+	private static void ThrowFixedCollectionException()
 	{
 		throw new NotSupportedException();
 	}
@@ -353,6 +373,7 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
 
 	public T this[int index]
 	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		get => IVector<Vector2<T>, T>.GetElement(this, index);
 		set => this = IVector<Vector2<T>, T>.WithElement(this, index, value);
 	}
@@ -427,7 +448,6 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
 			left.X * right,
 			left.Y * right);
 	}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector2<T> operator *(T left, Vector2<T> right)
 	{
@@ -447,5 +467,29 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
 		return new(
 			left.X / right,
 			left.Y / right);
+	}
+
+	public static implicit operator Vector2(Vector2<T> value)
+	{
+		float x = ((IConvertible)value.X).ToSingle(null);
+		float y = ((IConvertible)value.Y).ToSingle(null);
+
+		return new(x, y);
+	}
+	public static implicit operator Vector2<T>(Vector2 value)
+	{
+		T x = T.Create(value.X);
+		T y = T.Create(value.Y);
+
+		return new(x, y);
+	}
+
+	public static implicit operator Vector2D<T>(Vector2<T> value)
+	{
+		return new(value.X, value.Y);
+	}
+	public static implicit operator Vector2<T>(Vector2D<T> value)
+	{
+		return new(value.X, value.Y);
 	}
 }
