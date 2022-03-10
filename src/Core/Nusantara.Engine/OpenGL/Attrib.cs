@@ -14,7 +14,7 @@ namespace Nusantara.Engine.OpenGL;
 public record Attrib(int Size, VertexAttribType Type)
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static VertexAttribType ParseType([NotNull] Type type)
+	public static VertexAttribType ParseType([NotNull] Type type!!)
 	{
 		return
 			  type == typeof(sbyte)
@@ -35,8 +35,6 @@ public record Attrib(int Size, VertexAttribType Type)
 			? VertexAttribType.Float
 			: type == typeof(double)
 			? VertexAttribType.Double
-			: throw new ArgumentException(
-				$"Unable to parse of type {type}.",
-				nameof(type));
+			: throw new NotSupportedException();
 	}
 };
