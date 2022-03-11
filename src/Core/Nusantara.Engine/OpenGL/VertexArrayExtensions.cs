@@ -16,6 +16,7 @@ public static class VertexArrayExtensions
 		uint attribindex,
 		bool normalized = false,
 		uint relativeoffset = 0)
+		where T : struct
 	{
 		@this.AttribFormat(attribindex, typeof(T), normalized, relativeoffset);
 	}
@@ -29,6 +30,30 @@ public static class VertexArrayExtensions
 	{
 		(int size, VertexAttribType @enum) = AttribHelper.GetSizeEnum(type);
 		@this.AttribFormat(attribindex, size, @enum, normalized, relativeoffset);
+	}
+
+	public static void EnableAttribBindingFormat<T>(
+		this VertexArray @this,
+		uint attribindex,
+		uint bindingindex,
+		bool normalized = false,
+		uint relativeoffset = 0)
+		where T : struct
+	{
+		@this.EnableAttribBindingFormat(attribindex, bindingindex, typeof(T), normalized, relativeoffset);
+	}
+
+	public static void EnableAttribBindingFormat(
+		this VertexArray @this,
+		uint attribindex,
+		uint bindingindex,
+		[NotNull] Type type,
+		bool normalized = false,
+		uint relativeoffset = 0)
+	{
+		@this.AttribBinding(attribindex, bindingindex);
+		@this.AttribFormat(attribindex, type, normalized, relativeoffset);
+		@this.EnableAttrib(attribindex);
 	}
 
 	public static void EnableAttribBindingFormat(
