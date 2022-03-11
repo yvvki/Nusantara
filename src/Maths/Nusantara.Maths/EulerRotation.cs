@@ -34,8 +34,6 @@ public record struct EulerRotation(float Yaw, float Pitch, float Roll)
 
 		return q;
 	}
-
-	// wikipedia
 	public static EulerRotation FromQuaternionWikipedia(Quaternion q)
 	{
 		EulerRotation euler;
@@ -58,6 +56,39 @@ public record struct EulerRotation(float Yaw, float Pitch, float Roll)
 		euler.Yaw = Atan2(siny_cosp, cosy_cosp);
 
 		return euler;
+	}
+
+	// dotnet
+	public static Quaternion ToQuaternionDotnet(EulerRotation euler)
+	{
+		//  Roll first, about axis the object is facing, then
+		//  pitch upward, then yaw to face into the new heading
+		float sr, cr, sp, cp, sy, cy;
+
+		float halfRoll = euler.Roll * 0.5f;
+		sr = Sin(halfRoll);
+		cr = Cos(halfRoll);
+
+		float halfPitch = euler.Pitch * 0.5f;
+		sp = Sin(halfPitch);
+		cp = Cos(halfPitch);
+
+		float halfYaw = euler.Yaw * 0.5f;
+		sy = Sin(halfYaw);
+		cy = Cos(halfYaw);
+
+		Quaternion result;
+
+		result.X = cy * sp * cr + sy * cp * sr;
+		result.Y = sy * cp * cr - cy * sp * sr;
+		result.Z = cy * cp * sr - sy * sp * cr;
+		result.W = cy * cp * cr + sy * sp * sr;
+
+		return result;
+	}
+	public static EulerRotation FromQuaternionDotnet(Quaternion q)
+	{
+		throw new NotImplementedException();
 	}
 
 	public static implicit operator Quaternion(EulerRotation value)
