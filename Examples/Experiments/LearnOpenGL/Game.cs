@@ -186,7 +186,7 @@ public class Game
 					-MathF.PI / 2, // PI == 180 degrees
 					MathF.PI / 2);
 
-				camera.Rotation = cameraRotation;
+				camera.Rotation = (Quaternion)cameraRotation;
 			}
 
 			void OnScroll(IMouse mouse, ScrollWheel wheel)
