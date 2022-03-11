@@ -40,10 +40,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnOpenGL", "Examples\Exp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nusantara.OpenGL.Extensions", "src\OpenGL\Nusantara.OpenGL.Extensions\Nusantara.OpenGL.Extensions.csproj", "{67A37E59-4BDA-458D-A702-32E97DE72CA6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{228AD52C-C727-4E21-A5E1-43702793D50C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nusantara.Maths.Tests", "src\Maths\Tests\Nusantara.Maths.Tests\Nusantara.Maths.Tests.csproj", "{3FC91615-A91D-4CF7-B0E4-5968E808B25E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,10 +71,6 @@ Global
 		{67A37E59-4BDA-458D-A702-32E97DE72CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67A37E59-4BDA-458D-A702-32E97DE72CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67A37E59-4BDA-458D-A702-32E97DE72CA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FC91615-A91D-4CF7-B0E4-5968E808B25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FC91615-A91D-4CF7-B0E4-5968E808B25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FC91615-A91D-4CF7-B0E4-5968E808B25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FC91615-A91D-4CF7-B0E4-5968E808B25E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,8 +85,6 @@ Global
 		{6DD95B0A-C9CE-4445-9D61-474FEC17C091} = {0C166602-3D50-4DAF-97CF-558C382E7A6E}
 		{0F2A3807-6975-4EB4-8D49-05AF6491D1D9} = {51C20906-A2A4-4057-97BA-1ECC1642D23E}
 		{67A37E59-4BDA-458D-A702-32E97DE72CA6} = {53772A36-B75C-4088-ABAB-DADE052EC133}
-		{228AD52C-C727-4E21-A5E1-43702793D50C} = {CA4AC439-F80D-40B3-B99D-A556232B40F9}
-		{3FC91615-A91D-4CF7-B0E4-5968E808B25E} = {228AD52C-C727-4E21-A5E1-43702793D50C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {244E7E3A-7DC6-4C0B-941C-7C5EFAC0E98F}
