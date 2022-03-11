@@ -5,6 +5,8 @@ using Nusantara.Maths;
 Random r = new();
 
 TestWikipedia();
+Console.WriteLine();
+Console.WriteLine();
 TestDotnet();
 
 void TestWikipedia()
