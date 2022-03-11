@@ -11,7 +11,7 @@ using GLBuffer = Nusantara.OpenGL.Buffer;
 
 namespace Nusantara.Engine.OpenGL;
 
-public class Mesh
+public class Mesh : IDisposable
 {
 	public VertexArray VertexArray { get; }
 
@@ -21,7 +21,7 @@ public class Mesh
 	public Texture[] Textures { get; init; }
 
 	// No need to reference the array, since the data will get copied to the GPU memory.
-	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices, Texture[] textures)
+	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices, params Texture[] textures!!)
 	{
 		VertexBuffer = GLBuffer.FromData(gl, vertices);
 		ElementBuffer = GLBuffer.FromData(gl, indices);
@@ -48,7 +48,7 @@ public class Mesh
 
 		// Normals.
 		VertexArray.EnableAttribBindingFormat(
-			0,
+			1,
 			0,
 			// Vector4
 			typeof(Vector4),
@@ -57,7 +57,7 @@ public class Mesh
 
 		// UVs.
 		VertexArray.EnableAttribBindingFormat(
-			0,
+			2,
 			0,
 			// Vector2
 			typeof(Vector2),
@@ -68,5 +68,19 @@ public class Mesh
 	public void Bind()
 	{
 		VertexArray.Bind();
+	}
+
+	public void Dispose()
+	{
+		GC.SuppressFinalize(this);
+	}
+
+	protected virtual void Dispose(bool disposing)
+	{
+		VertexArray.Dispose();
+		VertexBuffer.Dispose();
+		ElementBuffer.Dispose();
+
+		foreach (var texture in Textures) texture.Dispose();
 	}
 }
