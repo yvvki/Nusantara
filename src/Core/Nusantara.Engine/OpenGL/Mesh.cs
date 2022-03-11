@@ -2,6 +2,7 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Numerics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 using Nusantara.OpenGL;
@@ -21,12 +22,14 @@ public class Mesh : IDisposable
 	public Texture[] Textures { get; init; }
 
 	// No need to reference the array, since the data will get copied to the GPU memory.
-	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices, params Texture[] textures!!)
+	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices = default, params Texture[] textures!!)
 	{
 		VertexBuffer = GLBuffer.FromData(gl, vertices);
 		ElementBuffer = GLBuffer.FromData(gl, indices);
 
 		Textures = textures;
+
+		Type vertexType = typeof(Vertex);
 
 		// Binding buffers to VertexArray.
 		VertexArray = VertexArray.FromBuffers(
@@ -35,34 +38,19 @@ public class Mesh : IDisposable
 			0,
 			VertexBuffer,
 			0,
-			(uint)Marshal.SizeOf<Vertex>());
+			(uint)Marshal.SizeOf(vertexType));
 
-		// Positions.
-		VertexArray.EnableAttribBindingFormat(
-			0,
-			0,
-			// Vector4
-			typeof(Vector4),
-			false,
-			(uint)Marshal.OffsetOf<Vertex>("Position"));
-
-		// Normals.
-		VertexArray.EnableAttribBindingFormat(
-			1,
-			0,
-			// Vector4
-			typeof(Vector4),
-			false,
-			(uint)Marshal.OffsetOf<Vertex>("Normal"));
-
-		// UVs.
-		VertexArray.EnableAttribBindingFormat(
-			2,
-			0,
-			// Vector2
-			typeof(Vector2),
-			false,
-			(uint)Marshal.OffsetOf<Vertex>("UV"));
+		// Handling attribs.
+		FieldInfo[] vertexFields = vertexType.GetFields();
+		for (uint i = 0; i < vertexFields.Length; i++)
+		{
+			VertexArray.EnableAttribBindingFormat(
+				i,
+				0,
+				vertexFields[i].FieldType,
+				false,
+				(uint)Marshal.OffsetOf(vertexType, vertexFields[i].Name));
+		}
 	}
 
 	public void Bind()
