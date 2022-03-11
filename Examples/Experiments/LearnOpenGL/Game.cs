@@ -131,6 +131,9 @@ public class Game
 
 		window.Load += () =>
 		{
+			// Centering window.
+			window.Center();
+
 			// Creating input.
 			input = window.CreateInput();
 
@@ -209,8 +212,6 @@ public class Game
 
 			// Creating GL.
 			gl = window.CreateOpenGL();
-			window.Center();
-
 			Initialize(gl);
 		};
 
@@ -296,11 +297,10 @@ public class Game
 			Matrix4x4 view = camera.GetView();
 			Matrix4x4 projection = camera.GetProjection();
 
-			Vector3 lightPosition = new(1.2f, 1.0f, 2.0f);
 			float time = (float)window.Time;
 
 			// Cube:
-			// Uniform handling.
+			// Uniforms.
 			gl.BindTextureUnit(0, container2.Handle);
 			gl.BindTextureUnit(1, container2_specular.Handle);
 
@@ -347,12 +347,12 @@ public class Game
 			shader.Uniform1("Torch.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
 			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
 
-			// Drawing.
 			gl.UseProgram(shader.Handle);
 			gl.BindVertexArray(VAO.Handle);
 
 			for (int i = 0; i < cubePositions.Length; i++)
 			{
+				// Model.
 				Transform model = Transform.Identity;
 				model.Translation = new(cubePositions[i], 1);
 				float angle = 20.0f * i;
@@ -361,31 +361,33 @@ public class Game
 					MathHelper.DegreesToRadians(angle));
 
 				Matrix4x4 modelMatrix = model.GetMatrix();
-				Matrix4x4 normal;
-				if (Matrix4x4.Invert(modelMatrix, out normal) is false) throw new InvalidOperationException();
+				if (Matrix4x4.Invert(modelMatrix, out Matrix4x4 normal) is false) throw new InvalidOperationException();
 
 				shader.UniformMatrix4("Model", false, modelMatrix);
 				shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
-				gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
+				// Drawing.
+				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
 			}
 
 			// Light:
-			// Uniform handling.
-			//Transform lightModel = new(
-			//	new(lightPosition, 1),
-			//	Quaternion.Identity,
-			//	new(new Vector3(0.2f), 1));
-			//Matrix4x4 lightModelMatrix = lightModel.GetMatrix();
+			gl.UseProgram(lightShader.Handle);
+			gl.BindVertexArray(lightVAO.Handle);
 
-			//lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
-			//lightShader.UniformMatrix4("ViewProjection", false, view * projection);
+			for (int i = 0; i < LampPositions.Length; i++)
+			{
+				// Model.
+				Transform lightModel = new(
+					new(LampPositions[i], 1),
+					Quaternion.Identity,
+					new(new Vector3(0.2f), 1));
 
-			// Drawing.
-			//gl.UseProgram(lightShader.Handle);
-			//gl.BindVertexArray(lightVAO.Handle);
+				lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
+				lightShader.UniformMatrix4("ViewProjection", false, view * projection);
 
-			//gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+				// Drawing.
+				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			}
 		};
 
 		window.Closing += () =>
@@ -399,6 +401,8 @@ public class Game
 
 			container2.Dispose();
 			container2_specular.Dispose();
+
+			input.Dispose();
 		};
 	}
 
