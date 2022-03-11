@@ -92,7 +92,7 @@ public static class AttribHelper
 		return GetEnum(typeof(T));
 	}
 
-	// Only accept unmanaged, but not user-defined struct type.
+	// Only accept unmanaged, but not decimal nor user-defined struct type.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static VertexAttribType GetEnum([NotNull] Type type!!)
 	{
