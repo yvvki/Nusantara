@@ -47,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Core\Nusantara.Engine\Nusantara.Engine.csproj" />
     <ProjectReference Include="..\..\..\src\Core\Nusantara\Nusantara.csproj" />
   </ItemGroup>
 

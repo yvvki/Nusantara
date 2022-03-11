@@ -1,8 +1,8 @@
 ﻿#version 330 core
 
 // In.
-in vec3 fPosition;
-in vec3 fNormal;
+in vec4 fPosition;
+in vec4 fNormal;
 in vec2 fUV;
 
 // Material.
@@ -68,8 +68,8 @@ uniform  SPOT_LIGHT        Torch;
 layout (location = 0) out vec4 cColor;
 
 // Internal members.
-vec3 normal           = normalize(fNormal);
-vec3 viewDirection    = normalize(CameraPosition - fPosition);
+vec3 normal           = normalize(vec3(fNormal));
+vec3 viewDirection    = normalize(CameraPosition - vec3(fPosition));
 
 vec3 materialDiffuse  = vec3(texture(Material.Diffuse,  fUV));
 vec3 materialSpecular = vec3(texture(Material.Specular, fUV));
@@ -112,7 +112,7 @@ vec3 calculate(in DIRECTIONAL_LIGHT light)
 vec3 calculate(in POINT_LIGHT light)
 {
 	// Calculate directions.
-	vec3   lightDirection = normalize(light.Position - fPosition);
+	vec3   lightDirection = normalize(light.Position - vec3(fPosition));
 	vec3 reflectDirection = reflect  (-lightDirection, normal);
 
 	// Calculate results.
@@ -120,7 +120,7 @@ vec3 calculate(in POINT_LIGHT light)
 	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
 
 	// Attenuation.
-	float distance        = length   (light.Position - fPosition);
+	float distance        = length   (light.Position - vec3(fPosition));
 	float attenuation     = 1.0 / (light.Constant + (light.Linear * distance) + (light.Quadratic * distance * distance));
 
 	// Color.
@@ -136,7 +136,7 @@ vec3 calculate(in POINT_LIGHT light)
 vec3 calculate(in SPOT_LIGHT light)
 {
 	// Calculate directions.
-	vec3   lightDirection = normalize(light.Position - fPosition);
+	vec3   lightDirection = normalize(light.Position - vec3(fPosition));
 	vec3 reflectDirection = reflect  (-lightDirection, normal);
 
 	// Calculate results.
@@ -144,7 +144,7 @@ vec3 calculate(in SPOT_LIGHT light)
 	float  specularResult = pow(max(dot(viewDirection, reflectDirection), 0.0), Material.Shininess);
 
 	// Attenuation.
-	float distance        = length   (light.Position - fPosition);
+	float distance        = length   (light.Position - vec3(fPosition));
 	float attenuation     = 1.0 / (light.Constant + (light.Linear * distance) + (light.Quadratic * distance * distance));
 
 	// Intensity.

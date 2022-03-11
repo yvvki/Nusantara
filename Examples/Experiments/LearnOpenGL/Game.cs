@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Numerics;
 
 using Nusantara;
+using Nusantara.Engine.OpenGL;
 using Nusantara.Maths;
 
 using Silk.NET.Input;
@@ -25,50 +26,50 @@ namespace LearnOpenGL;
 
 public class Game
 {
-	private static readonly float[] vertices =
+	private static readonly Vertex[] vertices =
 	{
 		// Positions         // Normals           // UVs
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 0.0f)),
 
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(0.0f, 0.0f)),
 
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
 
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
 
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(0.0f, 1.0f)),
 
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(0.0f, 1.0f))
 	};
 
 	private static readonly Vector3[] cubePositions =
@@ -95,12 +96,7 @@ public class Game
 	private IInputContext input;
 	private GL gl;
 
-	private GLVertexArray VAO;
-	private GLVertexArray lightVAO;
-	private GLBuffer VBO;
-
-	private GLTexture container2;
-	private GLTexture container2_specular;
+	Mesh mesh;
 
 	private GLProgram shader;
 	private GLProgram lightShader;
@@ -116,13 +112,7 @@ public class Game
 		input = null!;
 		gl = null!;
 
-		VAO = null!;
-		lightVAO = null!;
-
-		VBO = null!;
-
-		container2 = null!;
-		container2_specular = null!;
+		mesh = null!;
 
 		shader = null!;
 		lightShader = null!;
@@ -217,31 +207,10 @@ public class Game
 
 		void Initialize(GL gl)
 		{
-			// Creating Buffers.
-			VBO = GLBuffer.FromData<float>(gl, vertices);
-
-			// Creating VertexArray.
-			VAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 8);
-			lightVAO = GLVertexArray.FromBuffers(gl, null, 0, VBO, 0, sizeof(float) * 8);
-
-			// Handling Attrib.
-			VAO.AttribBinding(0, 0);
-			VAO.AttribFormat(0, 3, VertexAttribType.Float, false, 0);
-			VAO.EnableAttrib(0);
-
-			VAO.AttribBinding(1, 0);
-			VAO.AttribFormat(1, 3, VertexAttribType.Float, false, sizeof(float) * 3);
-			VAO.EnableAttrib(1);
-
-			VAO.AttribBinding(2, 0);
-			VAO.AttribFormat(2, 2, VertexAttribType.Float, false, sizeof(float) * 6);
-			VAO.EnableAttrib(2);
-
-			lightVAO.AttribBinding(0, 0);
-			lightVAO.AttribFormat(0, 3, VertexAttribType.Float, false, 0);
-			lightVAO.EnableAttrib(0);
-
 			//Creating Texture.
+			GLTexture container2;
+			GLTexture container2_specular;
+
 			using (SKBitmap container2_bitmap = SKBitmap.Decode("container2.png"))
 			{
 				container2 = GLSKTexture.FromBitmap(gl, container2_bitmap);
@@ -250,6 +219,8 @@ public class Game
 			{
 				container2_specular = GLSKTexture.FromBitmap(gl, container2_specular_bitmap);
 			}
+
+			mesh = new(gl, vertices, null, container2, container2_specular);
 
 			// Compiling Shaders.
 			using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, "shader.vert");
@@ -299,10 +270,13 @@ public class Game
 
 			float time = (float)window.Time;
 
+			// Bind mesh.
+			mesh.Bind();
+
 			// Cube:
 			// Uniforms.
-			gl.BindTextureUnit(0, container2.Handle);
-			gl.BindTextureUnit(1, container2_specular.Handle);
+			gl.BindTextureUnit(0, mesh.Textures[0].Handle);
+			gl.BindTextureUnit(1, mesh.Textures[1].Handle);
 
 			shader.Uniform1("Material.Diffuse", 0);
 			shader.Uniform1("Material.Specular", 1);
@@ -348,7 +322,6 @@ public class Game
 			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
 
 			gl.UseProgram(shader.Handle);
-			gl.BindVertexArray(VAO.Handle);
 
 			for (int i = 0; i < cubePositions.Length; i++)
 			{
@@ -367,12 +340,11 @@ public class Game
 				shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
 				// Drawing.
-				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+				gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
 			}
 
 			// Light:
 			gl.UseProgram(lightShader.Handle);
-			gl.BindVertexArray(lightVAO.Handle);
 
 			for (int i = 0; i < LampPositions.Length; i++)
 			{
@@ -395,12 +367,7 @@ public class Game
 			shader.Dispose();
 			lightShader.Dispose();
 
-			VBO.Dispose();
-			VAO.Dispose();
-			lightVAO.Dispose();
-
-			container2.Dispose();
-			container2_specular.Dispose();
+			mesh.Dispose();
 
 			input.Dispose();
 		};
