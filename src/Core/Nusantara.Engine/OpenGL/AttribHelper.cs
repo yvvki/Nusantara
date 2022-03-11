@@ -13,6 +13,14 @@ namespace Nusantara.Engine.OpenGL;
 // thanks to <https://github.com/Windows10CE> for helping!
 public static class AttribHelper
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static (int, VertexAttribType) GetSizeEnum<T>()
+		where T : struct
+	{
+		return GetSizeEnum(typeof(T));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static (int, VertexAttribType) GetSizeEnum([NotNull] Type type)
 	{
 		if (type.IsPrimitive)
@@ -38,13 +46,16 @@ public static class AttribHelper
 		return (size, @enum);
 	}
 
-	// Only supports System.Numerics and Silk.NET.Maths namespaces.
-	// Subject to change.
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int GetSize<T>()
+		where T : struct
 	{
 		return GetSize(typeof(T));
 	}
 
+	// Only supports System.Numerics and Silk.NET.Maths namespaces.
+	// Subject to change.
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int GetSize([NotNull] Type type!!)
 	{
 		if (type.IsGenericType)
@@ -74,28 +85,33 @@ public static class AttribHelper
 			: throw new NotSupportedException();
 	}
 
-	// Only accept primitive types.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static VertexAttribType GetEnum<T>()
-		where T : struct
+		where T : unmanaged
 	{
 		return GetEnum(typeof(T));
 	}
 
+	// Only accept unmanaged, but not user-defined struct type.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static VertexAttribType GetEnum([NotNull] Type type!!)
 	{
+		if (type.IsEnum)
+		{
+			type = Enum.GetUnderlyingType(type);
+		}
+
 		return
 			  type == typeof(sbyte)
 			? VertexAttribType.Byte
-			: type == typeof(short)
-			? VertexAttribType.Short
-			: type == typeof(int) || type == typeof(long) || type == typeof(nint)
-			? VertexAttribType.Int
 			: type == typeof(byte)
 			? VertexAttribType.UnsignedByte
-			: type == typeof(ushort)
+			: type == typeof(short)
+			? VertexAttribType.Short
+			: type == typeof(ushort) || type == typeof(char) // char size of 16 bit and implicitly convertible to ushort.
 			? VertexAttribType.UnsignedShort
+			: type == typeof(int) || type == typeof(long) || type == typeof(nint)
+			? VertexAttribType.Int
 			: type == typeof(uint) || type == typeof(ulong) || type == typeof(nuint)
 			? VertexAttribType.UnsignedInt
 			: type == typeof(Half)
