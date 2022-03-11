@@ -287,23 +287,27 @@ public class Game
 			Vector3 cameraPosition = MathHelper.NormalizeHomogeneous(camera.Position);
 			shader.Uniform3("CameraPosition", cameraPosition);
 
-			// Sun.
-			shader.Uniform3("Sun.Direction", -0.2f, -1.0f, -0.3f);
-			shader.Uniform3("Sun.Ambient", 0.05f, 0.05f, 0.05f);
-			shader.Uniform3("Sun.Diffuse", 0.4f, 0.4f, 0.4f);
-			shader.Uniform3("Sun.Specular", 0.5f, 0.5f, 0.5f);
-
+			// Light constants.
 			const float constant = 1.0f;
 			const float linear = 0.09f;
 			const float quadratic = 0.032f;
+
+			// Sun.
+			shader.Uniform3("Sun.Direction", -0.2f, -1.0f, -0.3f);
+
+			shader.Uniform3("Sun.Ambient", 0.05f, 0.05f, 0.05f);
+			shader.Uniform3("Sun.Diffuse", 0.4f, 0.4f, 0.4f);
+			shader.Uniform3("Sun.Specular", 0.5f, 0.5f, 0.5f);
 
 			// Lamps.
 			for (int i = 0; i < 4; i++)
 			{
 				shader.Uniform3($"Lamps[{i}].Position", LampPositions[i]);
+
 				shader.Uniform3($"Lamps[{i}].Ambient", 0.05f, 0.05f, 0.05f);
-				shader.Uniform3($"Lamps[{i}].Position", 0.8f, 0.8f, 0.8f);
+				shader.Uniform3($"Lamps[{i}].Diffuse", 0.8f, 0.8f, 0.8f);
 				shader.Uniform3($"Lamps[{i}].Specular", 1.0f, 1.0f, 1.0f);
+
 				shader.Uniform1($"Lamps[{i}].Constant", constant);
 				shader.Uniform1($"Lamps[{i}].Linear", linear);
 				shader.Uniform1($"Lamps[{i}].Quadratic", quadratic);
@@ -312,17 +316,19 @@ public class Game
 			// Torch.
 			shader.Uniform3("Torch.Position", cameraPosition);
 			shader.Uniform3("Torch.Direction", camera.Forward);
+
 			shader.Uniform3("Torch.Ambient", 0.0f, 0.0f, 0.0f);
 			shader.Uniform3("Torch.Diffuse", 1.0f, 1.0f, 1.0f);
 			shader.Uniform3("Torch.Specular", 1.0f, 1.0f, 1.0f);
+
 			shader.Uniform1("Torch.Constant", constant);
 			shader.Uniform1("Torch.Linear", linear);
 			shader.Uniform1("Torch.Quadratic", quadratic);
+
 			shader.Uniform1("Torch.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
 			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
 
 			gl.UseProgram(shader.Handle);
-
 			for (int i = 0; i < cubePositions.Length; i++)
 			{
 				// Model.
@@ -344,8 +350,10 @@ public class Game
 			}
 
 			// Light:
-			gl.UseProgram(lightShader.Handle);
+			// Uniforms.
+			lightShader.UniformMatrix4("ViewProjection", false, view * projection);
 
+			gl.UseProgram(lightShader.Handle);
 			for (int i = 0; i < LampPositions.Length; i++)
 			{
 				// Model.
@@ -355,7 +363,6 @@ public class Game
 					new(new Vector3(0.2f), 1));
 
 				lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
-				lightShader.UniformMatrix4("ViewProjection", false, view * projection);
 
 				// Drawing.
 				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
