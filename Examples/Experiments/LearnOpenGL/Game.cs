@@ -71,19 +71,19 @@ public class Game
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
 
-	//private static readonly Vector3[] cubePositions =
-	//{
-	//	new( 0.0f,  0.0f,  0.0f),
-	//	new( 2.0f,  5.0f, -15.0f),
-	//	new(-1.5f, -2.2f, -2.5f),
-	//	new(-3.8f, -2.0f, -12.3f),
-	//	new( 2.4f, -0.4f, -3.5f),
-	//	new(-1.7f,  3.0f, -7.5f),
-	//	new( 1.3f, -2.0f, -2.5f),
-	//	new( 1.5f,  2.0f, -2.5f),
-	//	new( 1.5f,  0.2f, -1.5f),
-	//	new(-1.3f,  1.0f, -1.5f)
-	//};
+	private static readonly Vector3[] cubePositions =
+	{
+		new( 0.0f,  0.0f,  0.0f),
+		new( 2.0f,  5.0f, -15.0f),
+		new(-1.5f, -2.2f, -2.5f),
+		new(-3.8f, -2.0f, -12.3f),
+		new( 2.4f, -0.4f, -3.5f),
+		new(-1.7f,  3.0f, -7.5f),
+		new( 1.3f, -2.0f, -2.5f),
+		new( 1.5f,  2.0f, -2.5f),
+		new( 1.5f,  0.2f, -1.5f),
+		new(-1.3f,  1.0f, -1.5f)
+	};
 
 	private WindowOptions options = WindowOptions.Default with
 	{
@@ -106,7 +106,7 @@ public class Game
 	private GLProgram lightShader;
 
 	private Camera camera;
-	private EulerQuaternion cameraRotation;
+	private EulerRotation cameraRotation;
 
 	public Game()
 	{
@@ -131,13 +131,16 @@ public class Game
 
 		window.Load += () =>
 		{
+			// Centering window.
+			window.Center();
+
 			// Creating input.
 			input = window.CreateInput();
 
 			// Handling input.
 			camera = new(
 				MathHelper.DegreesToRadians(90), // Defaults to 90 degrees (CS:GO).
-				MathHelper.NormalizeHomogenous((Vector2D<float>)window.Size),
+				MathHelper.NormalizeHomogeneous((Vector2D<float>)window.Size),
 				0.1f,
 				100.0f)
 			{
@@ -209,8 +212,6 @@ public class Game
 
 			// Creating GL.
 			gl = window.CreateOpenGL();
-			window.Center();
-
 			Initialize(gl);
 		};
 
@@ -277,6 +278,14 @@ public class Game
 				camera.Position -= new Vector4(camera.Right * cameraSpeed, 0);
 		};
 
+		Vector3[] LampPositions =
+		{
+			new Vector3( 0.7f,  0.2f,  2.0f),
+			new Vector3( 2.3f, -3.3f, -4.0f),
+			new Vector3(-4.0f,  2.0f, -12.0f),
+			new Vector3( 0.0f,  0.0f, -3.0f)
+		};
+
 		window.Render += (deltaTime) =>
 		{
 			gl.Enable(EnableCap.DepthTest);
@@ -288,10 +297,10 @@ public class Game
 			Matrix4x4 view = camera.GetView();
 			Matrix4x4 projection = camera.GetProjection();
 
-			Vector3 lightPosition = new(1.2f, 1.0f, 2.0f);
+			float time = (float)window.Time;
 
 			// Cube:
-			// Uniform handling.
+			// Uniforms.
 			gl.BindTextureUnit(0, container2.Handle);
 			gl.BindTextureUnit(1, container2_specular.Handle);
 
@@ -299,57 +308,86 @@ public class Game
 			shader.Uniform1("Material.Specular", 1);
 			shader.Uniform1("Material.Shininess", 32.0f);
 
-			shader.Uniform3("CameraPosition", MathHelper.NormalizeHomogenous(camera.Position));
-
-			shader.Uniform3("Light.Position", lightPosition);
-			shader.Uniform3("Light.Ambient", 0.2f, 0.2f, 0.2f);
-			shader.Uniform3("Light.Diffuse", 0.5f, 0.5f, 0.5f); // darken diffuse light a bit
-			shader.Uniform3("Light.Specular", 1.0f, 1.0f, 1.0f);
-
-			Transform model = new();
-			Matrix4x4 modelMatrix = model.GetMatrix();
-			Matrix4x4 normal;
-			if (Matrix4x4.Invert(modelMatrix, out normal) is false) throw new InvalidOperationException();
-
-			shader.UniformMatrix4("Model", false, modelMatrix);
 			shader.UniformMatrix4("ViewProjection", false, view * projection);
-			shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
-			// Drawing.
+			Vector3 cameraPosition = MathHelper.NormalizeHomogeneous(camera.Position);
+			shader.Uniform3("CameraPosition", cameraPosition);
+
+			// Sun.
+			shader.Uniform3("Sun.Direction", -0.2f, -1.0f, -0.3f);
+			shader.Uniform3("Sun.Ambient", 0.05f, 0.05f, 0.05f);
+			shader.Uniform3("Sun.Diffuse", 0.4f, 0.4f, 0.4f);
+			shader.Uniform3("Sun.Specular", 0.5f, 0.5f, 0.5f);
+
+			const float constant = 1.0f;
+			const float linear = 0.09f;
+			const float quadratic = 0.032f;
+
+			// Lamps.
+			for (int i = 0; i < 4; i++)
+			{
+				shader.Uniform3($"Lamps[{i}].Position", LampPositions[i]);
+				shader.Uniform3($"Lamps[{i}].Ambient", 0.05f, 0.05f, 0.05f);
+				shader.Uniform3($"Lamps[{i}].Position", 0.8f, 0.8f, 0.8f);
+				shader.Uniform3($"Lamps[{i}].Specular", 1.0f, 1.0f, 1.0f);
+				shader.Uniform1($"Lamps[{i}].Constant", constant);
+				shader.Uniform1($"Lamps[{i}].Linear", linear);
+				shader.Uniform1($"Lamps[{i}].Quadratic", quadratic);
+			}
+
+			// Torch.
+			shader.Uniform3("Torch.Position", cameraPosition);
+			shader.Uniform3("Torch.Direction", camera.Forward);
+			shader.Uniform3("Torch.Ambient", 0.0f, 0.0f, 0.0f);
+			shader.Uniform3("Torch.Diffuse", 1.0f, 1.0f, 1.0f);
+			shader.Uniform3("Torch.Specular", 1.0f, 1.0f, 1.0f);
+			shader.Uniform1("Torch.Constant", constant);
+			shader.Uniform1("Torch.Linear", linear);
+			shader.Uniform1("Torch.Quadratic", quadratic);
+			shader.Uniform1("Torch.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
+			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
+
 			gl.UseProgram(shader.Handle);
 			gl.BindVertexArray(VAO.Handle);
 
-			gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			for (int i = 0; i < cubePositions.Length; i++)
+			{
+				// Model.
+				Transform model = Transform.Identity;
+				model.Translation = new(cubePositions[i], 1);
+				float angle = 20.0f * i;
+				model.Rotation = Quaternion.CreateFromAxisAngle(
+					Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
+					MathHelper.DegreesToRadians(angle));
 
-			//for (int i = 0; i < cubePositions.Length; i++)
-			//{
-			//	model.Translation = new(cubePositions[i], 1);
-			//	float angle = 20.0f * i;
-			//	model.Rotation = Quaternion.CreateFromAxisAngle(
-			//		Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
-			//		MathHelper.DegreesToRadians(angle));
+				Matrix4x4 modelMatrix = model.GetMatrix();
+				if (Matrix4x4.Invert(modelMatrix, out Matrix4x4 normal) is false) throw new InvalidOperationException();
 
-			//	shader.UniformMatrix4("Model", false, model.GetMatrix());
+				shader.UniformMatrix4("Model", false, modelMatrix);
+				shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
-			//	gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
-			//}
+				// Drawing.
+				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			}
 
 			// Light:
-			// Uniform handling.
-			Transform lightModel = new(
-				new(lightPosition, 1),
-				Quaternion.Identity,
-				new(new Vector3(0.2f), 1));
-			Matrix4x4 lightModelMatrix = lightModel.GetMatrix();
-
-			lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
-			lightShader.UniformMatrix4("ViewProjection", false, view * projection);
-
-			// Drawing.
 			gl.UseProgram(lightShader.Handle);
 			gl.BindVertexArray(lightVAO.Handle);
 
-			gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			for (int i = 0; i < LampPositions.Length; i++)
+			{
+				// Model.
+				Transform lightModel = new(
+					new(LampPositions[i], 1),
+					Quaternion.Identity,
+					new(new Vector3(0.2f), 1));
+
+				lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
+				lightShader.UniformMatrix4("ViewProjection", false, view * projection);
+
+				// Drawing.
+				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);
+			}
 		};
 
 		window.Closing += () =>
@@ -363,6 +401,8 @@ public class Game
 
 			container2.Dispose();
 			container2_specular.Dispose();
+
+			input.Dispose();
 		};
 	}
 

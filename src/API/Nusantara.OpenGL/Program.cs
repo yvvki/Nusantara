@@ -76,7 +76,7 @@ public partial class Program : GLObject
 		}
 	}
 
-	public void Attach(Shader shader)
+	public void Attach([NotNull] Shader shader)
 	{
 		ThrowIfDisposed();
 		ThrowIfNullOrInvalidGLObject(shader, false);
@@ -84,7 +84,7 @@ public partial class Program : GLObject
 		_gl.AttachShader(_handle, shader._handle);
 	}
 
-	public void Detach(Shader? shader)
+	public void Detach([NotNull] Shader shader)
 	{
 		ThrowIfDisposed();
 		ThrowIfNullOrInvalidGLObject(shader, false);

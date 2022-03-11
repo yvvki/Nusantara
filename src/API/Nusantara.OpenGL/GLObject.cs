@@ -12,9 +12,8 @@ namespace Nusantara.OpenGL;
 
 public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 {
-	protected GLObject(GL gl, uint handle)
+	protected GLObject([NotNull] GL gl!!, uint handle)
 	{
-		ArgumentNullException.ThrowIfNull(gl);
 		Debug.Assert(handle is not default(uint));
 
 		_gl = gl;
@@ -40,7 +39,6 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	{
 		return obj is GLObject other && Equals(other);
 	}
-
 	public override int GetHashCode()
 	{
 		return HashCode.Combine(_gl, _handle);
@@ -50,7 +48,6 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	{
 		return left.Equals(right);
 	}
-
 	public static bool operator !=(GLObject left, GLObject right)
 	{
 		return !(left == right);
@@ -61,11 +58,7 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 		Dispose(disposing: true);
 		GC.SuppressFinalize(this);
 	}
-	~GLObject()
-	{
-		Dispose(disposing: false);
-	}
-
+	~GLObject() => Dispose(disposing: false);
 	private bool _disposed;
 	protected virtual void Dispose(bool disposing)
 	{
@@ -83,6 +76,7 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 
 	#region Throw Helper
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private protected void ThrowIfDisposed()
 	{
 		if (_disposed)
@@ -97,13 +91,12 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 		}
 	}
 
-	private protected void ThrowIfNullOrInvalidGLObject(
-		[NotNull] GLObject? argument,
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal void ThrowIfNullOrInvalidGLObject(
+		[NotNull] GLObject argument!!,
 		bool throwIfDisposed = true,
 		[CallerArgumentExpression("argument")] string? paramName = null)
 	{
-		ArgumentNullException.ThrowIfNull(argument, paramName);
-
 		if (_gl.Equals(argument._gl) is false)
 		{
 			ThrowArgumentGLMismatchException();
@@ -121,6 +114,7 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private protected static void ThrowIfInvalidEnum<T>(
 		T argument,
 		[CallerArgumentExpression("argument")] string? paramName = null)

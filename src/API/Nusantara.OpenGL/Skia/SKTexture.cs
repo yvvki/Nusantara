@@ -24,7 +24,13 @@ public class SKTexture : Texture
 		TextureMinFilter minFiler = TextureMinFilter.LinearMipmapLinear,
 		TextureMagFilter magFiler = TextureMagFilter.Linear)
 	{
+		SKTexture texture = new(gl);
 		ArgumentNullException.ThrowIfNull(bitmap);
+
+		ThrowIfInvalidEnum(wrapS);
+		ThrowIfInvalidEnum(wrapT);
+		ThrowIfInvalidEnum(minFiler);
+		ThrowIfInvalidEnum(magFiler);
 
 		if (flipVertically)
 		{
@@ -38,8 +44,6 @@ public class SKTexture : Texture
 
 			bitmap = flipped;
 		}
-
-		SKTexture texture = new(gl);
 
 		texture.Parameter(TextureParameterName.TextureWrapS, (int)wrapS);
 		texture.Parameter(TextureParameterName.TextureWrapT, (int)wrapS);

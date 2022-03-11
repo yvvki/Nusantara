@@ -178,6 +178,23 @@ public static partial class MathHelper
 		return result;
 	}
 
+	public static Matrix4x4 CreateTransform(Vector3 translation, Quaternion rotation, Vector3 scale)
+	{
+		Matrix4x4 result;
+
+		// Scale
+		Matrix4x4 m_scale = Matrix4x4.CreateScale(scale);
+		// Rotation
+		Matrix4x4 m_rotation = Matrix4x4.CreateFromQuaternion(rotation);
+
+		result = Matrix4x4.Multiply(m_scale, m_rotation);
+
+		// Translation
+		result.Translation = translation;
+
+		return result;
+	}
+
 	public static Matrix4x4 CreateTransform(Vector4 translation, Quaternion rotation, Vector4 scale)
 	{
 		Matrix4x4 result;

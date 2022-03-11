@@ -2,6 +2,7 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using Silk.NET.OpenGL;
 
@@ -52,7 +53,7 @@ public class VertexArray : GLObject
 
 	#region Wrapper
 
-	public void VertexBuffer(uint bindingindex, Buffer? buffer, nint offset = 0, uint stride = 0)
+	public void VertexBuffer(uint bindingindex, [AllowNull] Buffer? buffer, nint offset = 0, uint stride = 0)
 	{
 		ThrowIfDisposed();
 
@@ -60,6 +61,7 @@ public class VertexArray : GLObject
 
 		if (buffer is not null)
 		{
+			// Checks the equality of the GL members.
 			ThrowIfNullOrInvalidGLObject(buffer, false);
 			buffer_handle = buffer._handle;
 		}
@@ -67,7 +69,7 @@ public class VertexArray : GLObject
 		_gl.VertexArrayVertexBuffer(_handle, bindingindex, buffer_handle, offset, stride);
 	}
 
-	public void ElementBuffer(Buffer? buffer)
+	public void ElementBuffer([AllowNull] Buffer? buffer)
 	{
 		ThrowIfDisposed();
 
@@ -75,6 +77,7 @@ public class VertexArray : GLObject
 
 		if (buffer is not null)
 		{
+			// Checks the equality of the GL members.
 			ThrowIfNullOrInvalidGLObject(buffer, false);
 			buffer_handle = buffer._handle;
 		}
@@ -101,6 +104,11 @@ public class VertexArray : GLObject
 		ThrowIfDisposed();
 
 		_gl.EnableVertexArrayAttrib(_handle, index);
+	}
+
+	public void Bind()
+	{
+		_gl.BindVertexArray(_handle);
 	}
 
 	#endregion

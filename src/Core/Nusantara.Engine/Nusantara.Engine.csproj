@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\API\Nusantara.OpenGL\Nusantara.OpenGL.csproj" />
+	  <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
+	  <ProjectReference Include="..\Nusantara.Core\Nusantara.Core.csproj" />
+	</ItemGroup>
+
+</Project>
