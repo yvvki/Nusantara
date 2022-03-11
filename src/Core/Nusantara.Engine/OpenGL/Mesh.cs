@@ -20,6 +20,7 @@ public class Mesh
 
 	public Texture[] Textures { get; init; }
 
+	// No need to reference the array, since the data will get copied to the GPU memory.
 	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices, Texture[] textures)
 	{
 		VertexBuffer = GLBuffer.FromData(gl, vertices);
@@ -41,8 +42,7 @@ public class Mesh
 			0,
 			0,
 			// Vector4
-			4,
-			Silk.NET.OpenGL.VertexAttribType.Float,
+			typeof(Vector4),
 			false,
 			(uint)Marshal.OffsetOf<Vertex>("Position"));
 
@@ -51,8 +51,7 @@ public class Mesh
 			0,
 			0,
 			// Vector4
-			4,
-			Silk.NET.OpenGL.VertexAttribType.Float,
+			typeof(Vector4),
 			false,
 			(uint)Marshal.OffsetOf<Vertex>("Normal"));
 
@@ -61,9 +60,13 @@ public class Mesh
 			0,
 			0,
 			// Vector2
-			2,
-			Silk.NET.OpenGL.VertexAttribType.Float,
+			typeof(Vector2),
 			false,
 			(uint)Marshal.OffsetOf<Vertex>("UV"));
+	}
+
+	public void Bind()
+	{
+		VertexArray.Bind();
 	}
 }
