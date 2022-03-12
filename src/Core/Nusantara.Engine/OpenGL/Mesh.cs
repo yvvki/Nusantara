@@ -1,7 +1,6 @@
 ﻿// <https://github.com/YvvkiRika> wrote this file.
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
-using System.Numerics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -12,6 +11,7 @@ using GLBuffer = Nusantara.OpenGL.Buffer;
 
 namespace Nusantara.Engine.OpenGL;
 
+// Class for containing VertexArray of Vertex and the Buffer-s.
 public class Mesh : IDisposable
 {
 	public VertexArray VertexArray { get; }
@@ -19,15 +19,11 @@ public class Mesh : IDisposable
 	public GLBuffer VertexBuffer { get; }
 	public GLBuffer ElementBuffer { get; }
 
-	public Texture[] Textures { get; init; }
-
 	// No need to reference the array, since the data will get copied to the GPU memory.
-	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices = default, params Texture[] textures!!)
+	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices)
 	{
 		VertexBuffer = GLBuffer.FromData(gl, vertices);
 		ElementBuffer = GLBuffer.FromData(gl, indices);
-
-		Textures = textures;
 
 		Type vertexType = typeof(Vertex);
 
@@ -68,7 +64,10 @@ public class Mesh : IDisposable
 		VertexArray.Dispose();
 		VertexBuffer.Dispose();
 		ElementBuffer.Dispose();
+	}
 
-		foreach (var texture in Textures) texture.Dispose();
+	public static implicit operator VertexArray(Mesh value)
+	{
+		return value.VertexArray;
 	}
 }

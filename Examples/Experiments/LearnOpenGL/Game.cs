@@ -28,7 +28,6 @@ public class Game
 {
 	private static readonly Vertex[] vertices =
 	{
-		// Positions         // Normals           // UVs
 		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 0.0f)),
 		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 0.0f)),
 		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 1.0f)),
@@ -96,7 +95,10 @@ public class Game
 	private IInputContext input;
 	private GL gl;
 
-	Mesh mesh;
+	private Mesh mesh;
+
+	private GLTexture container2;
+	private GLTexture container2_specular;
 
 	private GLProgram shader;
 	private GLProgram lightShader;
@@ -113,6 +115,9 @@ public class Game
 		gl = null!;
 
 		mesh = null!;
+
+		container2 = null!;
+		container2_specular = null!;
 
 		shader = null!;
 		lightShader = null!;
@@ -207,10 +212,10 @@ public class Game
 
 		void Initialize(GL gl)
 		{
-			//Creating Texture.
-			GLTexture container2;
-			GLTexture container2_specular;
+			// Creating Mesh.
+			mesh = new(gl, vertices, null);
 
+			// Loading Texture.
 			using (SKBitmap container2_bitmap = SKBitmap.Decode("container2.png"))
 			{
 				container2 = GLSKTexture.FromBitmap(gl, container2_bitmap);
@@ -219,8 +224,6 @@ public class Game
 			{
 				container2_specular = GLSKTexture.FromBitmap(gl, container2_specular_bitmap);
 			}
-
-			mesh = new(gl, vertices, null, container2, container2_specular);
 
 			// Compiling Shaders.
 			using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, "shader.vert");
@@ -275,11 +278,13 @@ public class Game
 
 			// Cube:
 			// Uniforms.
-			gl.BindTextureUnit(0, mesh.Textures[0].Handle);
-			gl.BindTextureUnit(1, mesh.Textures[1].Handle);
+			gl.BindTextureUnit(0, container2.Handle);
+			gl.BindTextureUnit(1, container2_specular.Handle);
 
+			// Material.
 			shader.Uniform1("Material.Diffuse", 0);
 			shader.Uniform1("Material.Specular", 1);
+
 			shader.Uniform1("Material.Shininess", 32.0f);
 
 			shader.UniformMatrix4("ViewProjection", false, view * projection);
