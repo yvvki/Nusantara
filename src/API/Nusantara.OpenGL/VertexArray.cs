@@ -12,7 +12,7 @@ public class VertexArray : GLObject
 {
 	internal VertexArray(GL gl, uint handle) : base(gl, handle)
 	{
-		Debug.Assert(_gl.IsVertexArray(_handle));
+		Debug.Assert(GL.IsVertexArray(Handle));
 	}
 
 	public VertexArray(GL gl) : this(gl, Create(gl)) { }
@@ -37,84 +37,78 @@ public class VertexArray : GLObject
 
 	#endregion
 
-	internal sealed override void Get(GLEnum pname, out int param)
-	{
-		ThrowIfDisposed();
+	#region Wrapper
 
-		_gl.GetVertexArray(_handle, pname, out param);
-	}
 	public void Get(VertexArrayPName pname, out int param)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetVertexArray(_handle, pname, out param);
+		GL.GetVertexArray(Handle, pname, out param);
 	}
-
-	#region Wrapper
 
 	public void VertexBuffer(uint bindingindex, [AllowNull] Buffer? buffer, nint offset = 0, uint stride = 0)
 	{
 		ThrowIfDisposed();
 
-		uint buffer_handle = default;
+		uint bufferHandle = default;
 
 		if (buffer is not null)
 		{
 			// Checks the equality of the GL members.
 			ThrowIfNullOrInvalidGLObject(buffer, false);
-			buffer_handle = buffer._handle;
+			bufferHandle = buffer.Handle;
 		}
 
-		_gl.VertexArrayVertexBuffer(_handle, bindingindex, buffer_handle, offset, stride);
+		GL.VertexArrayVertexBuffer(Handle, bindingindex, bufferHandle, offset, stride);
 	}
 
 	public void ElementBuffer([AllowNull] Buffer? buffer)
 	{
 		ThrowIfDisposed();
 
-		uint buffer_handle = default;
+		uint bufferHandle = default;
 
 		if (buffer is not null)
 		{
 			// Checks the equality of the GL members.
 			ThrowIfNullOrInvalidGLObject(buffer, false);
-			buffer_handle = buffer._handle;
+			bufferHandle = buffer.Handle;
 		}
 
-		_gl.VertexArrayElementBuffer(_handle, buffer_handle);
+		GL.VertexArrayElementBuffer(Handle, bufferHandle);
 	}
 
 	public void AttribBinding(uint attribindex, uint bindingindex)
 	{
 		ThrowIfDisposed();
 
-		_gl.VertexArrayAttribBinding(_handle, attribindex, bindingindex);
+		GL.VertexArrayAttribBinding(Handle, attribindex, bindingindex);
 	}
 
 	public void AttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized = false, uint relativeoffset = 0)
 	{
 		ThrowIfDisposed();
 
-		_gl.VertexArrayAttribFormat(_handle, attribindex, size, type, normalized, relativeoffset);
+		GL.VertexArrayAttribFormat(Handle, attribindex, size, type, normalized, relativeoffset);
 	}
 
 	public void EnableAttrib(uint index)
 	{
 		ThrowIfDisposed();
 
-		_gl.EnableVertexArrayAttrib(_handle, index);
+		GL.EnableVertexArrayAttrib(Handle, index);
 	}
 
 	public void Bind()
 	{
-		_gl.BindVertexArray(_handle);
+		GL.BindVertexArray(Handle);
 	}
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		_gl.DeleteVertexArray(_handle);
+		GL.DeleteVertexArray(Handle);
 	}
 }

@@ -12,7 +12,7 @@ public class Shader : GLObject
 {
 	internal Shader(GL gl, uint handle) : base(gl, handle)
 	{
-		Debug.Assert(_gl.IsShader(_handle));
+		Debug.Assert(GL.IsShader(Handle));
 	}
 
 	internal Shader(GL gl, GLEnum type) : this(gl, Create(gl, type)) { }
@@ -61,21 +61,15 @@ public class Shader : GLObject
 
 	#endregion
 
-	internal sealed override void Get(GLEnum pname, out int param)
-	{
-		ThrowIfDisposed();
+	#region Wrapper
 
-		_gl.GetShader(_handle, pname, out param);
-	}
 	public void Get(ShaderParameterName pname, out int param)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetShader(_handle, pname, out param);
+		GL.GetShader(Handle, pname, out param);
 	}
-
-	#region Wrapper
 
 	public bool CompileStatus
 	{
@@ -90,7 +84,7 @@ public class Shader : GLObject
 	{
 		ThrowIfDisposed();
 
-		_gl.ShaderSource(_handle, @string);
+		GL.ShaderSource(Handle, @string);
 	}
 
 	public void Compile()
@@ -103,7 +97,7 @@ public class Shader : GLObject
 		[DoesNotReturn]
 		void ThrowFailCompile()
 		{
-			throw new InvalidOperationException(_gl.GetShaderInfoLog(_handle));
+			throw new InvalidOperationException(GL.GetShaderInfoLog(Handle));
 		}
 	}
 
@@ -111,7 +105,7 @@ public class Shader : GLObject
 	{
 		ThrowIfDisposed();
 
-		_gl.CompileShader(_handle);
+		GL.CompileShader(Handle);
 
 		return CompileStatus;
 	}
@@ -120,6 +114,6 @@ public class Shader : GLObject
 
 	protected sealed override void Delete()
 	{
-		_gl.DeleteShader(_handle);
+		GL.DeleteShader(Handle);
 	}
 }

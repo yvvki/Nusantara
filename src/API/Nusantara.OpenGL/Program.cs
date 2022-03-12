@@ -12,7 +12,7 @@ public partial class Program : GLObject
 {
 	internal Program(GL gl, uint handle) : base(gl, handle)
 	{
-		Debug.Assert(_gl.IsProgram(_handle));
+		Debug.Assert(GL.IsProgram(Handle));
 	}
 
 	public Program(GL gl) : this(gl, Create(gl)) { }
@@ -50,21 +50,15 @@ public partial class Program : GLObject
 
 	#endregion
 
-	internal sealed override void Get(GLEnum pname, out int @params)
-	{
-		ThrowIfDisposed();
+	#region Wrapper
 
-		_gl.GetProgram(_handle, pname, out @params);
-	}
 	public void Get(ProgramPropertyARB pname, out int @params)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetProgram(_handle, pname, out @params);
+		GL.GetProgram(Handle, pname, out @params);
 	}
-
-	#region Wrapper
 
 	public bool LinkStatus
 	{
@@ -81,7 +75,7 @@ public partial class Program : GLObject
 		ThrowIfDisposed();
 		ThrowIfNullOrInvalidGLObject(shader, false);
 
-		_gl.AttachShader(_handle, shader._handle);
+		GL.AttachShader(Handle, shader.Handle);
 	}
 
 	public void Detach([NotNull] Shader shader)
@@ -89,7 +83,7 @@ public partial class Program : GLObject
 		ThrowIfDisposed();
 		ThrowIfNullOrInvalidGLObject(shader, false);
 
-		_gl.DetachShader(_handle, shader._handle);
+		GL.DetachShader(Handle, shader.Handle);
 	}
 
 	public void Link()
@@ -102,7 +96,7 @@ public partial class Program : GLObject
 		[DoesNotReturn]
 		void ThrowFailLink()
 		{
-			throw new InvalidOperationException(_gl.GetProgramInfoLog(_handle));
+			throw new InvalidOperationException(GL.GetProgramInfoLog(Handle));
 		}
 	}
 
@@ -110,7 +104,7 @@ public partial class Program : GLObject
 	{
 		ThrowIfDisposed();
 
-		_gl.LinkProgram(_handle);
+		GL.LinkProgram(Handle);
 
 		return LinkStatus;
 	}
@@ -126,7 +120,7 @@ public partial class Program : GLObject
 
 	private int GetUniformLocationUnsafe(string name)
 	{
-		int location = _gl.GetUniformLocation(_handle, name);
+		int location = GL.GetUniformLocation(Handle, name);
 
 		return location;
 	}
@@ -135,6 +129,6 @@ public partial class Program : GLObject
 
 	protected sealed override void Delete()
 	{
-		_gl.DeleteProgram(_handle);
+		GL.DeleteProgram(Handle);
 	}
 }

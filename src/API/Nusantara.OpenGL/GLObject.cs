@@ -16,24 +16,18 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	{
 		Debug.Assert(handle is not default(uint));
 
-		_gl = gl;
-		_handle = handle;
+		GL = gl;
+		Handle = handle;
 	}
 
-	protected internal readonly GL _gl;
-	protected internal readonly uint _handle;
-
-	// To be derived for any glGet* methods.
-	internal abstract void Get(GLEnum pname, out int @params);
-
-	public GL GL => _gl;
-	public uint Handle => _handle;
+	public GL GL { get; }
+	public uint Handle { get; }
 
 	public bool Equals([NotNullWhen(true)] GLObject? other)
 	{
 		return other is not null
-			&& _gl.Equals(other._gl)
-			&& _handle.Equals(other._handle);
+			&& GL.Equals(other.GL)
+			&& Handle.Equals(other.Handle);
 	}
 	public override bool Equals([NotNullWhen(true)] object? obj)
 	{
@@ -41,7 +35,7 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	}
 	public override int GetHashCode()
 	{
-		return HashCode.Combine(_gl, _handle);
+		return HashCode.Combine(GL, Handle);
 	}
 
 	public static bool operator ==(GLObject left, GLObject right)
@@ -97,7 +91,7 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 		bool throwIfDisposed = true,
 		[CallerArgumentExpression("argument")] string? paramName = null)
 	{
-		if (_gl.Equals(argument._gl) is false)
+		if (GL.Equals(argument.GL) is false)
 		{
 			ThrowArgumentGLMismatchException();
 		}

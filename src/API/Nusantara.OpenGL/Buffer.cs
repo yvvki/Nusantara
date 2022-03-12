@@ -11,7 +11,7 @@ public class Buffer : GLObject
 {
 	internal Buffer(GL gl, uint handle) : base(gl, handle)
 	{
-		Debug.Assert(_gl.IsBuffer(_handle));
+		Debug.Assert(GL.IsBuffer(Handle));
 	}
 
 	public Buffer(GL gl) : this(gl, Create(gl)) { }
@@ -35,13 +35,6 @@ public class Buffer : GLObject
 
 	#endregion
 
-	internal sealed override void Get(GLEnum pname, out int @params)
-	{
-		ThrowIfDisposed();
-
-		_gl.GetNamedBufferParameter(_handle, pname, out @params);
-	}
-
 	#region Wrapper
 
 	public void GetParameter(BufferPNameARB pname, out int @params)
@@ -49,14 +42,14 @@ public class Buffer : GLObject
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetNamedBufferParameter(_handle, pname, out @params);
+		GL.GetNamedBufferParameter(Handle, pname, out @params);
 	}
 	public void GetParameter(BufferPNameARB pname, out long @params)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetNamedBufferParameter(_handle, pname, out @params);
+		GL.GetNamedBufferParameter(Handle, pname, out @params);
 	}
 
 	public void Storage<T>(ReadOnlySpan<T> data, BufferStorageMask flags = default)
@@ -65,13 +58,13 @@ public class Buffer : GLObject
 		ThrowIfDisposed();
 		//ThrowIfInvalidEnum(flags); // Do not throw, flags.
 
-		_gl.NamedBufferStorage(_handle, data, flags);
+		GL.NamedBufferStorage(Handle, data, flags);
 	}
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		_gl.DeleteBuffer(_handle);
+		GL.DeleteBuffer(Handle);
 	}
 }

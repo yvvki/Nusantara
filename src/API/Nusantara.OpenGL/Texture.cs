@@ -31,13 +31,6 @@ public class Texture : GLObject
 		return handle;
 	}
 
-	internal sealed override void Get(GLEnum pname, out int @params)
-	{
-		ThrowIfDisposed();
-
-		_gl.GetTextureParameter(_handle, pname, out @params);
-	}
-
 	#region Wrapper
 
 	public void Parameter(TextureParameterName pname, int param)
@@ -45,14 +38,14 @@ public class Texture : GLObject
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.TextureParameter(_handle, pname, param);
+		GL.TextureParameter(Handle, pname, param);
 	}
 	public void Parameter(TextureParameterName pname, float param)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.TextureParameter(_handle, pname, param);
+		GL.TextureParameter(Handle, pname, param);
 	}
 
 	public void GetParameter(GetTextureParameter pname, out int @params)
@@ -60,14 +53,14 @@ public class Texture : GLObject
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetTextureParameter(_handle, pname, out @params);
+		GL.GetTextureParameter(Handle, pname, out @params);
 	}
 	public void GetParameter(GetTextureParameter pname, out float @params)
 	{
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(pname);
 
-		_gl.GetTextureParameter(_handle, pname, out @params);
+		GL.GetTextureParameter(Handle, pname, out @params);
 	}
 
 	public void Storage2D(
@@ -79,8 +72,8 @@ public class Texture : GLObject
 		ThrowIfDisposed();
 		ThrowIfInvalidEnum(format);
 
-		_gl.TextureStorage2D(
-			_handle,
+		GL.TextureStorage2D(
+			Handle,
 			levels,
 			format,
 			width,
@@ -99,8 +92,8 @@ public class Texture : GLObject
 	{
 		ThrowIfDisposed();
 
-		_gl.TextureSubImage2D(
-			_handle,
+		GL.TextureSubImage2D(
+			Handle,
 			level,
 			xoffset,
 			yoffset,
@@ -125,8 +118,8 @@ public class Texture : GLObject
 		ThrowIfInvalidEnum(format);
 		ThrowIfInvalidEnum(type);
 
-		_gl.TextureSubImage2D(
-			_handle,
+		GL.TextureSubImage2D(
+			Handle,
 			level,
 			xoffset,
 			yoffset,
@@ -139,13 +132,18 @@ public class Texture : GLObject
 
 	public void GenerateMipmap()
 	{
-		_gl.GenerateTextureMipmap(_handle);
+		GL.GenerateTextureMipmap(Handle);
+	}
+
+	public void Bind(uint unit)
+	{
+		GL.BindTextureUnit(unit, Handle);
 	}
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		_gl.DeleteTexture(_handle);
+		GL.DeleteTexture(Handle);
 	}
 }
