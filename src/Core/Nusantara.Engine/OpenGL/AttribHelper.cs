@@ -14,32 +14,31 @@ namespace Nusantara.Engine.OpenGL;
 public static class AttribHelper
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static (int, VertexAttribType) GetSizeEnum<T>()
+	public static (int size, VertexAttribType type) GetSizeEnum<T>()
 		where T : struct
 	{
 		return GetSizeEnum(typeof(T));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static (int, VertexAttribType) GetSizeEnum([NotNull] Type type)
+	public static (int size, VertexAttribType type) GetSizeEnum([NotNull] Type type)
 	{
-		if (type.IsPrimitive)
-		{
-			return (1, GetEnum(type));
-		}
-
 		// Auto checks supported type.
 		int size = GetSize(type);
 		VertexAttribType @enum;
 
-		if (type.IsGenericType)
+		if (type.IsPrimitive)
+		{
+			@enum = GetEnum(type);
+		}
+		else if (type.IsGenericType)
 		{
 			Type genericArgument = type.GetGenericArguments()[0];
 			@enum = GetEnum(genericArgument);
 		}
 		else
 		{
-			// System.Numerics namespace uses float.
+			// System.Numerics namespace uses single float.
 			@enum = VertexAttribType.Float;
 		}
 
@@ -53,12 +52,16 @@ public static class AttribHelper
 		return GetSize(typeof(T));
 	}
 
-	// Only supports System.Numerics and Silk.NET.Maths namespaces.
+	// Only supports primitive, System.Numerics, and Silk.NET.Maths namespaces types.
 	// Subject to change.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int GetSize([NotNull] Type type!!)
 	{
-		if (type.IsGenericType)
+		if (type.IsPrimitive)
+		{
+			return 1;
+		}
+		else if (type.IsGenericType)
 		{
 			type = type.GetGenericTypeDefinition();
 		}
@@ -92,7 +95,7 @@ public static class AttribHelper
 		return GetEnum(typeof(T));
 	}
 
-	// Only accept unmanaged, but not decimal nor user-defined struct type.
+	// Only accept primitive and enum type.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static VertexAttribType GetEnum([NotNull] Type type!!)
 	{
@@ -108,7 +111,7 @@ public static class AttribHelper
 			? VertexAttribType.UnsignedByte
 			: type == typeof(short)
 			? VertexAttribType.Short
-			: type == typeof(ushort) || type == typeof(char) // char size of 16 bit and implicitly convertible to ushort.
+			: type == typeof(ushort) || type == typeof(char) // sizeof char is 16 bit and will be marshaled to ushort.
 			? VertexAttribType.UnsignedShort
 			: type == typeof(int) || type == typeof(long) || type == typeof(nint)
 			? VertexAttribType.Int
