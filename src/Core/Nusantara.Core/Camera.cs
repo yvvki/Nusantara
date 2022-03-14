@@ -19,17 +19,17 @@ public sealed class Camera : ICamera, ITransformable
 		_projection = CalculateProjection();
 	}
 
-	public Vector4 Position { get; set; }
-	Vector4 ITransformable.Translation { get => Position; set => Position = value; }
+	public Vector3 Position { get; set; }
+	Vector3 ITransformable.Translation { get => Position; set => Position = value; }
 	public Quaternion Rotation { get; set; }
-	Vector4 ITransformable.Scale { get; set; } // Unused.
+	Vector3 ITransformable.Scale { get; set; } // Unused.
 
 	// Facing down.
 	public Vector3 Right => Vector3.Transform(Directions.Right, Rotation);
 	public Vector3 Forward => Vector3.Transform(-Directions.Up, Rotation);
 	public Vector3 Up => Vector3.Transform(Directions.Forward, Rotation);
 
-	public Vector4 Target => Position + new Vector4(Forward, 0);
+	public Vector3 Target => Position + Forward;
 
 	// Automatically throws.
 	private float _fieldOfView;
@@ -79,8 +79,8 @@ public sealed class Camera : ICamera, ITransformable
 	public Matrix4x4 GetView()
 	{
 		return Matrix4x4.CreateLookAt(
-			MathHelper.NormalizeHomogeneous(Position),
-			MathHelper.NormalizeHomogeneous(Target),
+			Position,
+			Target,
 			Up);
 	}
 
