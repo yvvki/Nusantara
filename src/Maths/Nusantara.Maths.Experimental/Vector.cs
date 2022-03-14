@@ -325,15 +325,22 @@ public interface IVector<TSelf, TNumber> :
 	string IFormattable.ToString(string? format, IFormatProvider? formatProvider)
 	{
 		StringBuilder sb = new();
+
+		IEnumerator<TNumber> enumerator = GetEnumerator();
+
 		sb.Append('<');
-		foreach (TNumber component in this)
+		while (PrintComponent())
 		{
-			sb.Append(component.ToString(format, formatProvider));
 			sb.Append(',');
 			sb.Append(' ');
 		}
-		sb.Remove(sb.Length - 2, 2);
 		sb.Append('>');
+
+		bool PrintComponent()
+		{
+			sb.Append(enumerator.Current.ToString(format, formatProvider));
+			return enumerator.MoveNext();
+		}
 
 		return sb.ToString();
 	}
