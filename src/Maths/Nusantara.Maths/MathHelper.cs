@@ -59,32 +59,6 @@ public static partial class MathHelper
 	#region Homogeneous Vector
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4 AddHomogeneous(Vector4 left, Vector4 right)
-	{
-		return new(
-			left.X + right.X,
-			left.Y + right.Y,
-			left.Z + right.Z,
-			left.W * right.W);
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4 SubtractHomogeneous(Vector4 left, Vector4 right)
-	{
-		return new(
-			left.X - right.X,
-			left.Y - right.Y,
-			left.Z - right.Z,
-			left.W / right.W);
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Vector4 NegateHomogeneous(Vector4 value)
-	{
-		return SubtractHomogeneous(Vector4.UnitW, value);
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Vector3D<T> NormalizeHomogeneous<T>(Vector4D<T> value)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{

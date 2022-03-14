@@ -139,7 +139,7 @@ public class Game
 				0.1f,
 				100.0f)
 			{
-				Position = new(0.0f, 0.0f, 3.0f, 1)
+				Position = new(0.0f, 0.0f, 3.0f)
 			};
 
 			foreach (IKeyboard keyboard in input.Keyboards)
@@ -243,13 +243,13 @@ public class Game
 
 			// W is 0 (homogeneous vector) since we adding the values.
 			if (keyboard.IsKeyPressed(Key.W))
-				camera.Position += new Vector4(camera.Forward * cameraSpeed, 0);
+				camera.Position += camera.Forward * cameraSpeed;
 			if (keyboard.IsKeyPressed(Key.S))
-				camera.Position -= new Vector4(camera.Forward * cameraSpeed, 0);
+				camera.Position -= camera.Forward * cameraSpeed;
 			if (keyboard.IsKeyPressed(Key.D))
-				camera.Position += new Vector4(camera.Right * cameraSpeed, 0);
+				camera.Position += camera.Right * cameraSpeed;
 			if (keyboard.IsKeyPressed(Key.A))
-				camera.Position -= new Vector4(camera.Right * cameraSpeed, 0);
+				camera.Position -= camera.Right * cameraSpeed;
 		};
 
 		Vector3[] LampPositions =
@@ -289,7 +289,7 @@ public class Game
 
 			shader.UniformMatrix4("ViewProjection", false, view * projection);
 
-			Vector3 cameraPosition = MathHelper.NormalizeHomogeneous(camera.Position);
+			Vector3 cameraPosition = camera.Position;
 			shader.Uniform3("CameraPosition", cameraPosition);
 
 			// Light constants.
@@ -338,7 +338,7 @@ public class Game
 			{
 				// Model.
 				Transform model = Transform.Identity;
-				model.Translation = new(cubePositions[i], 1);
+				model.Translation = cubePositions[i];
 				float angle = 20.0f * i;
 				model.Rotation = Quaternion.CreateFromAxisAngle(
 					Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
@@ -363,9 +363,9 @@ public class Game
 			{
 				// Model.
 				Transform lightModel = new(
-					new(LampPositions[i], 1),
+					LampPositions[i],
 					Quaternion.Identity,
-					new(new Vector3(0.2f), 1));
+					new Vector3(0.2f));
 
 				lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
 

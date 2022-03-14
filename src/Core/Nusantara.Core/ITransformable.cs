@@ -7,7 +7,7 @@ namespace Nusantara;
 
 public interface ITransformable
 {
-	Vector4 Translation { get; set; }
+	Vector3 Translation { get; set; }
 	Quaternion Rotation { get; set; }
-	Vector4 Scale { get; set; }
+	Vector3 Scale { get; set; }
 }
