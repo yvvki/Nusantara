@@ -11,25 +11,32 @@ namespace Nusantara;
 public static class TransformableExtensions
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Negate<T>(this ref T transformable)
-		where T : struct, ITransformable
+	public static void Negate<T>(this T transformable)
+		where T : class, ITransformable
 	{
-		transformable.Translation = Vector3.Negate(transformable.Translation);
-		transformable.Rotation = Quaternion.Inverse(transformable.Rotation);
-		transformable.Scale = Vector3.Divide(Vector3.One, transformable.Scale);
+		Transform result = new(transformable);
+		result = Transform.Negate(result);
+
+		transformable.Translation = result.Translation;
+		transformable.Rotation = result.Rotation;
+		transformable.Scale = result.Scale;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Concatenate<T>(this ref T @this, ITransformable other)
-		where T : struct, ITransformable
+	public static void Concatenate<T>(this T transformable, Transform other)
+		where T : class, ITransformable
 	{
-		@this.Translation = Vector3.Add(@this.Translation, other.Translation);
-		@this.Rotation = Quaternion.Concatenate(@this.Rotation, other.Rotation);
-		@this.Scale = Vector3.Multiply(@this.Scale, other.Scale);
+		Transform result = new(transformable);
+		result = Transform.Concatenate(result, other);
+
+		transformable.Translation = result.Translation;
+		transformable.Rotation = result.Rotation;
+		transformable.Scale = result.Scale;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Matrix4x4 GetMatrix(this ITransformable transformable)
+	public static Matrix4x4 GetMatrix<T>(this T transformable)
+		where T : ITransformable
 	{
 		return MathHelper.CreateTransform(
 			transformable.Translation,
