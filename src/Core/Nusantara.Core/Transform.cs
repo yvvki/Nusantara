@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace Nusantara;
 
-[Serializable]
 public record struct Transform(Vector3 Translation, Quaternion Rotation, Vector3 Scale) : ITransformable
 {
 	public static Transform Identity => new();
