@@ -65,9 +65,4 @@ public class Mesh : IDisposable
 		VertexBuffer.Dispose();
 		ElementBuffer.Dispose();
 	}
-
-	public static implicit operator VertexArray(Mesh value)
-	{
-		return value.VertexArray;
-	}
 }
