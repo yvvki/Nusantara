@@ -14,25 +14,25 @@ namespace Nusantara.Engine.OpenGL;
 // Class for containing VertexArray of Vertex and the Buffer-s.
 public class Mesh : IDisposable
 {
-	public VertexArray VertexArray { get; }
+	private VertexArray _vao;
 
-	public GLBuffer VertexBuffer { get; }
-	public GLBuffer ElementBuffer { get; }
+	private GLBuffer _vbo;
+	private GLBuffer _ebo;
 
 	// No need to reference the array, since the data will get copied to the GPU memory.
 	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices)
 	{
-		VertexBuffer = GLBuffer.FromData(gl, vertices);
-		ElementBuffer = GLBuffer.FromData(gl, indices);
+		_vbo = GLBuffer.FromData(gl, vertices);
+		_ebo = GLBuffer.FromData(gl, indices);
 
 		Type vertexType = typeof(Vertex);
 
 		// Binding buffers to VertexArray.
-		VertexArray = VertexArray.FromBuffers(
+		_vao = VertexArray.FromBuffers(
 			gl,
-			ElementBuffer,
+			_ebo,
 			0,
-			VertexBuffer,
+			_vbo,
 			0,
 			(uint)Marshal.SizeOf(vertexType));
 
@@ -40,7 +40,7 @@ public class Mesh : IDisposable
 		FieldInfo[] vertexFields = vertexType.GetFields();
 		for (uint i = 0; i < vertexFields.Length; i++)
 		{
-			VertexArray.EnableAttribBindingFormat(
+			_vao.EnableAttribBindingFormat(
 				i,
 				0,
 				vertexFields[i].FieldType,
@@ -51,7 +51,7 @@ public class Mesh : IDisposable
 
 	public void Bind()
 	{
-		VertexArray.Bind();
+		_vao.Bind();
 	}
 
 	public void Dispose()
@@ -61,8 +61,8 @@ public class Mesh : IDisposable
 
 	protected virtual void Dispose(bool disposing)
 	{
-		VertexArray.Dispose();
-		VertexBuffer.Dispose();
-		ElementBuffer.Dispose();
+		_vao.Dispose();
+		_vbo.Dispose();
+		_ebo.Dispose();
 	}
 }
