@@ -1,7 +1,6 @@
 ﻿// <https://github.com/YvvkiRika> wrote this file.
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
-using System.Drawing;
 using System.Numerics;
 
 using Nusantara;
@@ -15,12 +14,10 @@ using Silk.NET.Windowing;
 
 using SkiaSharp;
 
-using GLBuffer = Nusantara.OpenGL.Buffer;
 using GLProgram = Nusantara.OpenGL.Program;
 using GLShader = Nusantara.OpenGL.Shader;
 using GLSKTexture = Nusantara.OpenGL.Skia.SKTexture;
 using GLTexture = Nusantara.OpenGL.Texture;
-using GLVertexArray = Nusantara.OpenGL.VertexArray;
 
 namespace LearnOpenGL;
 
@@ -215,20 +212,22 @@ public class Game
 			// Creating Mesh.
 			mesh = new(gl, vertices, null);
 
+			const string resourcePath = "Resources";
+
 			// Loading Texture.
-			using (SKBitmap container2_bitmap = SKBitmap.Decode("container2.png"))
+			using (SKBitmap container2_bitmap = SKBitmap.Decode(Path.Combine(resourcePath, "container2.png")))
 			{
 				container2 = GLSKTexture.FromBitmap(gl, container2_bitmap);
 			}
-			using (SKBitmap container2_specular_bitmap = SKBitmap.Decode("container2_specular.png"))
+			using (SKBitmap container2_specular_bitmap = SKBitmap.Decode(Path.Combine(resourcePath, "container2_specular.png")))
 			{
 				container2_specular = GLSKTexture.FromBitmap(gl, container2_specular_bitmap);
 			}
 
 			// Compiling Shaders.
-			using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, "shader.vert");
-			using GLShader fragShader = GLShader.FromFile(gl, ShaderType.FragmentShader, "shader.frag");
-			using GLShader fragLight = GLShader.FromFile(gl, ShaderType.FragmentShader, "light.frag");
+			using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, Path.Combine(resourcePath, "shader.vert"));
+			using GLShader fragShader = GLShader.FromFile(gl, ShaderType.FragmentShader, Path.Combine(resourcePath, "shader.frag"));
+			using GLShader fragLight = GLShader.FromFile(gl, ShaderType.FragmentShader, Path.Combine(resourcePath, "light.frag"));
 
 			// Linking Program.
 			shader = GLProgram.FromShaders(gl, vertShader, fragShader);
