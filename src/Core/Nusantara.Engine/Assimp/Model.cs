@@ -9,11 +9,11 @@ using ai = Silk.NET.Assimp;
 
 using GL = Silk.NET.OpenGL.GL;
 
-namespace Nusantara.Engine.OpenGL;
+namespace Nusantara.Engine.Assimp;
 
 public class Model
 {
-	public List<Mesh> Meshes { get; } = new();
+	public List<OpenGL.Mesh> Meshes { get; } = new();
 	public List<Nusantara.OpenGL.Skia.SKTexture> Textures { get; } = new();
 
 	public static unsafe void FromFile(GL gl, ai::Assimp ai, string filename)
