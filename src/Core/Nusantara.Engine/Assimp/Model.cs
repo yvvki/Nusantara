@@ -13,8 +13,19 @@ namespace Nusantara.Engine.Assimp;
 
 public class Model
 {
-	public List<MeshInfo> Meshes { get; } = new();
-	public List<TextureInfo> Textures { get; } = new();
+	public List<MeshInfo> Meshes { get; }
+	public List<TextureInfo> Textures { get; }
+
+	private Model()
+	{
+		Meshes = new();
+		Textures = new();
+	}
+	public Model(IEnumerable<MeshInfo> meshes, IEnumerable<TextureInfo> textures)
+	{
+		Meshes = new(meshes);
+		Textures = new(textures);
+	}
 
 	public static unsafe void FromFile(GL gl, ai::Assimp ai, string filename)
 	{
@@ -38,9 +49,13 @@ public class Model
 				ai::Mesh* mesh = scene->MMeshes[node->MMeshes[i]];
 
 				model.Meshes.Add(ProcessMesh(mesh));
+
+				ai::Material* mat = scene->MMaterials[mesh->MMaterialIndex];
+
+				model.Textures.AddRange(ProcessMaterial(mat));
 			}
 
-			// Convert Assimp's mesh to our mesh-info.
+			// Convert Assimp's mesh to our mesh info.
 			MeshInfo ProcessMesh(ai::Mesh* mesh)
 			{
 				List<Vertex> vertices = new();
@@ -74,65 +89,80 @@ public class Model
 				return new(vertices.ToArray(), indices.ToArray());
 			}
 
-			TextureInfo[] ProcessTexture(ai::Material* mat, ai::TextureType type)
+			// Convert Assimp's material to our texture infos.
+			TextureInfo[] ProcessMaterial(ai::Material* mat)
 			{
-				uint count = ai.GetMaterialTextureCount(mat, type);
+				TextureInfo[] result;
 
-				TextureInfo[] textures = new TextureInfo[count];
+				TextureInfo[] diffuses = ProcessTexture(mat, ai::TextureType.TextureTypeDiffuse);
+				TextureInfo[] specular = ProcessTexture(mat, ai::TextureType.TextureTypeSpecular);
 
-				for (uint i = 0; i < count; i++)
+				result = new TextureInfo[diffuses.Length + specular.Length];
+				diffuses.CopyTo(result, 0);
+				specular.CopyTo(result, diffuses.Length);
+
+				return result;
+
+				TextureInfo[] ProcessTexture(ai::Material* mat, ai::TextureType type)
 				{
-					ai::AssimpString path;
-					//TextureMapping mapping;
-					//uint uvindex;
-					//float blend;
-					//TextureOp op;
-					//TextureMapMode mapmode;
+					uint count = ai.GetMaterialTextureCount(mat, type);
 
-					//uint flags = (uint)TextureFlags.TextureFlagsUseAlpha;
+					TextureInfo[] textures = new TextureInfo[count];
 
-					ai.GetMaterialTexture(
-						mat,
-						type,
-						i,
-						&path,
-						/*&mapping*/ null,
-						/*&uvindex*/ null,
-						/*&blend*/ null,
-						/*&op*/ null,
-						/*&mapmode*/ null,
-						/*&flags*/ null);
-
-					textures[i] = new(FromAssimp(type), path);
-				}
-
-				TextureType FromAssimp(ai::TextureType type)
-				{
-					return type switch
+					for (uint i = 0; i < count; i++)
 					{
-						ai::TextureType.TextureTypeNone => default,
-						ai::TextureType.TextureTypeDiffuse => TextureType.Diffuse,
-						ai::TextureType.TextureTypeSpecular => TextureType.Specular,
-						ai::TextureType.TextureTypeAmbient => TextureType.Ambient,
-						ai::TextureType.TextureTypeEmissive => TextureType.Emissive,
-						ai::TextureType.TextureTypeHeight => TextureType.Height,
-						ai::TextureType.TextureTypeNormals => TextureType.Normals,
-						ai::TextureType.TextureTypeShininess => TextureType.Shininess,
-						ai::TextureType.TextureTypeOpacity => TextureType.Opacity,
-						ai::TextureType.TextureTypeDisplacement => TextureType.Displacement,
-						ai::TextureType.TextureTypeLightmap => TextureType.Lightmap,
-						ai::TextureType.TextureTypeReflection => TextureType.Reflection,
-						ai::TextureType.TextureTypeBaseColor => TextureType.BaseColor,
-						ai::TextureType.TextureTypeNormalCamera => TextureType.NormalCamera,
-						ai::TextureType.TextureTypeEmissionColor => TextureType.EmissionColor,
-						ai::TextureType.TextureTypeMetalness => TextureType.Metalness,
-						ai::TextureType.TextureTypeDiffuseRoughness => TextureType.DiffuseRoughness,
-						ai::TextureType.TextureTypeAmbientOcclusion => TextureType.AmbientOcclusion,
-						_ => throw new NotSupportedException()
-					};
-				}
+						ai::AssimpString path;
+						//TextureMapping mapping;
+						//uint uvindex;
+						//float blend;
+						//TextureOp op;
+						//TextureMapMode mapmode;
 
-				return textures;
+						//uint flags = (uint)TextureFlags.TextureFlagsUseAlpha;
+
+						ai.GetMaterialTexture(
+							mat,
+							type,
+							i,
+							&path,
+							/*&mapping*/ null,
+							/*&uvindex*/ null,
+							/*&blend*/ null,
+							/*&op*/ null,
+							/*&mapmode*/ null,
+							/*&flags*/ null);
+
+						textures[i] = new(FromAssimp(type), path);
+					}
+
+					return textures;
+
+					TextureType FromAssimp(ai::TextureType type)
+					{
+						return type switch
+						{
+							ai::TextureType.TextureTypeNone => default,
+							ai::TextureType.TextureTypeDiffuse => TextureType.Diffuse,
+							ai::TextureType.TextureTypeSpecular => TextureType.Specular,
+							ai::TextureType.TextureTypeAmbient => TextureType.Ambient,
+							ai::TextureType.TextureTypeEmissive => TextureType.Emissive,
+							ai::TextureType.TextureTypeHeight => TextureType.Height,
+							ai::TextureType.TextureTypeNormals => TextureType.Normals,
+							ai::TextureType.TextureTypeShininess => TextureType.Shininess,
+							ai::TextureType.TextureTypeOpacity => TextureType.Opacity,
+							ai::TextureType.TextureTypeDisplacement => TextureType.Displacement,
+							ai::TextureType.TextureTypeLightmap => TextureType.Lightmap,
+							ai::TextureType.TextureTypeReflection => TextureType.Reflection,
+							ai::TextureType.TextureTypeBaseColor => TextureType.BaseColor,
+							ai::TextureType.TextureTypeNormalCamera => TextureType.NormalCamera,
+							ai::TextureType.TextureTypeEmissionColor => TextureType.EmissionColor,
+							ai::TextureType.TextureTypeMetalness => TextureType.Metalness,
+							ai::TextureType.TextureTypeDiffuseRoughness => TextureType.DiffuseRoughness,
+							ai::TextureType.TextureTypeAmbientOcclusion => TextureType.AmbientOcclusion,
+							_ => throw new NotSupportedException()
+						};
+					}
+				}
 			}
 		}
 	}
