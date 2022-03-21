@@ -13,8 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Silk.NET.Maths" Version="2.13.0" />
-    <PackageReference Include="System.Runtime.Experimental" Version="7.0.0-preview.1.22076.8" />
+    <PackageReference Include="System.Runtime.Experimental" Version="7.0.0-preview.2.22152.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nusantara.Maths\Nusantara.Maths.csproj" />
   </ItemGroup>
 
 </Project>

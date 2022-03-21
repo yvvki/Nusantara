@@ -135,7 +135,7 @@ public interface IVector<TSelf, TNumber> :
 	static TNumber Distance(TSelf left, TSelf right)
 	{
 		TNumber distanceSquared = DistanceSquared(left, right);
-		
+
 		if (distanceSquared is float distanceSquaredF)
 		{
 			return (TNumber)(object)MathF.Sqrt(distanceSquaredF);
@@ -374,7 +374,7 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
 
 	public static Vector2<T> Zero => default;
 	public static Vector2<T> One { get; }
-	
+
 	public static Vector2<T> AdditiveIdentity { get; }
 	public static Vector2<T> MultiplicativeIdentity { get; }
 

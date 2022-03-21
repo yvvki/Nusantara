@@ -16,7 +16,7 @@ using SkiaSharp;
 
 using GLProgram = Nusantara.OpenGL.Program;
 using GLShader = Nusantara.OpenGL.Shader;
-using GLSKTexture = Nusantara.OpenGL.Skia.SKTexture;
+using GLSKTexture = Nusantara.Engine.OpenGL.SKTexture;
 using GLTexture = Nusantara.OpenGL.Texture;
 
 namespace LearnOpenGL;

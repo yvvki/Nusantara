@@ -14,10 +14,10 @@ namespace Nusantara.Engine.OpenGL;
 // Class for containing VertexArray of Vertex and the Buffer-s.
 public class Mesh : IDisposable
 {
-	private VertexArray _vao;
+	private readonly VertexArray _vao;
 
-	private GLBuffer _vbo;
-	private GLBuffer _ebo;
+	private readonly GLBuffer _vbo;
+	private readonly GLBuffer _ebo;
 
 	// No need to reference the array, since the data will get copied to the GPU memory.
 	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices)
@@ -57,7 +57,9 @@ public class Mesh : IDisposable
 	public void Dispose()
 	{
 		GC.SuppressFinalize(this);
+		Dispose(disposing: true);
 	}
+	~Mesh() => Dispose(disposing: false);
 
 	protected virtual void Dispose(bool disposing)
 	{
