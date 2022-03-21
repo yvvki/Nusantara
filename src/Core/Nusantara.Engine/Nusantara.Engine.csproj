@@ -9,7 +9,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Silk.NET.Assimp" Version="2.13.0" />
+	  <Compile Remove="Assimp\**" />
+	  <EmbeddedResource Remove="Assimp\**" />
+	  <None Remove="Assimp\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Silk.NET.Assimp" Version="2.14.0" />
+	  <PackageReference Include="SixLabors.ImageSharp" Version="2.1.0" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.232" />
 	</ItemGroup>
 
 	<ItemGroup>
