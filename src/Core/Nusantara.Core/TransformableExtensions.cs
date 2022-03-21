@@ -11,27 +11,40 @@ namespace Nusantara;
 public static class TransformableExtensions
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Negate<T>(this T transformable)
-		where T : class, ITransformable
+	public static T WithTransform<T>(this T transformable, Transform transform)
+		where T : ITransformable
 	{
-		Transform result = new(transformable);
-		result = Transform.Negate(result);
+		T result = transformable;
 
-		transformable.Translation = result.Translation;
-		transformable.Rotation = result.Rotation;
-		transformable.Scale = result.Scale;
+		result.Translation = transform.Translation;
+		result.Rotation = transform.Rotation;
+		result.Scale = transform.Scale;
+
+		return result;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Concatenate<T>(this T transformable, Transform other)
-		where T : class, ITransformable
+	public static T Negate<T>(this T transformable)
+		where T : ITransformable
 	{
-		Transform result = new(transformable);
-		result = Transform.Concatenate(result, other);
+		Transform transform = new(transformable);
+		transform = Transform.Negate(transform);
 
-		transformable.Translation = result.Translation;
-		transformable.Rotation = result.Rotation;
-		transformable.Scale = result.Scale;
+		T result = transformable.WithTransform(transform);
+
+		return result;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static T Concatenate<T>(this T transformable, Transform other)
+		where T : ITransformable
+	{
+		Transform transform = new(transformable);
+		transform = Transform.Concatenate(transform, other);
+
+		T result = transformable.WithTransform(transform);
+
+		return result;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
