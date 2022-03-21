@@ -13,8 +13,8 @@ namespace Nusantara.Engine.Assimp;
 
 public class Model
 {
-	public List<OpenGL.Mesh> Meshes { get; } = new();
-	public List<Nusantara.OpenGL.Skia.SKTexture> Textures { get; } = new();
+	public List<MeshInfo> Meshes { get; } = new();
+	public List<TextureInfo> Textures { get; } = new();
 
 	public static unsafe void FromFile(GL gl, ai::Assimp ai, string filename)
 	{
@@ -28,7 +28,6 @@ public class Model
 		Model model = new();
 
 		Process();
-
 		void Process()
 		{
 			ai::Node* node = scene->MRootNode;
@@ -41,8 +40,8 @@ public class Model
 				model.Meshes.Add(ProcessMesh(mesh));
 			}
 
-			// Convert Assimp's mesh to our mesh.
-			Mesh ProcessMesh(ai::Mesh* mesh)
+			// Convert Assimp's mesh to our mesh-info.
+			MeshInfo ProcessMesh(ai::Mesh* mesh)
 			{
 				List<Vertex> vertices = new();
 				List<uint> indices = new();
@@ -72,7 +71,7 @@ public class Model
 					}
 				}
 
-				return new(gl, vertices.ToArray(), indices.ToArray());
+				return new(vertices.ToArray(), indices.ToArray());
 			}
 
 			TextureInfo[] ProcessTexture(ai::Material* mat, ai::TextureType type)
