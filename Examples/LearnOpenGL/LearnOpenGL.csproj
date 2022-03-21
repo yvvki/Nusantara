@@ -15,12 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Core\Nusantara.Engine\Nusantara.Engine.csproj" />
-    <ProjectReference Include="..\..\..\src\Core\Nusantara\Nusantara.csproj" />
+    <ProjectReference Include="..\..\src\Core\Nusantara.Engine\Nusantara.Engine.csproj" />
+    <ProjectReference Include="..\..\src\Core\Nusantara\Nusantara.csproj" />
   </ItemGroup>
 
 </Project>
