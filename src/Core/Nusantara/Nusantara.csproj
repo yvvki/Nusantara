@@ -10,8 +10,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\API\Nusantara.OpenGL\Nusantara.OpenGL.csproj" />
+    <ProjectReference Include="..\..\Maths\Nusantara.Maths.Experimental\Nusantara.Maths.Experimental.csproj" />
     <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
     <ProjectReference Include="..\Nusantara.Core\Nusantara.Core.csproj" />
+    <ProjectReference Include="..\Nusantara.Engine\Nusantara.Engine.csproj" />
   </ItemGroup>
 
 </Project>
