@@ -9,41 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="awesomeface.png" />
-    <None Remove="container.jpg" />
-    <None Remove="container2.png" />
-    <None Remove="container2_specular.png" />
-    <None Remove="light.frag" />
-    <None Remove="shader.frag" />
-    <None Remove="shader.vert" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Resources\awesomeface.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\container.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\container2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\container2_specular.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\light.frag">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\shader.frag">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\shader.vert">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Resources\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\Nusantara\Nusantara.csproj" />
+    <PackageReference Include="SkiaSharp" Version="2.88.0-preview.209" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Core\Nusantara.Engine\Nusantara.Engine.csproj" />
+    <ProjectReference Include="..\..\..\src\Core\Nusantara\Nusantara.csproj" />
   </ItemGroup>
 
 </Project>
