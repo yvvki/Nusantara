@@ -19,7 +19,7 @@ public sealed class Camera : ICamera, ITransformable
 
 	public Vector3 Position { get; set; }
 	Vector3 ITransformable.Translation { get => Position; set => Position = value; }
-	public Quaternion Rotation { get; set; }
+	public Quaternion Rotation { get; set; } = Quaternion.Identity;
 	Vector3 ITransformable.Scale { get; set; } // Unused.
 
 	// Facing down.
