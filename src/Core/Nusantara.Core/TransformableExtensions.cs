@@ -11,7 +11,7 @@ namespace Nusantara;
 public static class TransformableExtensions
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static T WithTransform<T>(this T transformable, Transform transform)
+	public static T SetTransform<T>(this T transformable, Transform transform)
 		where T : ITransformable
 	{
 		T result = transformable;
@@ -30,7 +30,7 @@ public static class TransformableExtensions
 		Transform transform = new(transformable);
 		transform = Transform.Negate(transform);
 
-		T result = transformable.WithTransform(transform);
+		T result = transformable.SetTransform(transform);
 
 		return result;
 	}
@@ -42,7 +42,7 @@ public static class TransformableExtensions
 		Transform transform = new(transformable);
 		transform = Transform.Concatenate(transform, other);
 
-		T result = transformable.WithTransform(transform);
+		T result = transformable.SetTransform(transform);
 
 		return result;
 	}
