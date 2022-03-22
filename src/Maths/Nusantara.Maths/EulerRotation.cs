@@ -44,6 +44,12 @@ public struct EulerRotation :
 	public float Pitch;
 	public float Roll;
 
+	public static EulerRotation Identity
+	{
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		get => FromVector(Vector3.Zero);
+	}
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	internal static Vector3 ToVector(EulerRotation euler)
 	{
@@ -53,6 +59,18 @@ public struct EulerRotation :
 	internal static EulerRotation FromVector(Vector3 vector)
 	{
 		return new(vector.X, vector.Y, vector.Z);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Normalize(EulerRotation value)
+	{
+		EulerRotation result;
+
+		result.Yaw = value.Yaw % MathF.Tau;
+		result.Pitch = value.Pitch % MathF.Tau;
+		result.Roll = value.Roll % MathF.Tau;
+
+		return result;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
