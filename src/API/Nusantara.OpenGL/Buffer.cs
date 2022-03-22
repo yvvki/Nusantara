@@ -23,12 +23,12 @@ public class Buffer : GLObject
 
 	#region Constructors
 
-	public static Buffer FromData<T>(GL gl, ReadOnlySpan<T> data)
+	public static Buffer FromData<T>(GL gl, ReadOnlySpan<T> data, BufferStorageMask flags = default)
 		where T : unmanaged
 	{
 		Buffer buffer = new(gl);
 
-		buffer.Storage(data);
+		buffer.Storage(data, flags);
 
 		return buffer;
 	}
