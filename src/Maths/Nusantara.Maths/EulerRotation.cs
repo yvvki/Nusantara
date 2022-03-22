@@ -18,10 +18,6 @@ public struct EulerRotation :
 		Roll = roll;
 	}
 
-	public float Yaw;
-	public float Pitch;
-	public float Roll;
-
 	// I am very smart yes.
 	public static EulerRotation CreateFromQuaternion(Quaternion q)
 	{
@@ -44,105 +40,112 @@ public struct EulerRotation :
 		return euler;
 	}
 
+	public float Yaw;
+	public float Pitch;
+	public float Roll;
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static Vector3 ToVector(EulerRotation euler)
+	{
+		return new(euler.Yaw, euler.Pitch, euler.Roll);
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal static EulerRotation FromVector(Vector3 vector)
+	{
+		return new(vector.X, vector.Y, vector.Z);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public bool Equals(EulerRotation other)
 	{
-		return this == other;
+		return ToVector(this).Equals(ToVector(other));
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override bool Equals([NotNullWhen(true)] object? obj)
 	{
 		return obj is EulerRotation other && Equals(other);
 	}
 	public override int GetHashCode()
 	{
-		return unchecked(Yaw.GetHashCode() + Pitch.GetHashCode() + Roll.GetHashCode());
+		return ToVector(this).GetHashCode();
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool operator ==(EulerRotation left, EulerRotation right)
 	{
-		return left.Yaw == right.Yaw
-			&& left.Pitch == right.Pitch
-			&& left.Roll == right.Roll;
+		return ToVector(left) == ToVector(right);
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool operator !=(EulerRotation left, EulerRotation right)
 	{
-		return !(left == right);
+		return ToVector(left) != ToVector(right);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation Negate(EulerRotation value)
 	{
-		return -value;
+		return FromVector(Vector3.Negate(ToVector(value)));
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation Add(EulerRotation left, EulerRotation right)
 	{
-		return left + right;
+		return FromVector(Vector3.Add(ToVector(left), ToVector(right)));
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation Subtract(EulerRotation left, EulerRotation right)
 	{
-		return left - right;
+		return FromVector(Vector3.Subtract(ToVector(left), ToVector(right)));
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation Multiply(EulerRotation left, EulerRotation right)
 	{
-		return left * right;
+		return FromVector(Vector3.Multiply(ToVector(left), ToVector(right)));
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation Divide(EulerRotation left, EulerRotation right)
 	{
-		return left / right;
+		return FromVector(Vector3.Divide(ToVector(left), ToVector(right)));
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation operator -(EulerRotation value)
 	{
-		EulerRotation result;
-
-		result.Yaw = -value.Yaw;
-		result.Pitch = -value.Pitch;
-		result.Roll = -value.Roll;
-
-		return result;
+		return FromVector(-ToVector(value));
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation operator +(EulerRotation left, EulerRotation right)
 	{
-		EulerRotation result;
-
-		result.Yaw = left.Yaw + right.Yaw;
-		result.Pitch = left.Pitch + right.Pitch;
-		result.Roll = left.Roll + right.Roll;
-
-		return result;
+		return FromVector(ToVector(left) + ToVector(right));
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation operator -(EulerRotation left, EulerRotation right)
 	{
-		EulerRotation result;
-
-		result.Yaw = left.Yaw - right.Yaw;
-		result.Pitch = left.Pitch - right.Pitch;
-		result.Roll = left.Roll - right.Roll;
-
-		return result;
+		return FromVector(ToVector(left) - ToVector(right));
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation operator *(EulerRotation left, EulerRotation right)
 	{
-		EulerRotation result;
-
-		result.Yaw = left.Yaw * right.Yaw;
-		result.Pitch = left.Pitch * right.Pitch;
-		result.Roll = left.Roll * right.Roll;
-
-		return result;
+		return FromVector(ToVector(left) * ToVector(right));
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation operator *(EulerRotation left, float right)
+	{
+		return FromVector(ToVector(left) * right);
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation operator *(float left, EulerRotation right)
+	{
+		return FromVector(left * ToVector(right));
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static EulerRotation operator /(EulerRotation left, EulerRotation right)
 	{
-		EulerRotation result;
-
-		result.Yaw = left.Yaw / right.Yaw;
-		result.Pitch = left.Pitch / right.Pitch;
-		result.Roll = left.Roll / right.Roll;
-
-		return result;
+		return FromVector(ToVector(left) / ToVector(right));
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation operator /(EulerRotation left, float right)
+	{
+		return FromVector(ToVector(left) / right);
 	}
 
 	public override string ToString()
