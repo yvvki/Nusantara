@@ -3,8 +3,6 @@
 
 using System.Numerics;
 
-using Nusantara.Maths;
-
 namespace Nusantara;
 
 public sealed class Camera : ICamera, ITransformable
