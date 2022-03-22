@@ -44,11 +44,6 @@ public struct EulerRotation :
 		return euler;
 	}
 
-	public override string ToString()
-	{
-		return $"{{Yaw:{Yaw} Pitch:{Pitch} Roll:{Roll}}}";
-	}
-
 	public bool Equals(EulerRotation other)
 	{
 		return this == other;
@@ -71,6 +66,88 @@ public struct EulerRotation :
 	public static bool operator !=(EulerRotation left, EulerRotation right)
 	{
 		return !(left == right);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Negate(EulerRotation value)
+	{
+		return -value;
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Add(EulerRotation left, EulerRotation right)
+	{
+		return left + right;
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Subtract(EulerRotation left, EulerRotation right)
+	{
+		return left - right;
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Multiply(EulerRotation left, EulerRotation right)
+	{
+		return left * right;
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Divide(EulerRotation left, EulerRotation right)
+	{
+		return left / right;
+	}
+
+	public static EulerRotation operator -(EulerRotation value)
+	{
+		EulerRotation result;
+
+		result.Yaw = -value.Yaw;
+		result.Pitch = -value.Pitch;
+		result.Roll = -value.Roll;
+
+		return result;
+	}
+	public static EulerRotation operator +(EulerRotation left, EulerRotation right)
+	{
+		EulerRotation result;
+
+		result.Yaw = left.Yaw + right.Yaw;
+		result.Pitch = left.Pitch + right.Pitch;
+		result.Roll = left.Roll + right.Roll;
+
+		return result;
+	}
+	public static EulerRotation operator -(EulerRotation left, EulerRotation right)
+	{
+		EulerRotation result;
+
+		result.Yaw = left.Yaw - right.Yaw;
+		result.Pitch = left.Pitch - right.Pitch;
+		result.Roll = left.Roll - right.Roll;
+
+		return result;
+	}
+	public static EulerRotation operator *(EulerRotation left, EulerRotation right)
+	{
+		EulerRotation result;
+
+		result.Yaw = left.Yaw * right.Yaw;
+		result.Pitch = left.Pitch * right.Pitch;
+		result.Roll = left.Roll * right.Roll;
+
+		return result;
+	}
+	public static EulerRotation operator /(EulerRotation left, EulerRotation right)
+	{
+		EulerRotation result;
+
+		result.Yaw = left.Yaw / right.Yaw;
+		result.Pitch = left.Pitch / right.Pitch;
+		result.Roll = left.Roll / right.Roll;
+
+		return result;
+	}
+
+	public override string ToString()
+	{
+		return $"{{Yaw:{Yaw} Pitch:{Pitch} Roll:{Roll}}}";
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
