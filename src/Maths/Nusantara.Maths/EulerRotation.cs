@@ -56,6 +56,28 @@ public struct EulerRotation :
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Min(EulerRotation value1, EulerRotation value2)
+	{
+		return FromVector(Vector3.Min(ToVector(value1), ToVector(value2)));
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Max(EulerRotation value1, EulerRotation value2)
+	{
+		return FromVector(Vector3.Max(ToVector(value1), ToVector(value2)));
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Clamp(EulerRotation value, EulerRotation min, EulerRotation max)
+	{
+		return FromVector(Vector3.Clamp(ToVector(value), ToVector(min), ToVector(max)));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static EulerRotation Lerp(EulerRotation value1, EulerRotation value2, float amount)
+	{
+		return FromVector(Vector3.Lerp(ToVector(value1), ToVector(value2), amount));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public bool Equals(EulerRotation other)
 	{
 		return ToVector(this).Equals(ToVector(other));
@@ -65,6 +87,7 @@ public struct EulerRotation :
 	{
 		return obj is EulerRotation other && Equals(other);
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override int GetHashCode()
 	{
 		return ToVector(this).GetHashCode();
