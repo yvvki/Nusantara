@@ -32,12 +32,12 @@ public class Game
 		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 1.0f)),
 		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 0.0f)),
 
-		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(0.0f, 0.0f)),
-		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(1.0f, 0.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(1.0f, 1.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(1.0f, 1.0f)),
-		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(0.0f, 1.0f)),
-		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f, 1.0f),   new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(0.0f, 0.0f)),
 
 		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
 		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 1.0f)),
@@ -131,7 +131,7 @@ public class Game
 
 			// Handling input.
 			camera = new(
-				MathHelper.DegreesToRadians(90), // Defaults to 90 degrees (CS:GO).
+				Scalar.DegreesToRadians(90f), // Defaults to 90 degrees (CS:GO).
 				MathHelper.NormalizeHomogeneous((Vector2D<float>)window.Size),
 				0.1f,
 				100.0f)
@@ -157,9 +157,9 @@ public class Game
 			{
 				switch (key)
 				{
-				case Key.Escape:
-					window.Close();
-					break;
+					case Key.Escape:
+						window.Close();
+						break;
 				}
 			}
 
@@ -197,9 +197,9 @@ public class Game
 
 				// Team Fortress 2 style.
 				camera.FieldOfView = Math.Clamp(
-					 camera.FieldOfView - MathHelper.DegreesToRadians(wheel.Y),
-					 MathHelper.DegreesToRadians(75),
-					 MathHelper.DegreesToRadians(90));
+					 camera.FieldOfView - Scalar.DegreesToRadians(wheel.Y),
+					 Scalar.DegreesToRadians(75f),
+					 Scalar.DegreesToRadians(90f));
 			}
 
 			// Creating GL.
@@ -329,8 +329,8 @@ public class Game
 			shader.Uniform1("Torch.Linear", linear);
 			shader.Uniform1("Torch.Quadratic", quadratic);
 
-			shader.Uniform1("Torch.CutOff", MathF.Cos(MathHelper.DegreesToRadians(25.0f)));
-			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(MathHelper.DegreesToRadians(35.0f)));
+			shader.Uniform1("Torch.CutOff", MathF.Cos(Scalar.DegreesToRadians(25.0f)));
+			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(Scalar.DegreesToRadians(35.0f)));
 
 			gl.UseProgram(shader.Handle);
 			for (int i = 0; i < cubePositions.Length; i++)
@@ -341,7 +341,7 @@ public class Game
 				float angle = 20.0f * i;
 				model.Rotation = Quaternion.CreateFromAxisAngle(
 					Vector3.Normalize(new(1.0f, 0.3f, 0.5f)),
-					MathHelper.DegreesToRadians(angle));
+					Scalar.DegreesToRadians(angle));
 
 				Matrix4x4 modelMatrix = model.GetMatrix();
 				if (Matrix4x4.Invert(modelMatrix, out Matrix4x4 normal) is false) throw new InvalidOperationException();

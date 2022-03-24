@@ -24,38 +24,6 @@ public static partial class MathHelper
 
 	#endregion
 
-	#region Radians Degrees
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static float DegreesToRadians(float degrees)
-	{
-		const float constant = MathF.PI / 180.0f;
-		return degrees * constant;
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static float RadiansToDegree(float radians)
-	{
-		const float constant = 180.0f / MathF.PI;
-		return radians * constant;
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static double DegreesToRadians(double degrees)
-	{
-		const double constant = Math.PI / 180.0;
-		return degrees * constant;
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static double RadiansToDegree(double radians)
-	{
-		const double constant = 180.0 / Math.PI;
-		return radians * constant;
-	}
-
-	#endregion
-
 	#region Homogeneous Vector
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
