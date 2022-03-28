@@ -67,29 +67,34 @@ public static partial class MathHelper
 
 	#endregion
 
+	#region Rectangle
+
+	public static Rectangle<T> CalculateBounds<T>(ReadOnlySpan<Vector2D<T>> vectors)
+		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
+	{
+		// Return early if empty.
+		if (vectors.IsEmpty) return new(Vector2D<T>.Zero, Vector2D<T>.Zero);
+
+		Vector2D<T> left_top;
+		Vector2D<T> right_bottom;
+
+		// Assign the first 
+		left_top = right_bottom = vectors[0];
+
+		for (int i = 1; i < vectors.Length; i++)
+		{
+			var vector = vectors[i];
+
+			left_top = Vector2D.Min(left_top, vector);
+			right_bottom = Vector2D.Max(right_bottom, vector);
+		}
+
+		return Rectangle.FromLTRB(left_top.X, left_top.Y, right_bottom.X, right_bottom.Y);
+	}
+
+	#endregion
+
 	#region Create Matrix
-
-	/// <inheritdoc cref="Matrix4x4.CreateScale(Vector3)"/>
-	public static Matrix4x4 CreateScale(Vector4 scales)
-	{
-		Matrix4x4 result = Matrix4x4.Identity;
-		result.M11 = scales.X;
-		result.M22 = scales.Y;
-		result.M33 = scales.Z;
-		result.M44 = scales.W;
-		return result;
-	}
-
-	/// <inheritdoc cref="Matrix4x4.CreateTranslation(Vector3)"/>
-	public static Matrix4x4 CreateTranslation(Vector4 position)
-	{
-		Matrix4x4 result = Matrix4x4.Identity;
-		result.M41 = position.X;
-		result.M42 = position.Y;
-		result.M43 = position.Z;
-		result.M44 = position.W;
-		return result;
-	}
 
 	public static Matrix4x4 CreateTransform(Vector3 translation, Quaternion rotation, Vector3 scale)
 	{
@@ -104,24 +109,6 @@ public static partial class MathHelper
 
 		// Translation
 		result.Translation = translation;
-
-		return result;
-	}
-
-	public static Matrix4x4 CreateTransform(Vector4 translation, Quaternion rotation, Vector4 scale)
-	{
-		Matrix4x4 result;
-
-		// Scale
-		Matrix4x4 m_scale = CreateScale(scale);
-		// Rotation
-		Matrix4x4 m_rotation = Matrix4x4.CreateFromQuaternion(rotation);
-
-		result = Matrix4x4.Multiply(m_scale, m_rotation);
-
-		// Translation
-		result.Translation = translation.XYZ();
-		result.M44 *= translation.W;
 
 		return result;
 	}
