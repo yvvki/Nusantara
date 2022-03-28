@@ -2,6 +2,7 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Nusantara;
 
@@ -82,6 +83,7 @@ public sealed class Camera : ICamera, ITransformable
 			Up);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private Matrix4x4 CalculateProjection()
 	{
 		return Matrix4x4.CreatePerspectiveFieldOfView(
