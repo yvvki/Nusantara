@@ -10,11 +10,13 @@ namespace Nusantara;
 
 public static class TransformableExtensions
 {
+	// Returns the @this argument for dealing with struct types.
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static T SetTransform<T>(this T transformable, Transform transform)
+	public static T SetTransform<T>(this T @this, Transform transform)
 		where T : ITransformable
 	{
-		T result = transformable;
+		T result = @this;
 
 		result.Translation = transform.Translation;
 		result.Rotation = transform.Rotation;
@@ -24,36 +26,36 @@ public static class TransformableExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static T Negate<T>(this T transformable)
+	public static T Negate<T>(this T @this)
 		where T : ITransformable
 	{
-		Transform transform = new(transformable);
+		Transform transform = new(@this);
 		transform = Transform.Negate(transform);
 
-		T result = transformable.SetTransform(transform);
+		T result = @this.SetTransform(transform);
 
 		return result;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static T Concatenate<T>(this T transformable, Transform other)
+	public static T Concatenate<T>(this T @this, Transform other)
 		where T : ITransformable
 	{
-		Transform transform = new(transformable);
+		Transform transform = new(@this);
 		transform = Transform.Concatenate(transform, other);
 
-		T result = transformable.SetTransform(transform);
+		T result = @this.SetTransform(transform);
 
 		return result;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Matrix4x4 GetMatrix<T>(this T transformable)
+	public static Matrix4x4 GetMatrix<T>(this T @this)
 		where T : ITransformable
 	{
 		return MathHelper.CreateTransform(
-			transformable.Translation,
-			transformable.Rotation,
-			transformable.Scale);
+			@this.Translation,
+			@this.Rotation,
+			@this.Scale);
 	}
 }
