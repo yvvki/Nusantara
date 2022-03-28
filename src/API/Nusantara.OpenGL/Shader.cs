@@ -33,7 +33,7 @@ public class Shader : GLObject
 
 	#region Constructors
 
-	public static Shader FromSource(GL gl, ShaderType type, string @string)
+	public static Shader CreateFromSource(GL gl, ShaderType type, string @string)
 	{
 		Shader shader = new(gl, type);
 
@@ -43,20 +43,20 @@ public class Shader : GLObject
 		return shader;
 	}
 
-	public static Shader FromFile(GL gl, ShaderType type, string path)
+	public static Shader CreateFromFile(GL gl, ShaderType type, string path)
 	{
 		string @string = File.ReadAllText(path);
 
-		return FromSource(gl, type, @string);
+		return CreateFromSource(gl, type, @string);
 	}
 
-	public static Shader FromStream(GL gl, ShaderType type, Stream stream)
+	public static Shader CreateFromStream(GL gl, ShaderType type, Stream stream)
 	{
 		using StreamReader streamReader = new(stream, leaveOpen: true);
 
 		string @string = streamReader.ReadToEnd();
 
-		return FromSource(gl, type, @string);
+		return CreateFromSource(gl, type, @string);
 	}
 
 	#endregion

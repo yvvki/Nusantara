@@ -225,13 +225,13 @@ public class Game
 			}
 
 			// Compiling Shaders.
-			using GLShader vertShader = GLShader.FromFile(gl, ShaderType.VertexShader, Path.Combine(resourcePath, "shader.vert"));
-			using GLShader fragShader = GLShader.FromFile(gl, ShaderType.FragmentShader, Path.Combine(resourcePath, "shader.frag"));
-			using GLShader fragLight = GLShader.FromFile(gl, ShaderType.FragmentShader, Path.Combine(resourcePath, "light.frag"));
+			using GLShader vertShader = GLShader.CreateFromFile(gl, ShaderType.VertexShader, Path.Combine(resourcePath, "shader.vert"));
+			using GLShader fragShader = GLShader.CreateFromFile(gl, ShaderType.FragmentShader, Path.Combine(resourcePath, "shader.frag"));
+			using GLShader fragLight = GLShader.CreateFromFile(gl, ShaderType.FragmentShader, Path.Combine(resourcePath, "light.frag"));
 
 			// Linking Program.
-			shader = GLProgram.FromShaders(gl, vertShader, fragShader);
-			lightShader = GLProgram.FromShaders(gl, vertShader, fragLight);
+			shader = GLProgram.CreateFromShaders(gl, vertShader, fragShader);
+			lightShader = GLProgram.CreateFromShaders(gl, vertShader, fragLight);
 		}
 
 		window.Update += (deltaTime) =>

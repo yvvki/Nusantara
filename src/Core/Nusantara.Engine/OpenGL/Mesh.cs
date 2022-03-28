@@ -22,13 +22,13 @@ public class Mesh : IDisposable
 	// No need to reference the array, since the data will get copied to the GPU memory.
 	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices)
 	{
-		_vbo = GLBuffer.FromData(gl, vertices);
-		_ebo = GLBuffer.FromData(gl, indices);
+		_vbo = GLBuffer.CreateStorage(gl, vertices);
+		_ebo = GLBuffer.CreateStorage(gl, indices);
 
 		Type vertexType = typeof(Vertex);
 
 		// Binding buffers to VertexArray.
-		_vao = VertexArray.FromBuffers(
+		_vao = VertexArray.CreateFromBuffers(
 			gl,
 			_ebo,
 			0,

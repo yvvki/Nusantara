@@ -24,12 +24,12 @@ public partial class Program : GLObject
 
 	#region Constructors
 
-	public static Program FromShaders(GL gl, params Shader[] shaders)
+	public static Program CreateFromShaders(GL gl, params Shader[] shaders)
 	{
-		return FromShaders(gl, shaders.AsEnumerable());
+		return CreateFromShaders(gl, shaders.AsEnumerable());
 	}
 
-	public static Program FromShaders(GL gl, IEnumerable<Shader> shaders)
+	public static Program CreateFromShaders(GL gl, IEnumerable<Shader> shaders)
 	{
 		Program program = new(gl);
 

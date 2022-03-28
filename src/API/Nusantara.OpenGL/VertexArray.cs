@@ -25,7 +25,13 @@ public class VertexArray : GLObject
 	#region Constructors
 
 	// Attribs are not handled. 
-	public static VertexArray FromBuffers(GL gl, Buffer? elementBuffer, uint bindingindex, Buffer? vertexBuffer, nint offset = 0, uint stride = 0)
+	public static VertexArray CreateFromBuffers(
+		GL gl,
+		Buffer? elementBuffer,
+		uint bindingindex,
+		Buffer? vertexBuffer,
+		nint offset = 0,
+		uint stride = 0)
 	{
 		VertexArray vertexArray = new(gl);
 
