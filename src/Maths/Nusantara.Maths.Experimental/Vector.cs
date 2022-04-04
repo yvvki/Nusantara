@@ -3,17 +3,16 @@
 
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using System.Text;
 
 using Silk.NET.Maths;
 
 namespace Nusantara.Maths;
 
-[RequiresPreviewFeatures]
 public interface IVector<TSelf, TNumber> :
 	IList,
 	IList<TNumber>,
@@ -35,58 +34,52 @@ public interface IVector<TSelf, TNumber> :
 	where TSelf : struct, IVector<TSelf, TNumber>
 	where TNumber : unmanaged, INumber<TNumber>
 {
+	// value should be constant.
 	static new abstract int Count { get; }
 	static new abstract bool IsReadOnly { get; }
 
 	static abstract TSelf Zero { get; }
 	static abstract TSelf One { get; }
 
+	int Length => TSelf.Count; // Workaround in order for from end and range indexer to work.
 	new TNumber this[int index] { get; set; }
 
 	static abstract TSelf operator *(TSelf left, TNumber right);
 	static abstract TSelf operator *(TNumber left, TSelf right);
 	static abstract TSelf operator /(TSelf left, TNumber right);
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Add(TSelf left, TSelf right)
 	{
 		return left + right;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Subtract(TSelf left, TSelf right)
 	{
 		return left - right;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Multiply(TSelf left, TSelf right)
 	{
 		return left * right;
 	}
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Multiply(TSelf left, TNumber right)
 	{
 		return left * right;
 	}
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Multiply(TNumber left, TSelf right)
 	{
 		return left * right;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Divide(TSelf left, TSelf right)
 	{
 		return left / right;
 	}
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Divide(TSelf left, TNumber right)
 	{
 		return left / right;
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Min(TSelf left, TSelf right)
 	{
 		TSelf result = left;
@@ -165,6 +158,7 @@ public interface IVector<TSelf, TNumber> :
 		GetElementReferenceUnsafe(ref result, index) = value;
 		return result;
 	}
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void ThrowIfIndexOutOfCountRange(int index)
 	{
@@ -179,7 +173,6 @@ public interface IVector<TSelf, TNumber> :
 			throw new IndexOutOfRangeException();
 		}
 	}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static ref TNumber GetElementReferenceUnsafe(ref TSelf vector, int index)
 	{
@@ -253,11 +246,11 @@ public interface IVector<TSelf, TNumber> :
 
 	bool ICollection<TNumber>.Contains(TNumber item)
 	{
-		return IndexOf(item) is >= 0;
+		return IndexOf(item) is not < 0;
 	}
 	bool IList.Contains(object? value)
 	{
-		return IndexOf(value) is >= 0;
+		return IndexOf(value) is not < 0;
 	}
 
 	int IList.Add(object? obj)
@@ -325,13 +318,14 @@ public interface IVector<TSelf, TNumber> :
 	string IFormattable.ToString(string? format, IFormatProvider? formatProvider)
 	{
 		StringBuilder sb = new();
+		string separator = NumberFormatInfo.GetInstance(formatProvider).NumberGroupSeparator;
 
 		IEnumerator<TNumber> enumerator = GetEnumerator();
 
 		sb.Append('<');
 		while (PrintComponent())
 		{
-			sb.Append(',');
+			sb.Append(separator);
 			sb.Append(' ');
 		}
 		sb.Append('>');
@@ -354,12 +348,11 @@ public interface IVector<TSelf, TNumber> :
 	#endregion
 }
 
-[RequiresPreviewFeatures]
 public struct Vector2<T> : IVector<Vector2<T>, T>
 	where T : unmanaged, INumber<T>
 {
-	internal const int Count = 2;
-	static int IVector<Vector2<T>, T>.Count => Count;
+	internal const int count = 2;
+	static int IVector<Vector2<T>, T>.Count => count;
 	public static bool IsReadOnly => false;
 
 	public T X;
@@ -372,11 +365,11 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
 	}
 	public Vector2(T value) : this(value, value) { }
 
-	public static Vector2<T> Zero => default;
-	public static Vector2<T> One { get; }
+	public static Vector2<T> Zero => new(T.Zero);
+	public static Vector2<T> One => new(T.One);
 
-	public static Vector2<T> AdditiveIdentity { get; }
-	public static Vector2<T> MultiplicativeIdentity { get; }
+	public static Vector2<T> AdditiveIdentity => new(T.AdditiveIdentity);
+	public static Vector2<T> MultiplicativeIdentity => new(T.MultiplicativeIdentity);
 
 	public T this[int index]
 	{
