@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.Experimental" Version="7.0.0-preview.2.22152.2" />
     <PackageReference Include="Silk.NET.Maths" Version="2.14.0" />
   </ItemGroup>
 

@@ -12,8 +12,16 @@
     <RootNamespace>Nusantara.Maths</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <EnablePreviewFeatures>True</EnablePreviewFeatures>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Nusantara.Maths\Nusantara.Maths.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Experimental" Version="7.0.0-preview.2.22152.2" />
   </ItemGroup>
 
 </Project>
