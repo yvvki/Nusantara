@@ -24,7 +24,7 @@ public class VertexArray : GLObject
 
 	#region Constructors
 
-	// Attribs are not handled. 
+	// Attribs are not handled.
 	public static VertexArray CreateFromBuffers(
 		GL gl,
 		Buffer? elementBuffer,
@@ -62,7 +62,7 @@ public class VertexArray : GLObject
 		if (buffer is not null)
 		{
 			// Checks the equality of the GL members.
-			ThrowIfNullOrInvalidGLObject(buffer, false);
+			ThrowIfArgumentGLObjectNullOrInvalid(buffer, false);
 			bufferHandle = buffer.Handle;
 		}
 
@@ -78,7 +78,7 @@ public class VertexArray : GLObject
 		if (buffer is not null)
 		{
 			// Checks the equality of the GL members.
-			ThrowIfNullOrInvalidGLObject(buffer, false);
+			ThrowIfArgumentGLObjectNullOrInvalid(buffer, false);
 			bufferHandle = buffer.Handle;
 		}
 

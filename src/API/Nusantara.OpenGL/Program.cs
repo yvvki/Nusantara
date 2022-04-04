@@ -73,7 +73,7 @@ public partial class Program : GLObject
 	public void Attach([NotNull] Shader shader)
 	{
 		ThrowIfDisposed();
-		ThrowIfNullOrInvalidGLObject(shader, false);
+		ThrowIfArgumentGLObjectNullOrInvalid(shader, false);
 
 		GL.AttachShader(Handle, shader.Handle);
 	}
@@ -81,7 +81,7 @@ public partial class Program : GLObject
 	public void Detach([NotNull] Shader shader)
 	{
 		ThrowIfDisposed();
-		ThrowIfNullOrInvalidGLObject(shader, false);
+		ThrowIfArgumentGLObjectNullOrInvalid(shader, false);
 
 		GL.DetachShader(Handle, shader.Handle);
 	}
@@ -123,6 +123,11 @@ public partial class Program : GLObject
 		int location = GL.GetUniformLocation(Handle, name);
 
 		return location;
+	}
+
+	public void Use()
+	{
+		GL.UseProgram(Handle);
 	}
 
 	#endregion

@@ -86,21 +86,27 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal void ThrowIfNullOrInvalidGLObject(
-		[NotNull] GLObject argument!!,
-		bool throwIfDisposed = true,
-		[CallerArgumentExpression("argument")] string? paramName = null)
+	internal void ThrowIfArgumentGLNullOrMismatch([NotNull] GL argument!!)
 	{
-		if (GL.Equals(argument.GL) is false)
+		if (GL.Equals(argument) is false)
 		{
 			ThrowArgumentGLMismatchException();
 		}
 
 		[DoesNotReturn]
-		void ThrowArgumentGLMismatchException()
+		static void ThrowArgumentGLMismatchException()
 		{
-			throw new ArgumentException("Argument GL object does not match.", paramName);
+			// Throw InvalidOperationException since we expect both value is true.
+			throw new InvalidOperationException();
 		}
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	internal void ThrowIfArgumentGLObjectNullOrInvalid(
+		[NotNull] GLObject argument!!,
+		bool throwIfDisposed = true)
+	{
+		ThrowIfArgumentGLNullOrMismatch(argument.GL);
 
 		if (throwIfDisposed)
 		{
