@@ -4,8 +4,8 @@
 using System.Numerics;
 
 using Nusantara;
-using Nusantara.Engine.OpenGL;
 using Nusantara.Maths;
+using Nusantara.OpenGL;
 
 using Silk.NET.Input;
 using Silk.NET.Maths;
@@ -16,8 +16,7 @@ using SkiaSharp;
 
 using GLProgram = Nusantara.OpenGL.Program;
 using GLShader = Nusantara.OpenGL.Shader;
-using GLSKTexture = Nusantara.Engine.OpenGL.SKTexture;
-using GLTexture = Nusantara.OpenGL.Texture;
+using GLSKTexture = Nusantara.OpenGL.SKTexture;
 
 namespace LearnOpenGL;
 
@@ -25,61 +24,61 @@ public class Game
 {
 	private static readonly Vertex[] vertices =
 	{
-		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 0.0f)),
-		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 0.0f)),
-		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 1.0f)),
-		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(1.0f, 1.0f)),
-		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 1.0f)),
-		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f),  new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f), new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f), new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f), new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f), new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f), new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f,  0.0f, -1.0f), new(0.0f, 0.0f)),
 
-		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(0.0f, 0.0f)),
-		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(1.0f, 0.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(1.0f, 1.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(1.0f, 1.0f)),
-		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(0.0f, 1.0f)),
-		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f),  new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f), new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f), new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f), new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f), new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f), new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f,  0.0f,  1.0f), new(0.0f, 0.0f)),
 
-		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
-		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 1.0f)),
-		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
-		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
-		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(0.0f, 0.0f)),
-		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f), new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f), new(1.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f), new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f,  0.0f,  0.0f), new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f), new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3(-1.0f,  0.0f,  0.0f), new(1.0f, 0.0f)),
 
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
-		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(1.0f, 1.0f)),
-		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
-		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(0.0f, 1.0f)),
-		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(0.0f, 0.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f),  new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f), new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f), new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f), new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 1.0f,  0.0f,  0.0f), new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f), new(0.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 1.0f,  0.0f,  0.0f), new(1.0f, 0.0f)),
 
-		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(0.0f, 1.0f)),
-		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(1.0f, 1.0f)),
-		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(1.0f, 0.0f)),
-		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(1.0f, 0.0f)),
-		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(0.0f, 0.0f)),
-		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f),  new(0.0f, 1.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f), new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f), new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f), new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f), new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f,  0.5f), new Vector3( 0.0f, -1.0f,  0.0f), new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3( 0.0f, -1.0f,  0.0f), new(0.0f, 1.0f)),
 
-		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(0.0f, 1.0f)),
-		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(1.0f, 1.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(1.0f, 0.0f)),
-		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(1.0f, 0.0f)),
-		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(0.0f, 0.0f)),
-		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f),  new(0.0f, 1.0f))
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f), new(0.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f), new(1.0f, 1.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f), new(1.0f, 0.0f)),
+		new(new Vector3( 0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f), new(1.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f,  0.5f), new Vector3( 0.0f,  1.0f,  0.0f), new(0.0f, 0.0f)),
+		new(new Vector3(-0.5f,  0.5f, -0.5f), new Vector3( 0.0f,  1.0f,  0.0f), new(0.0f, 1.0f))
 	};
 
 	private static readonly Vector3[] cubePositions =
 	{
-		new( 0.0f,  0.0f,  0.0f),
+		new( 0.0f,  0.0f,  0.0f ),
 		new( 2.0f,  5.0f, -15.0f),
-		new(-1.5f, -2.2f, -2.5f),
+		new(-1.5f, -2.2f, -2.5f ),
 		new(-3.8f, -2.0f, -12.3f),
-		new( 2.4f, -0.4f, -3.5f),
-		new(-1.7f,  3.0f, -7.5f),
-		new( 1.3f, -2.0f, -2.5f),
-		new( 1.5f,  2.0f, -2.5f),
-		new( 1.5f,  0.2f, -1.5f),
-		new(-1.3f,  1.0f, -1.5f)
+		new( 2.4f, -0.4f, -3.5f ),
+		new(-1.7f,  3.0f, -7.5f ),
+		new( 1.3f, -2.0f, -2.5f ),
+		new( 1.5f,  2.0f, -2.5f ),
+		new( 1.5f,  0.2f, -1.5f ),
+		new(-1.3f,  1.0f, -1.5f )
 	};
 
 	private WindowOptions options = WindowOptions.Default with
@@ -94,8 +93,8 @@ public class Game
 
 	private Mesh mesh;
 
-	private GLTexture container2;
-	private GLTexture container2_specular;
+	private GLSKTexture container2;
+	private GLSKTexture container2_specular;
 
 	private GLProgram shader;
 	private GLProgram lightShader;

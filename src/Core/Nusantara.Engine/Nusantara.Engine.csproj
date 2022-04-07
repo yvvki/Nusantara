@@ -1,29 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>preview</LangVersion>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Assimp\**" />
-	  <EmbeddedResource Remove="Assimp\**" />
-	  <None Remove="Assimp\**" />
-	</ItemGroup>
+  <PropertyGroup>
+    <RootNamespace>Nusantara</RootNamespace>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="Silk.NET.Assimp" Version="2.14.0" />
-	  <PackageReference Include="SixLabors.ImageSharp" Version="2.1.0" />
-	  <PackageReference Include="SkiaSharp" Version="2.88.0-preview.232" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Silk.NET.Assimp" Version="2.14.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.0" />
+    <PackageReference Include="SkiaSharp" Version="2.88.0-preview.232" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\API\Nusantara.OpenGL\Nusantara.OpenGL.csproj" />
-	  <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
-	  <ProjectReference Include="..\Nusantara.Core\Nusantara.Core.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\API\Nusantara.OpenGL\Nusantara.OpenGL.csproj" />
+    <ProjectReference Include="..\..\Maths\Nusantara.Maths\Nusantara.Maths.csproj" />
+    <ProjectReference Include="..\Nusantara.Core\Nusantara.Core.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -4,26 +4,23 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-using Nusantara.OpenGL;
+using Silk.NET.OpenGL;
 
-using GL = Silk.NET.OpenGL.GL;
-using GLBuffer = Nusantara.OpenGL.Buffer;
-
-namespace Nusantara.Engine.OpenGL;
+namespace Nusantara.OpenGL;
 
 // Class for containing VertexArray of Vertex and the Buffer-s.
 public class Mesh : IDisposable
 {
 	private readonly VertexArray _vao;
 
-	private readonly GLBuffer _vbo;
-	private readonly GLBuffer _ebo;
+	private readonly Buffer _vbo;
+	private readonly Buffer _ebo;
 
 	// No need to reference the array, since the data will get copied to the GPU memory.
 	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices)
 	{
-		_vbo = GLBuffer.CreateStorage(gl, vertices);
-		_ebo = GLBuffer.CreateStorage(gl, indices);
+		_vbo = Buffer.CreateStorage(gl, vertices);
+		_ebo = Buffer.CreateStorage(gl, indices);
 
 		Type vertexType = typeof(Vertex);
 

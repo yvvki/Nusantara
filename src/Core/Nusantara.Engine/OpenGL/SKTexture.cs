@@ -5,9 +5,9 @@ using Silk.NET.OpenGL;
 
 using SkiaSharp;
 
-namespace Nusantara.Engine.OpenGL;
+namespace Nusantara.OpenGL;
 
-public class SKTexture : Nusantara.OpenGL.Texture
+public class SKTexture : Texture
 {
 	internal SKTexture(GL gl, uint handle) : base(gl, handle) { }
 

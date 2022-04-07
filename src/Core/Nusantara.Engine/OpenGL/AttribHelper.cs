@@ -8,10 +8,10 @@ using System.Runtime.CompilerServices;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 
-namespace Nusantara.Engine.OpenGL;
+namespace Nusantara.OpenGL;
 
 // thanks to <https://github.com/Windows10CE> for helping!
-public static class AttribHelper
+internal static class AttribHelper
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static (int size, VertexAttribType type) GetSizeEnum<T>()

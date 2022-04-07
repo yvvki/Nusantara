@@ -3,11 +3,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Nusantara.OpenGL;
+using Silk.NET.OpenGL;
 
-using VertexAttribType = Silk.NET.OpenGL.VertexAttribType;
-
-namespace Nusantara.Engine.OpenGL;
+namespace Nusantara.OpenGL;
 
 public static class VertexArrayExtensions
 {
