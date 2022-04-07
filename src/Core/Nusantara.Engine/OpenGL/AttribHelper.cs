@@ -14,14 +14,14 @@ namespace Nusantara.OpenGL;
 internal static class AttribHelper
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static (int size, VertexAttribType type) GetSizeEnum<T>()
+	public static (int size, VertexAttribType type) GetSizeType<T>()
 		where T : struct
 	{
-		return GetSizeEnum(typeof(T));
+		return GetSizeType(typeof(T));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static (int size, VertexAttribType type) GetSizeEnum([NotNull] Type type)
+	public static (int size, VertexAttribType type) GetSizeType([NotNull] Type type)
 	{
 		// Auto checks supported type.
 		int size = GetSize(type);
@@ -29,12 +29,12 @@ internal static class AttribHelper
 
 		if (type.IsPrimitive)
 		{
-			@enum = GetEnum(type);
+			@enum = GetType(type);
 		}
 		else if (type.IsGenericType)
 		{
 			Type genericArgument = type.GetGenericArguments()[0];
-			@enum = GetEnum(genericArgument);
+			@enum = GetType(genericArgument);
 		}
 		else
 		{
@@ -89,15 +89,15 @@ internal static class AttribHelper
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static VertexAttribType GetEnum<T>()
+	public static VertexAttribType GetType<T>()
 		where T : unmanaged
 	{
-		return GetEnum(typeof(T));
+		return GetType(typeof(T));
 	}
 
 	// Only accept primitive and enum type.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static VertexAttribType GetEnum([NotNull] Type type!!)
+	public static VertexAttribType GetType([NotNull] Type type!!)
 	{
 		if (type.IsEnum)
 		{

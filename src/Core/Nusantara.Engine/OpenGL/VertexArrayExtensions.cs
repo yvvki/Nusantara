@@ -26,8 +26,8 @@ public static class VertexArrayExtensions
 		bool normalized = false,
 		uint relativeoffset = 0)
 	{
-		(int size, VertexAttribType @enum) = AttribHelper.GetSizeEnum(type);
-		@this.AttribFormat(attribindex, size, @enum, normalized, relativeoffset);
+		(int size, VertexAttribType attribType) = AttribHelper.GetSizeType(type);
+		@this.AttribFormat(attribindex, size, attribType, normalized, relativeoffset);
 	}
 
 	public static void EnableAttribBindingFormat<T>(
