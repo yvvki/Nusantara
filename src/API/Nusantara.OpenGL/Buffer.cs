@@ -23,6 +23,16 @@ public class Buffer : GLObject
 
 	#region Constructors
 
+	public static Buffer CreateData<T>(GL gl, ReadOnlySpan<T> data, VertexBufferObjectUsage usage)
+		where T : unmanaged
+	{
+		Buffer buffer = new Buffer(gl);
+
+		buffer.Data(data, usage);
+
+		return buffer;
+	}
+
 	public static Buffer CreateStorage<T>(GL gl, ReadOnlySpan<T> data, BufferStorageMask flags = default)
 		where T : unmanaged
 	{
@@ -50,6 +60,39 @@ public class Buffer : GLObject
 		ThrowIfInvalidEnum(pname);
 
 		GL.GetNamedBufferParameter(Handle, pname, out @params);
+	}
+
+	public void Data<T>(ReadOnlySpan<T> data, VertexBufferObjectUsage usage)
+		where T : unmanaged
+	{
+		ThrowIfDisposed();
+		ThrowIfInvalidEnum(usage);
+
+		GL.NamedBufferData(Handle, (nuint)data.Length, data, usage);
+	}
+
+	public void SubData<T>(nint offset, ReadOnlySpan<T> data)
+		where T : unmanaged
+	{
+		ThrowIfDisposed();
+
+		GL.NamedBufferSubData(Handle, offset, (nuint)data.Length, data);
+	}
+
+	public void InvalidateDate<T>(nint offset, nint length)
+		where T : unmanaged
+	{
+		ThrowIfDisposed();
+
+		GL.InvalidateBufferData(Handle);
+	}
+
+	public void InvalidateSubData<T>(nint offset, nuint length)
+		where T : unmanaged
+	{
+		ThrowIfDisposed();
+
+		GL.InvalidateBufferSubData(Handle, offset, length);
 	}
 
 	public void Storage<T>(ReadOnlySpan<T> data, BufferStorageMask flags = default)
