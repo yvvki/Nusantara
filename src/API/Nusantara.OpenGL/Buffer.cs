@@ -13,6 +13,7 @@ public class Buffer : GLObject
 	{
 		Debug.Assert(GL.IsBuffer(Handle));
 	}
+	internal Buffer(GL gl, Silk.NET.OpenGL.Buffer buffer) : this(gl, buffer.Handle) { }
 
 	public Buffer(GL gl) : this(gl, Create(gl)) { }
 
@@ -49,59 +50,69 @@ public class Buffer : GLObject
 
 	public void GetParameter(BufferPNameARB pname, out int @params)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetNamedBufferParameter(Handle, pname, out @params);
+		lock (GL)
+		{
+			GL.GetNamedBufferParameter(Handle, pname, out @params);
+			ThrowIfError();
+		}
 	}
 	public void GetParameter(BufferPNameARB pname, out long @params)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetNamedBufferParameter(Handle, pname, out @params);
+		lock (GL)
+		{
+			GL.GetNamedBufferParameter(Handle, pname, out @params);
+			ThrowIfError();
+		}
 	}
 
 	public void Data<T>(ReadOnlySpan<T> data, VertexBufferObjectUsage usage)
 		where T : unmanaged
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(usage);
-
-		GL.NamedBufferData(Handle, (nuint)data.Length, data, usage);
+		lock (GL)
+		{
+			GL.NamedBufferData(Handle, (nuint)data.Length, data, usage);
+			ThrowIfError();
+		}
 	}
 
 	public void SubData<T>(nint offset, ReadOnlySpan<T> data)
 		where T : unmanaged
 	{
-		ThrowIfDisposed();
-
-		GL.NamedBufferSubData(Handle, offset, (nuint)data.Length, data);
+		lock (GL)
+		{
+			GL.NamedBufferSubData(Handle, offset, (nuint)data.Length, data);
+			ThrowIfError();
+		}
 	}
 
 	public void InvalidateDate<T>(nint offset, nint length)
 		where T : unmanaged
 	{
-		ThrowIfDisposed();
-
-		GL.InvalidateBufferData(Handle);
+		lock (GL)
+		{
+			GL.InvalidateBufferData(Handle);
+			ThrowIfError();
+		}
 	}
 
 	public void InvalidateSubData<T>(nint offset, nuint length)
 		where T : unmanaged
 	{
-		ThrowIfDisposed();
-
-		GL.InvalidateBufferSubData(Handle, offset, length);
+		lock (GL)
+		{
+			GL.InvalidateBufferSubData(Handle, offset, length);
+			ThrowIfError();
+		}
 	}
 
 	public void Storage<T>(ReadOnlySpan<T> data, BufferStorageMask flags = default)
 		where T : unmanaged
 	{
-		ThrowIfDisposed();
-		//ThrowIfInvalidEnum(flags); // Do not throw, flags.
-
-		GL.NamedBufferStorage(Handle, data, flags);
+		lock (GL)
+		{
+			GL.NamedBufferStorage(Handle, data, flags);
+			ThrowIfError();
+		}
 	}
 
 	#endregion
@@ -109,5 +120,10 @@ public class Buffer : GLObject
 	protected sealed override void Delete()
 	{
 		GL.DeleteBuffer(Handle);
+	}
+
+	public static implicit operator Silk.NET.OpenGL.Buffer(Buffer value)
+	{
+		return new() { Handle = value.Handle };
 	}
 }
