@@ -26,7 +26,7 @@ public class Buffer : GLObject
 	public static Buffer CreateData<T>(GL gl, ReadOnlySpan<T> data, VertexBufferObjectUsage usage)
 		where T : unmanaged
 	{
-		Buffer buffer = new Buffer(gl);
+		Buffer buffer = new(gl);
 
 		buffer.Data(data, usage);
 
@@ -79,7 +79,7 @@ public class Buffer : GLObject
 		GL.NamedBufferSubData(Handle, offset, (nuint)data.Length, data);
 	}
 
-	public void InvalidateDate<T>(nint offset, nint length)
+	public void InvalidateData<T>(nint offset, nint length)
 		where T : unmanaged
 	{
 		ThrowIfDisposed();
