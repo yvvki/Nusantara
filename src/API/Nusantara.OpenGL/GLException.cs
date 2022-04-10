@@ -41,9 +41,10 @@ public class GLException : Exception
 
 			while (true)
 			{
-				var error = gl.GetError();
-				if (error is GLEnum.NoError)
-					break;
+				GLEnum error = gl.GetError();
+
+				if (error is GLEnum.NoError) break;
+
 				errors.Add(error);
 			}
 
@@ -62,21 +63,29 @@ public class GLException : Exception
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static string? GetMessage(GLEnum errorcode)
+	{
+		return GetMessage((ErrorCode)errorcode);
+	}
+
 	// Messages from https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetError.xhtml.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static string? GetMessage(GLEnum errorflag)
+	public static string? GetMessage(ErrorCode errorcode)
 	{
-		return errorflag switch
+		return errorcode switch
 		{
-			GLEnum.NoError => "No error has been recorded.",
-			GLEnum.InvalidEnum => "An unacceptable value is specified for an enumerated argument.",
-			GLEnum.InvalidValue => "A numeric argument is out of range.",
-			GLEnum.InvalidOperation => "The specified operation is not allowed in the current state.",
-			GLEnum.InvalidFramebufferOperation => "The framebuffer object is not complete.",
-			GLEnum.OutOfMemory => "There is not enough memory left to execute the command.",
-			GLEnum.StackUnderflow => "An attempt has been made to perform an operation that would cause an internal stack to underflow.",
-			GLEnum.StackOverflow => "An attempt has been made to perform an operation that would cause an internal stack to overflow.",
-			_ => throw new ArgumentOutOfRangeException(nameof(errorflag))
+			ErrorCode.NoError => "No error has been recorded.",
+			ErrorCode.InvalidEnum => "An unacceptable value is specified for an enumerated argument.",
+			ErrorCode.InvalidValue => "A numeric argument is out of range.",
+			ErrorCode.InvalidOperation => "The specified operation is not allowed in the current state.",
+			ErrorCode.StackOverflow => "An attempt has been made to perform an operation that would cause an internal stack to overflow.",
+			ErrorCode.StackUnderflow => "An attempt has been made to perform an operation that would cause an internal stack to underflow.",
+			ErrorCode.OutOfMemory => "There is not enough memory left to execute the command.",
+			ErrorCode.InvalidFramebufferOperation => "The framebuffer object is not complete.",
+			ErrorCode.TableTooLarge => "The specified table exceeds the implementation's maximum supported table size.",
+			ErrorCode.TextureTooLargeExt => "The specified texture exceeds the implementation's maximum supported texture size.",
+			_ => throw new ArgumentOutOfRangeException(nameof(errorcode))
 		};
 	}
 }
