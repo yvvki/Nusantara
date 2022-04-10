@@ -78,31 +78,6 @@ public static partial class VectorExtensions
 			@this.Y);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XY(this ref Vector2 @this,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XY<T>(this ref Vector2D<T> @this,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XY(this ref Vector2 @this, Vector2 value)
 	{
@@ -124,31 +99,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YX(this ref Vector2 @this,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YX<T>(this ref Vector2D<T> @this,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YX(this ref Vector2 @this, Vector2 value)
@@ -813,31 +763,6 @@ public static partial class VectorExtensions
 			@this.Z);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XY(this ref Vector3 @this,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XY<T>(this ref Vector3D<T> @this,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XY(this ref Vector3 @this, Vector2 value)
 	{
@@ -859,31 +784,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YX(this ref Vector3 @this,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YX<T>(this ref Vector3D<T> @this,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YX(this ref Vector3 @this, Vector2 value)
@@ -907,31 +807,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZ(this ref Vector3 @this,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZ<T>(this ref Vector3D<T> @this,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZ(this ref Vector3 @this, Vector2 value)
 	{
@@ -953,31 +828,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZY(this ref Vector3 @this,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZY<T>(this ref Vector3D<T> @this,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZY(this ref Vector3 @this, Vector2 value)
@@ -1514,35 +1364,6 @@ public static partial class VectorExtensions
 			@this.Z);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYZ(this ref Vector3 @this,
-	//	float x,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYZ<T>(this ref Vector3D<T> @this,
-	//	T x,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XYZ(this ref Vector3 @this, Vector3 value)
 	{
@@ -1566,35 +1387,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZY(this ref Vector3 @this,
-	//	float x,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZY<T>(this ref Vector3D<T> @this,
-	//	T x,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XZY(this ref Vector3 @this, Vector3 value)
@@ -1620,35 +1412,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXZ(this ref Vector3 @this,
-	//	float y,
-	//	float x,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXZ<T>(this ref Vector3D<T> @this,
-	//	T y,
-	//	T x,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YXZ(this ref Vector3 @this, Vector3 value)
 	{
@@ -1672,35 +1435,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZX(this ref Vector3 @this,
-	//	float y,
-	//	float z,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZX<T>(this ref Vector3D<T> @this,
-	//	T y,
-	//	T z,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZX(this ref Vector3 @this, Vector3 value)
@@ -1726,35 +1460,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYX(this ref Vector3 @this,
-	//	float z,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYX<T>(this ref Vector3D<T> @this,
-	//	T z,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZYX(this ref Vector3 @this, Vector3 value)
 	{
@@ -1778,35 +1483,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXY(this ref Vector3 @this,
-	//	float z,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXY<T>(this ref Vector3D<T> @this,
-	//	T z,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZXY(this ref Vector3 @this, Vector3 value)
@@ -3805,31 +3481,6 @@ public static partial class VectorExtensions
 			@this.W);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XY(this ref Vector4 @this,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XY<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XY(this ref Vector4 @this, Vector2 value)
 	{
@@ -3851,31 +3502,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YX(this ref Vector4 @this,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YX<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YX(this ref Vector4 @this, Vector2 value)
@@ -3899,31 +3525,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZ(this ref Vector4 @this,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZ<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZ(this ref Vector4 @this, Vector2 value)
 	{
@@ -3945,31 +3546,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZY(this ref Vector4 @this,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZY<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZY(this ref Vector4 @this, Vector2 value)
@@ -3993,31 +3569,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZW(this ref Vector4 @this,
-	//	float z,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZW<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZW(this ref Vector4 @this, Vector2 value)
 	{
@@ -4039,31 +3590,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZ(this ref Vector4 @this,
-	//	float w,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZ<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WZ(this ref Vector4 @this, Vector2 value)
@@ -5303,35 +4829,6 @@ public static partial class VectorExtensions
 			@this.W);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYZ(this ref Vector4 @this,
-	//	float x,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYZ<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XYZ(this ref Vector4 @this, Vector3 value)
 	{
@@ -5355,35 +4852,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZY(this ref Vector4 @this,
-	//	float x,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZY<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XZY(this ref Vector4 @this, Vector3 value)
@@ -5409,35 +4877,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXZ(this ref Vector4 @this,
-	//	float y,
-	//	float x,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXZ<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T x,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YXZ(this ref Vector4 @this, Vector3 value)
 	{
@@ -5461,35 +4900,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZX(this ref Vector4 @this,
-	//	float y,
-	//	float z,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZX<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T z,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZX(this ref Vector4 @this, Vector3 value)
@@ -5515,35 +4925,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYX(this ref Vector4 @this,
-	//	float z,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYX<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZYX(this ref Vector4 @this, Vector3 value)
 	{
@@ -5567,35 +4948,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXY(this ref Vector4 @this,
-	//	float z,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXY<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZXY(this ref Vector4 @this, Vector3 value)
@@ -5621,35 +4973,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZW(this ref Vector4 @this,
-	//	float y,
-	//	float z,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZW<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T z,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZW(this ref Vector4 @this, Vector3 value)
 	{
@@ -5673,35 +4996,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YWZ(this ref Vector4 @this,
-	//	float y,
-	//	float w,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YWZ<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T w,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YWZ(this ref Vector4 @this, Vector3 value)
@@ -5727,35 +5021,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYW(this ref Vector4 @this,
-	//	float z,
-	//	float y,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYW<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T y,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZYW(this ref Vector4 @this, Vector3 value)
 	{
@@ -5779,35 +5044,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZWY(this ref Vector4 @this,
-	//	float z,
-	//	float w,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZWY<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T w,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZWY(this ref Vector4 @this, Vector3 value)
@@ -5833,35 +5069,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZY(this ref Vector4 @this,
-	//	float w,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZY<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WZY(this ref Vector4 @this, Vector3 value)
 	{
@@ -5885,35 +5092,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WYZ(this ref Vector4 @this,
-	//	float w,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WYZ<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WYZ(this ref Vector4 @this, Vector3 value)
@@ -11315,39 +10493,6 @@ public static partial class VectorExtensions
 			@this.W);
 	}
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYZW(this ref Vector4 @this,
-	//	float x,
-	//	float y,
-	//	float z,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYZW<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T y,
-	//	T z,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XYZW(this ref Vector4 @this, Vector4 value)
 	{
@@ -11373,39 +10518,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYWZ(this ref Vector4 @this,
-	//	float x,
-	//	float y,
-	//	float w,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XYWZ<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T y,
-	//	T w,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Y = y,
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XYWZ(this ref Vector4 @this, Vector4 value)
@@ -11433,39 +10545,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZYW(this ref Vector4 @this,
-	//	float x,
-	//	float z,
-	//	float y,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		Y = y,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZYW<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T z,
-	//	T y,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		Y = y,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XZYW(this ref Vector4 @this, Vector4 value)
 	{
@@ -11491,39 +10570,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZWY(this ref Vector4 @this,
-	//	float x,
-	//	float z,
-	//	float w,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		W = w,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XZWY<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T z,
-	//	T w,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		Z = z,
-	//		W = w,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XZWY(this ref Vector4 @this, Vector4 value)
@@ -11551,39 +10597,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XWZY(this ref Vector4 @this,
-	//	float x,
-	//	float w,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		W = w,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XWZY<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T w,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		W = w,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XWZY(this ref Vector4 @this, Vector4 value)
 	{
@@ -11609,39 +10622,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XWYZ(this ref Vector4 @this,
-	//	float x,
-	//	float w,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		W = w,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void XWYZ<T>(this ref Vector4D<T> @this,
-	//	T x,
-	//	T w,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		X = x,
-	//		W = w,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void XWYZ(this ref Vector4 @this, Vector4 value)
@@ -11669,39 +10649,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXZW(this ref Vector4 @this,
-	//	float y,
-	//	float x,
-	//	float z,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXZW<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T x,
-	//	T z,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		Z = z,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YXZW(this ref Vector4 @this, Vector4 value)
 	{
@@ -11727,39 +10674,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXWZ(this ref Vector4 @this,
-	//	float y,
-	//	float x,
-	//	float w,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YXWZ<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T x,
-	//	T w,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		X = x,
-	//		W = w,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YXWZ(this ref Vector4 @this, Vector4 value)
@@ -11787,39 +10701,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZXW(this ref Vector4 @this,
-	//	float y,
-	//	float z,
-	//	float x,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		X = x,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZXW<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T z,
-	//	T x,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		X = x,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZXW(this ref Vector4 @this, Vector4 value)
 	{
@@ -11845,39 +10726,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZWX(this ref Vector4 @this,
-	//	float y,
-	//	float z,
-	//	float w,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		W = w,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YZWX<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T z,
-	//	T w,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		Z = z,
-	//		W = w,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YZWX(this ref Vector4 @this, Vector4 value)
@@ -11905,39 +10753,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YWZX(this ref Vector4 @this,
-	//	float y,
-	//	float w,
-	//	float z,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		W = w,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YWZX<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T w,
-	//	T z,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		W = w,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YWZX(this ref Vector4 @this, Vector4 value)
 	{
@@ -11963,39 +10778,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YWXZ(this ref Vector4 @this,
-	//	float y,
-	//	float w,
-	//	float x,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		W = w,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void YWXZ<T>(this ref Vector4D<T> @this,
-	//	T y,
-	//	T w,
-	//	T x,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Y = y,
-	//		W = w,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void YWXZ(this ref Vector4 @this, Vector4 value)
@@ -12023,39 +10805,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYXW(this ref Vector4 @this,
-	//	float z,
-	//	float y,
-	//	float x,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		X = x,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYXW<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T y,
-	//	T x,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		X = x,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZYXW(this ref Vector4 @this, Vector4 value)
 	{
@@ -12081,39 +10830,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYWX(this ref Vector4 @this,
-	//	float z,
-	//	float y,
-	//	float w,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		W = w,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZYWX<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T y,
-	//	T w,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		Y = y,
-	//		W = w,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZYWX(this ref Vector4 @this, Vector4 value)
@@ -12141,39 +10857,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXYW(this ref Vector4 @this,
-	//	float z,
-	//	float x,
-	//	float y,
-	//	float w)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		Y = y,
-	//		W = w
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXYW<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T x,
-	//	T y,
-	//	T w)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		Y = y,
-	//		W = w
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZXYW(this ref Vector4 @this, Vector4 value)
 	{
@@ -12199,39 +10882,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXWY(this ref Vector4 @this,
-	//	float z,
-	//	float x,
-	//	float w,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		W = w,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZXWY<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T x,
-	//	T w,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		X = x,
-	//		W = w,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZXWY(this ref Vector4 @this, Vector4 value)
@@ -12259,39 +10909,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZWXY(this ref Vector4 @this,
-	//	float z,
-	//	float w,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZWXY<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T w,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZWXY(this ref Vector4 @this, Vector4 value)
 	{
@@ -12317,39 +10934,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZWYX(this ref Vector4 @this,
-	//	float z,
-	//	float w,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void ZWYX<T>(this ref Vector4D<T> @this,
-	//	T z,
-	//	T w,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		Z = z,
-	//		W = w,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ZWYX(this ref Vector4 @this, Vector4 value)
@@ -12377,39 +10961,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WYZX(this ref Vector4 @this,
-	//	float w,
-	//	float y,
-	//	float z,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Y = y,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WYZX<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T y,
-	//	T z,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Y = y,
-	//		Z = z,
-	//		X = x
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WYZX(this ref Vector4 @this, Vector4 value)
 	{
@@ -12435,39 +10986,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WYXZ(this ref Vector4 @this,
-	//	float w,
-	//	float y,
-	//	float x,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Y = y,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WYXZ<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T y,
-	//	T x,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Y = y,
-	//		X = x,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WYXZ(this ref Vector4 @this, Vector4 value)
@@ -12495,39 +11013,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZYX(this ref Vector4 @this,
-	//	float w,
-	//	float z,
-	//	float y,
-	//	float x)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZYX<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T z,
-	//	T y,
-	//	T x)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z,
-	//		Y = y,
-	//		X = x
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WZYX(this ref Vector4 @this, Vector4 value)
 	{
@@ -12553,39 +11038,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZXY(this ref Vector4 @this,
-	//	float w,
-	//	float z,
-	//	float x,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WZXY<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T z,
-	//	T x,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		Z = z,
-	//		X = x,
-	//		Y = y
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WZXY(this ref Vector4 @this, Vector4 value)
@@ -12613,39 +11065,6 @@ public static partial class VectorExtensions
 	}
 
 
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WXZY(this ref Vector4 @this,
-	//	float w,
-	//	float x,
-	//	float z,
-	//	float y)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		X = x,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WXZY<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T x,
-	//	T z,
-	//	T y)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		X = x,
-	//		Z = z,
-	//		Y = y
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WXZY(this ref Vector4 @this, Vector4 value)
 	{
@@ -12671,39 +11090,6 @@ public static partial class VectorExtensions
 		};
 	}
 
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WXYZ(this ref Vector4 @this,
-	//	float w,
-	//	float x,
-	//	float y,
-	//	float z)
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		X = x,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void WXYZ<T>(this ref Vector4D<T> @this,
-	//	T w,
-	//	T x,
-	//	T y,
-	//	T z)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		W = w,
-	//		X = x,
-	//		Y = y,
-	//		Z = z
-	//	};
-	//}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void WXYZ(this ref Vector4 @this, Vector4 value)

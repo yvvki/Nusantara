@@ -104,31 +104,6 @@ void Print(int count, char[] outputSymbols = null)
 			foreach ((char[] o, char[] c) in outputPermutation.Zip(componentPermutation, (o, c) => (o, c)))
 			{
 #>
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void <#= new string(o) #>(this ref Vector<#= count #> @this,
-	//	<#= string.Join(@",
-	//	", o.Select(symbol => $"float {symbol.ToString().ToLower()}")) #>)
-	//{
-	//	@this = @this with
-	//	{
-	//		<#= string.Join(@",
-	//		", c.Zip(o, (c, o) => (c, o)).Select(comp => $"{comp.Item1} = {comp.Item2.ToString().ToLower()}")) #>
-	//	};
-	//}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static void <#= new string(o) #><T>(this ref Vector<#= count #>D<T> @this,
-	//	<#= string.Join(@",
-	//	", o.Select(symbol => $"T {symbol.ToString().ToLower()}")) #>)
-	//	where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
-	//{
-	//	@this = @this with
-	//	{
-	//		<#= string.Join(@",
-	//		", c.Zip(o, (c, o) => (c, o)).Select(comp => $"{comp.Item1} = {comp.Item2.ToString().ToLower()}")) #>
-	//	};
-	//}
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void <#= new string(o) #>(this ref Vector<#= count #> @this, Vector<#= ioCount #> value)
 	{
