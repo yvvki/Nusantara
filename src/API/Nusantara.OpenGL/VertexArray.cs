@@ -14,13 +14,9 @@ public class VertexArray : GLObject
 	{
 		Debug.Assert(GL.IsVertexArray(Handle));
 	}
+	internal VertexArray(GL gl, Silk.NET.OpenGL.VertexArray vertexArray) : this(gl, vertexArray.Handle) { }
 
 	public VertexArray(GL gl) : this(gl, Create(gl)) { }
-
-	private static uint Create(GL gl)
-	{
-		return gl.CreateVertexArray();
-	}
 
 	#region Constructors
 
@@ -45,76 +41,92 @@ public class VertexArray : GLObject
 
 	#region Wrapper
 
-	public void Get(VertexArrayPName pname, out int param)
+	private static uint Create(GL gl)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetVertexArray(Handle, pname, out param);
+		lock (gl)
+		{
+			uint result = gl.CreateVertexArray();
+			ThrowIfError(gl);
+			return result;
+		}
 	}
 
-	public void VertexBuffer(uint bindingindex, [AllowNull] Buffer? buffer, nint offset = 0, uint stride = 0)
+	public void Get(VertexArrayPName pname, out int param)
 	{
-		ThrowIfDisposed();
-
-		uint bufferHandle = default;
-
-		if (buffer is not null)
+		lock (GL)
 		{
-			// Checks the equality of the GL members.
-			ThrowIfArgumentGLObjectNullOrInvalid(buffer, false);
-			bufferHandle = buffer.Handle;
+			GL.GetVertexArray(Handle, pname, out param);
+			ThrowIfError();
 		}
+	}
 
-		GL.VertexArrayVertexBuffer(Handle, bindingindex, bufferHandle, offset, stride);
+	public void VertexBuffer(uint bindingindex, Buffer? buffer, nint offset = 0, uint stride = 0)
+	{
+		lock (GL)
+		{
+			GL.VertexArrayVertexBuffer(Handle, bindingindex, buffer?.Handle ?? default, offset, stride);
+			ThrowIfError();
+		}
 	}
 
 	public void ElementBuffer([AllowNull] Buffer? buffer)
 	{
-		ThrowIfDisposed();
-
-		uint bufferHandle = default;
-
-		if (buffer is not null)
+		lock (GL)
 		{
-			// Checks the equality of the GL members.
-			ThrowIfArgumentGLObjectNullOrInvalid(buffer, false);
-			bufferHandle = buffer.Handle;
+			GL.VertexArrayElementBuffer(Handle, buffer?.Handle ?? default);
+			ThrowIfError();
 		}
-
-		GL.VertexArrayElementBuffer(Handle, bufferHandle);
 	}
 
 	public void AttribBinding(uint attribindex, uint bindingindex)
 	{
-		ThrowIfDisposed();
-
-		GL.VertexArrayAttribBinding(Handle, attribindex, bindingindex);
+		lock (GL)
+		{
+			GL.VertexArrayAttribBinding(Handle, attribindex, bindingindex);
+			ThrowIfError();
+		}
 	}
 
 	public void AttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized = false, uint relativeoffset = 0)
 	{
-		ThrowIfDisposed();
-
-		GL.VertexArrayAttribFormat(Handle, attribindex, size, type, normalized, relativeoffset);
+		lock (GL)
+		{
+			GL.VertexArrayAttribFormat(Handle, attribindex, size, type, normalized, relativeoffset);
+			ThrowIfError();
+		}
 	}
 
 	public void EnableAttrib(uint index)
 	{
-		ThrowIfDisposed();
-
-		GL.EnableVertexArrayAttrib(Handle, index);
+		lock (GL)
+		{
+			GL.EnableVertexArrayAttrib(Handle, index);
+			ThrowIfError();
+		}
 	}
 
 	public void Bind()
 	{
-		GL.BindVertexArray(Handle);
+		lock (GL)
+		{
+			GL.BindVertexArray(Handle);
+			ThrowIfError();
+		}
 	}
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		GL.DeleteVertexArray(Handle);
+		lock (GL)
+		{
+			GL.DeleteVertexArray(Handle);
+			ThrowIfError();
+		}
+	}
+
+	public static implicit operator Silk.NET.OpenGL.VertexArray(VertexArray value)
+	{
+		return new() { Handle = value.Handle };
 	}
 }

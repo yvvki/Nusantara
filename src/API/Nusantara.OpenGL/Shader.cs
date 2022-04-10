@@ -14,22 +14,10 @@ public class Shader : GLObject
 	{
 		Debug.Assert(GL.IsShader(Handle));
 	}
+	internal Shader(GL gl, Silk.NET.OpenGL.Shader shader) : this(gl, shader.Handle) { }
 
 	internal Shader(GL gl, GLEnum type) : this(gl, Create(gl, type)) { }
-
 	public Shader(GL gl, ShaderType type) : this(gl, Create(gl, type)) { }
-
-	private static uint Create(GL gl, GLEnum type)
-	{
-		return gl.CreateShader(type);
-	}
-
-	private static uint Create(GL gl, ShaderType type)
-	{
-		ThrowIfInvalidEnum(type);
-
-		return gl.CreateShader(type);
-	}
 
 	#region Constructors
 
@@ -63,13 +51,65 @@ public class Shader : GLObject
 
 	#region Wrapper
 
+	private static uint Create(GL gl, GLEnum type)
+	{
+		lock (gl)
+		{
+			uint result = gl.CreateShader(type);
+			ThrowIfError(gl);
+			return result;
+		}
+	}
+	private static uint Create(GL gl, ShaderType type)
+	{
+		lock (gl)
+		{
+			uint result = gl.CreateShader(type);
+			ThrowIfError(gl);
+			return result;
+		}
+	}
+
 	public void Get(ShaderParameterName pname, out int param)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetShader(Handle, pname, out param);
+		lock (GL)
+		{
+			GL.GetShader(Handle, pname, out param);
+			ThrowIfError();
+		}
 	}
+
+	public void Source(string @string)
+	{
+		lock (GL)
+		{
+			GL.ShaderSource(Handle, @string);
+			ThrowIfError();
+		}
+	}
+
+	public void Compile()
+	{
+		lock (GL)
+		{
+			GL.CompileShader(Handle);
+			ThrowIfError();
+		}
+	}
+
+	public string GetInfoLog()
+	{
+		lock (GL)
+		{
+			string result = GL.GetShaderInfoLog(Handle);
+			ThrowIfError();
+			return result;
+		}
+	}
+
+	#endregion
+
+	#region Helper
 
 	public bool CompileStatus
 	{
@@ -80,40 +120,35 @@ public class Shader : GLObject
 		}
 	}
 
-	public void Source(string @string)
+	public void CompileAndThrowOnFail()
 	{
-		ThrowIfDisposed();
+		Compile();
 
-		GL.ShaderSource(Handle, @string);
-	}
-
-	public void Compile()
-	{
-		if (TryCompile() is false)
+		if (CompileStatus is false)
 		{
-			ThrowFailCompile();
+			ThrowFail();
 		}
 
 		[DoesNotReturn]
-		void ThrowFailCompile()
+		void ThrowFail()
 		{
-			throw new InvalidOperationException(GL.GetShaderInfoLog(Handle));
+			throw new InvalidOperationException(GetInfoLog());
 		}
-	}
-
-	public bool TryCompile()
-	{
-		ThrowIfDisposed();
-
-		GL.CompileShader(Handle);
-
-		return CompileStatus;
 	}
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		GL.DeleteShader(Handle);
+		lock (GL)
+		{
+			GL.DeleteShader(Handle);
+			ThrowIfError();
+		}
+	}
+
+	public static implicit operator Silk.NET.OpenGL.Shader(Shader value)
+	{
+		return new() { Handle = value.Handle };
 	}
 }

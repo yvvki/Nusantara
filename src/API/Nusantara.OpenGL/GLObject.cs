@@ -1,10 +1,8 @@
 ﻿// <https://github.com/YvvkiRika> wrote this file.
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
 using Silk.NET.OpenGL;
 
@@ -68,72 +66,14 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 
 	protected abstract void Delete();
 
-	#region Throw Helper
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private protected void ThrowIfDisposed()
+	public static bool ThrowOnError { get; set; } = true;
+	internal static void ThrowIfError(GL gl)
 	{
-		if (_disposed)
-		{
-			ThrowObjectDisposedException();
-		}
-
-		[DoesNotReturn]
-		void ThrowObjectDisposedException()
-		{
-			throw new ObjectDisposedException(GetType().Name);
-		}
+		if (ThrowOnError is false) return;
+		GLException.ThrowIfError(gl);
 	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal void ThrowIfArgumentGLNullOrMismatch([NotNull] GL argument!!)
+	protected void ThrowIfError()
 	{
-		if (GL.Equals(argument) is false)
-		{
-			ThrowArgumentGLMismatchException();
-		}
-
-		[DoesNotReturn]
-		static void ThrowArgumentGLMismatchException()
-		{
-			// Throw InvalidOperationException since we expect both value is true.
-			throw new InvalidOperationException();
-		}
+		ThrowIfError(GL);
 	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	internal void ThrowIfArgumentGLObjectNullOrInvalid(
-		[NotNull] GLObject argument!!,
-		bool throwIfDisposed = true)
-	{
-		ThrowIfArgumentGLNullOrMismatch(argument.GL);
-
-		if (throwIfDisposed)
-		{
-			argument.ThrowIfDisposed();
-		}
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private protected static void ThrowIfInvalidEnum<T>(
-		T argument,
-		[CallerArgumentExpression("argument")] string? paramName = null)
-		where T : struct, Enum
-	{
-		if (Enum.IsDefined(argument) is false)
-		{
-			ThrowInvalidEnumArgumentException();
-		}
-
-		[DoesNotReturn]
-		void ThrowInvalidEnumArgumentException()
-		{
-			throw new InvalidEnumArgumentException(
-				paramName,
-				(int)(object)argument,
-				typeof(T));
-		}
-	}
-
-	#endregion
 }

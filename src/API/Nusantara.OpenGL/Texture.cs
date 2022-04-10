@@ -13,54 +13,64 @@ public class Texture : GLObject
 	{
 		Debug.Assert(gl.IsTexture(handle));
 	}
+	internal Texture(GL gl, Silk.NET.OpenGL.Texture texture) : this(gl, texture.Handle) { }
 
 	internal Texture(GL gl, GLEnum target) : this(gl, Create(gl, target)) { }
-
 	public Texture(GL gl, TextureTarget target) : this(gl, Create(gl, target)) { }
-
-	private static uint Create(GL gl, GLEnum target)
-	{
-		gl.CreateTextures(target, 1, out uint handle);
-		return handle;
-	}
-	private static uint Create(GL gl, TextureTarget target)
-	{
-		ThrowIfInvalidEnum(target);
-
-		gl.CreateTextures(target, 1, out uint handle);
-		return handle;
-	}
 
 	#region Wrapper
 
+	private static uint Create(GL gl, GLEnum target)
+	{
+		lock (gl)
+		{
+			gl.CreateTextures(target, 1, out uint handle);
+			ThrowIfError(gl);
+			return handle;
+		}
+	}
+	private static uint Create(GL gl, TextureTarget target)
+	{
+		lock (gl)
+		{
+			gl.CreateTextures(target, 1, out uint handle);
+			ThrowIfError(gl);
+			return handle;
+		}
+	}
+
 	public void Parameter(TextureParameterName pname, int param)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.TextureParameter(Handle, pname, param);
+		lock (GL)
+		{
+			GL.TextureParameter(Handle, pname, param);
+			ThrowIfError();
+		}
 	}
 	public void Parameter(TextureParameterName pname, float param)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.TextureParameter(Handle, pname, param);
+		lock (GL)
+		{
+			GL.TextureParameter(Handle, pname, param);
+			ThrowIfError();
+		}
 	}
 
 	public void GetParameter(GetTextureParameter pname, out int @params)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetTextureParameter(Handle, pname, out @params);
+		lock (GL)
+		{
+			GL.GetTextureParameter(Handle, pname, out @params);
+			ThrowIfError();
+		}
 	}
 	public void GetParameter(GetTextureParameter pname, out float @params)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetTextureParameter(Handle, pname, out @params);
+		lock (GL)
+		{
+			GL.GetTextureParameter(Handle, pname, out @params);
+			ThrowIfError();
+		}
 	}
 
 	public void Storage2D(
@@ -69,15 +79,17 @@ public class Texture : GLObject
 		uint width,
 		uint height)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(format);
+		lock (GL)
+		{
+			GL.TextureStorage2D(
+				Handle,
+				levels,
+				format,
+				width,
+				height);
+			ThrowIfError();
+		}
 
-		GL.TextureStorage2D(
-			Handle,
-			levels,
-			format,
-			width,
-			height);
 	}
 
 	internal unsafe void SubImage2D(
@@ -90,18 +102,20 @@ public class Texture : GLObject
 		GLEnum type,
 		void* pixels)
 	{
-		ThrowIfDisposed();
-
-		GL.TextureSubImage2D(
-			Handle,
-			level,
-			xoffset,
-			yoffset,
-			width,
-			height,
-			format,
-			type,
-			pixels);
+		lock (GL)
+		{
+			GL.TextureSubImage2D(
+				Handle,
+				level,
+				xoffset,
+				yoffset,
+				width,
+				height,
+				format,
+				type,
+				pixels);
+			ThrowIfError();
+		}
 	}
 
 	public unsafe void SubImage2D(
@@ -114,36 +128,53 @@ public class Texture : GLObject
 		PixelType type,
 		void* pixels)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(format);
-		ThrowIfInvalidEnum(type);
-
-		GL.TextureSubImage2D(
-			Handle,
-			level,
-			xoffset,
-			yoffset,
-			width,
-			height,
-			format,
-			type,
-			pixels);
+		lock (GL)
+		{
+			GL.TextureSubImage2D(
+				Handle,
+				level,
+				xoffset,
+				yoffset,
+				width,
+				height,
+				format,
+				type,
+				pixels);
+			ThrowIfError();
+		}
 	}
 
 	public void GenerateMipmap()
 	{
-		GL.GenerateTextureMipmap(Handle);
+		lock (GL)
+		{
+			GL.GenerateTextureMipmap(Handle);
+			ThrowIfError();
+		}
 	}
 
 	public void Bind(uint unit)
 	{
-		GL.BindTextureUnit(unit, Handle);
+		lock (GL)
+		{
+			GL.BindTextureUnit(unit, Handle);
+			ThrowIfError();
+		}
 	}
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		GL.DeleteTexture(Handle);
+		lock (GL)
+		{
+			GL.DeleteTexture(Handle);
+			ThrowIfError();
+		}
+	}
+
+	public static implicit operator Silk.NET.OpenGL.Texture(Texture value)
+	{
+		return new() { Handle = value.Handle };
 	}
 }

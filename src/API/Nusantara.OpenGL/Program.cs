@@ -14,13 +14,9 @@ public partial class Program : GLObject
 	{
 		Debug.Assert(GL.IsProgram(Handle));
 	}
+	internal Program(GL gl, Silk.NET.OpenGL.Program program) : this(gl, program.Handle) { }
 
 	public Program(GL gl) : this(gl, Create(gl)) { }
-
-	private static uint Create(GL gl)
-	{
-		return gl.CreateProgram();
-	}
 
 	#region Constructors
 
@@ -52,88 +48,123 @@ public partial class Program : GLObject
 
 	#region Wrapper
 
-	public void Get(ProgramPropertyARB pname, out int @params)
+	private static uint Create(GL gl)
 	{
-		ThrowIfDisposed();
-		ThrowIfInvalidEnum(pname);
-
-		GL.GetProgram(Handle, pname, out @params);
+		lock (gl)
+		{
+			uint result = gl.CreateProgram();
+			ThrowIfError(gl);
+			return result;
+		}
 	}
 
-	public bool LinkStatus
+	public void Get(ProgramPropertyARB pname, out int @params)
 	{
-		get
+		lock (GL)
 		{
-			Get(ProgramPropertyARB.LinkStatus, out int result);
-
-			return result is not 0;
+			GL.GetProgram(Handle, pname, out @params);
+			ThrowIfError();
 		}
 	}
 
 	public void Attach([NotNull] Shader shader)
 	{
-		ThrowIfDisposed();
-		ThrowIfArgumentGLObjectNullOrInvalid(shader, false);
-
-		GL.AttachShader(Handle, shader.Handle);
+		lock (GL)
+		{
+			GL.AttachShader(Handle, shader.Handle);
+			ThrowIfError();
+		}
 	}
 
 	public void Detach([NotNull] Shader shader)
 	{
-		ThrowIfDisposed();
-		ThrowIfArgumentGLObjectNullOrInvalid(shader, false);
-
-		GL.DetachShader(Handle, shader.Handle);
+		lock (GL)
+		{
+			GL.DetachShader(Handle, shader.Handle);
+			ThrowIfError();
+		}
 	}
 
 	public void Link()
 	{
-		if (TryLink() is false)
+		lock (GL)
 		{
-			ThrowFailLink();
-		}
-
-		[DoesNotReturn]
-		void ThrowFailLink()
-		{
-			throw new InvalidOperationException(GL.GetProgramInfoLog(Handle));
+			GL.LinkProgram(Handle);
+			ThrowIfError();
 		}
 	}
 
-	public bool TryLink()
+	public string GetInfoLog()
 	{
-		ThrowIfDisposed();
-
-		GL.LinkProgram(Handle);
-
-		return LinkStatus;
+		lock (GL)
+		{
+			string result = GL.GetProgramInfoLog(Handle);
+			ThrowIfError();
+			return result;
+		}
 	}
 
 	public int GetUniformLocation(string name)
 	{
-		ThrowIfDisposed();
-
-		int location = GetUniformLocationUnsafe(name);
-
-		return location;
-	}
-
-	private int GetUniformLocationUnsafe(string name)
-	{
-		int location = GL.GetUniformLocation(Handle, name);
-
-		return location;
+		lock (GL)
+		{
+			int result = GL.GetUniformLocation(Handle, name);
+			ThrowIfError();
+			return result;
+		}
 	}
 
 	public void Use()
 	{
-		GL.UseProgram(Handle);
+		lock (GL)
+		{
+			GL.UseProgram(Handle);
+			ThrowIfError();
+		}
 	}
+
+	#endregion
+
+	#region Helper
+
+	public bool LinkStatus
+	{
+		get
+		{
+			Get(ProgramPropertyARB.LinkStatus, out int linkStatus);
+			return linkStatus is not 0;
+		}
+	}
+
+	public void LinkAndThrowOnFail()
+	{
+		Link();
+		if (LinkStatus is false)
+		{
+			ThrowFail();
+		}
+
+		[DoesNotReturn]
+		void ThrowFail()
+		{
+			throw new InvalidOperationException(GetInfoLog());
+		}
+	}
+
 
 	#endregion
 
 	protected sealed override void Delete()
 	{
-		GL.DeleteProgram(Handle);
+		lock (GL)
+		{
+			GL.DeleteProgram(Handle);
+			ThrowIfError();
+		}
+	}
+
+	public static implicit operator Silk.NET.OpenGL.Program(Program value)
+	{
+		return new() { Handle = value.Handle };
 	}
 }
