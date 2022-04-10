@@ -11,9 +11,9 @@
 void Uniform(string type)
 {
 	Uniform1(type);
-	UniformMore1(type, 2);
-	UniformMore1(type, 3);
-	UniformMore1(type, 4);
+	UniformD(type, 2);
+	UniformD(type, 3);
+	UniformD(type, 4);
 }
 
 void Uniform1(string type)
@@ -21,121 +21,68 @@ void Uniform1(string type)
 #>
 	public void Uniform1(int location, <#= type #> v0)
 	{
-		ThrowIfDisposed();
-
-		GL.ProgramUniform1(Handle, location, v0);
+		lock (GL)
+		{
+			GL.ProgramUniform1(Handle, location, v0);
+		}
 	}
 
 	public void Uniform1(string name, <#= type #> v0)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		Uniform1(location, v0);
 	}
 
-	public bool TryUniform1(string name, <#= type #> v0)
+	public void Uniform1(int location, ReadOnlySpan<<#= type #>> value)
 	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
+		lock (GL)
 		{
-			return false;
-		}
-
-		Uniform1(location, v0);
-		return true;
-	}
-
-	public unsafe void Uniform1(int location, Span<<#= type #>> value)
-	{
-		ThrowIfDisposed();
-
-		fixed (<#= type #>* value_ptr = value)
-		{
-			GL.ProgramUniform1(
-				Handle,
-				location,
-				(uint)value.Length,
-				value_ptr);
+			GL.ProgramUniform1(Handle, location, value);
 		}
 	}
 
-	public unsafe void Uniform1(string name, Span<<#= type #>> value)
+	public void Uniform1(string name, ReadOnlySpan<<#= type #>> value)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		Uniform1(location, value);
 	}
 
-	public unsafe bool TryUniform1(string name, Span<<#= type #>> value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform1(location, value);
-		return true;
-	}
-
-	public unsafe void Uniform1(int location, params <#= type #>[] value)
+	public void Uniform1(int location, params <#= type #>[] value)
 	{
 		Uniform1(location, value.AsSpan());
 	}
 
-	public unsafe void Uniform1(string name, params <#= type #>[] value)
+	public void Uniform1(string name, params <#= type #>[] value)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
-		Uniform1(location, value);
-	}
-
-	public unsafe bool TryUniform1(string name, params <#= type #>[] value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform1(location, value);
-		return true;
-	}
-
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	public unsafe void Uniform1(int location, params ValueTuple<<#= type #>>[] value)
-	{
-		ThrowIfDisposed();
-
-		fixed (ValueTuple<<#= type #>>* value_ptr = value)
-		{
-			GL.ProgramUniform1(
-				Handle,
-				location,
-				(uint)value.Length,
-				(float*)value_ptr);
-		}
-	}
-
-	[EditorBrowsable(EditorBrowsableState.Never)]
-	public unsafe void Uniform1(string name, params ValueTuple<<#= type #>>[] value)
-	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		Uniform1(location, value);
 	}
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public unsafe bool TryUniform1(string name, params ValueTuple<<#= type #>>[] value)
+	public void Uniform1(int location, ReadOnlySpan<ValueTuple<<#= type #>>> value)
 	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
+		ReadOnlySpan<<#= type #>> value1 = MemoryMarshal.Cast<ValueTuple<<#= type #>>, <#= type #>>(value);
+		Uniform1(location, value1);
+	}
 
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public void Uniform1(string name, ReadOnlySpan<ValueTuple<<#= type #>>> value)
+	{
+		int location = GetUniformLocation(name);
 		Uniform1(location, value);
-		return true;
+	}
+
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public void Uniform1(int location, params ValueTuple<<#= type #>>[] value)
+	{
+		Uniform1(location, value.AsSpan());
+	}
+
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public void Uniform1(string name, params ValueTuple<<#= type #>>[] value)
+	{
+		int location = GetUniformLocation(name);
+		Uniform1(location, value);
 	}
 
 <#
@@ -150,95 +97,55 @@ char[] GetSymbols(char[] symbols, int index, int count)
 	return result;
 }
 
-void UniformMore1(string type, int count)
+string GetValueTupleType(string type, int count)
 {
-	string[] typeArr = new string[count];
-	for (int i = 0; i < count; i++)
-	{
-		typeArr[i] = type;
-	}
+	return "ValueTuple<" + string.Join(", ", Enumerable.Repeat(type, count)) + ">";
+}
+
+void UniformD(string type, int count)
+{
+	string vParameterDeclare = string.Join(", ", Enumerable.Range(0, count).Select(index => $"{type} v{index}"));
+	string vParameterInvoke = string.Join(", ", Enumerable.Range(0, count).Select(index => $"v{index}"));
+
+	string ValueTupleType = GetValueTupleType(type, count);
 #>
-	public void Uniform<#= count #>(int location, <#= string.Join(", ", Enumerable.Range(0, count).Select(index => $"{type} v{index}")) #>)
+	public void Uniform<#= count #>(int location, <#= vParameterDeclare #>)
 	{
-		ThrowIfDisposed();
-
-		GL.ProgramUniform<#= count #>(Handle, location, <#= string.Join(", ", Enumerable.Range(0, count).Select(index => $"v{index}")) #>);
-	}
-
-	public void Uniform<#= count #>(string name, <#= string.Join(", ", Enumerable.Range(0, count).Select(index => $"{type} v{index}")) #>)
-	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
-		Uniform<#= count #>(location, <#= string.Join(", ", Enumerable.Range(0, count).Select(index => $"v{index}")) #>);
-	}
-
-	public bool TryUniform<#= count #>(string name, <#= string.Join(", ", Enumerable.Range(0, count).Select(index => $"{type} v{index}")) #>)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
+		lock (GL)
 		{
-			return false;
-		}
-
-		Uniform<#= count #>(location, <#= string.Join(", ", Enumerable.Range(0, count).Select(index => $"v{index}")) #>);
-		return true;
-	}
-
-	public unsafe void Uniform<#= count #>(int location, Span<ValueTuple<<#= string.Join(", ", typeArr) #>>> value)
-	{
-		ThrowIfDisposed();
-
-		fixed (ValueTuple<<#= string.Join(", ", typeArr) #>>* value_ptr = value)
-		{
-			GL.ProgramUniform<#= count #>(
-				Handle,
-				location,
-				(uint)value.Length,
-				(<#= type #>*)value_ptr);
+			GL.ProgramUniform<#= count #>(Handle, location, <#= vParameterInvoke #>);
 		}
 	}
 
-	public void Uniform<#= count #>(string name, Span<ValueTuple<<#= string.Join(", ", typeArr) #>>> value)
+	public void Uniform<#= count #>(string name, <#= vParameterDeclare #>)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
+		int location = GetUniformLocation(name);
+		Uniform<#= count #>(location, <#= vParameterInvoke #>);
+	}
 
+	public void Uniform<#= count #>(int location, ReadOnlySpan<<#= ValueTupleType #>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniform<#= count #>(Handle, location, (uint)value.Length, MemoryMarshal.Cast<<#= ValueTupleType #>, <#= type #>>(value));
+		}
+	}
+
+	public void Uniform<#= count #>(string name, ReadOnlySpan<<#= ValueTupleType #>> value)
+	{
+		int location = GetUniformLocation(name);
 		Uniform<#= count #>(location, value);
 	}
 
-	public bool TryUniform<#= count #>(string name, Span<ValueTuple<<#= string.Join(", ", typeArr) #>>> value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform<#= count #>(location, value);
-		return true;
-	}
-
-	public unsafe void Uniform<#= count #>(int location, params ValueTuple<<#= string.Join(", ", typeArr) #>>[] value)
+	public void Uniform<#= count #>(int location, params <#= ValueTupleType #>[] value)
 	{
 		Uniform<#= count #>(location, value.AsSpan());
 	}
 
-	public void Uniform<#= count #>(string name, params ValueTuple<<#= string.Join(", ", typeArr) #>>[] value)
+	public void Uniform<#= count #>(string name, params <#= ValueTupleType #>[] value)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		Uniform<#= count #>(location, value);
-	}
-
-	public bool TryUniform<#= count #>(string name, params ValueTuple<<#= string.Join(", ", typeArr) #>>[] value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform<#= count #>(location, value);
-		return true;
 	}
 
 <#
@@ -247,8 +154,10 @@ void UniformMore1(string type, int count)
 
 void UniformVector(int count, string type, string vectorName)
 {
+	string ValueTupleType = GetValueTupleType(type, count);
+
 #>
-	public unsafe void Uniform<#= count #>(int location, <#= vectorName #> vector)
+	public void Uniform<#= count #>(int location, <#= vectorName #> vector)
 	{
 		Uniform<#= count #>(
 			location,
@@ -256,7 +165,7 @@ void UniformVector(int count, string type, string vectorName)
 			", GetSymbols(_symbols, 0, count).Select(symbol => $"vector.{symbol}"))#>);
 	}
 
-	public unsafe void Uniform<#= count #>(string name, <#= vectorName #> vector)
+	public void Uniform<#= count #>(string name, <#= vectorName #> vector)
 	{
 		Uniform<#= count #>(
 			name,
@@ -264,73 +173,26 @@ void UniformVector(int count, string type, string vectorName)
 			", GetSymbols(_symbols, 0, count).Select(symbol => $"vector.{symbol}"))#>);
 	}
 
-	public bool TryUniform<#= count #>(string name, <#= vectorName #> vector)
+	public void Uniform<#= count #>(int location, ReadOnlySpan<<#= vectorName #>> value)
 	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform<#= count #>(location, vector);
-		return true;
+		Uniform<#= count #>(location, MemoryMarshal.Cast<<#= vectorName #>, <#= ValueTupleType #>>(value));
 	}
 
-	public unsafe void Uniform<#= count #>(int location, Span<<#= vectorName #>> value)
+	public void Uniform<#= count #>(string name, ReadOnlySpan<<#= vectorName #>> value)
 	{
-		ThrowIfDisposed();
-
-		fixed (<#= vectorName #>* value_ptr = value)
-		{
-			GL.ProgramUniform<#= count #>(
-				Handle,
-				location,
-				(uint)value.Length,
-				(<#= type #>*)value_ptr);
-		}
-	}
-
-	public unsafe void Uniform<#= count #>(string name, Span<<#= vectorName #>> value)
-	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		Uniform<#= count #>(location, value);
 	}
 
-	public bool TryUniform<#= count #>(string name, Span<<#= vectorName #>> value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform<#= count #>(location, value);
-		return true;
-	}
-
-	public unsafe void Uniform<#= count #>(int location, params <#= vectorName #>[] value)
+	public void Uniform<#= count #>(int location, params <#= vectorName #>[] value)
 	{
 		Uniform<#= count #>(location, value.AsSpan());
 	}
 
-	public unsafe void Uniform<#= count #>(string name, params <#= vectorName #>[] value)
+	public void Uniform<#= count #>(string name, params <#= vectorName #>[] value)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		Uniform<#= count #>(location, value);
-	}
-
-	public bool TryUniform<#= count #>(string name, params <#= vectorName #>[] value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		Uniform<#= count #>(location, value);
-		return true;
 	}
 
 <#
@@ -354,38 +216,23 @@ void UniformMatrix(string type)
 void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 {
 #>
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(int location, bool transpose, Span<<#= matrixType #>> value)
+	public void UniformMatrix<#= glMatrixDimension #>(int location, bool transpose, ReadOnlySpan<<#= matrixType #>> value)
 	{
-		ThrowIfDisposed();
-
-		fixed (<#= matrixType #>* value_ptr = value)
+		lock (GL)
 		{
 			GL.ProgramUniformMatrix<#= glMatrixDimension #>(
 				Handle,
 				location,
 				(uint)value.Length,
 				transpose,
-				(<#= type #>*)value_ptr);
+				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, bool transpose, Span<<#= matrixType #>> value)
+	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, bool transpose, ReadOnlySpan<<#= matrixType #>> value)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		UniformMatrix<#= glMatrixDimension #>(location, transpose, value);
-	}
-
-	public bool TryUniformMatrix<#= glMatrixDimension #>(string name, bool transpose, Span<<#= matrixType #>> value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		UniformMatrix<#= glMatrixDimension #>(location, transpose, value);
-		return true;
 	}
 
 	public unsafe void UniformMatrix<#= glMatrixDimension #>(int location, bool transpose = false, params <#= matrixType #>[] value)
@@ -395,29 +242,16 @@ void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 
 	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, bool transpose = false, params <#= matrixType #>[] value)
 	{
-		int location = GetUniformLocationUnsafeChecked(name);
-
+		int location = GetUniformLocation(name);
 		UniformMatrix<#= glMatrixDimension #>(location, transpose, value);
-	}
-
-	public bool TryUniformMatrix<#= glMatrixDimension #>(string name, bool transpose = false, params <#= matrixType #>[] value)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			return false;
-		}
-
-		UniformMatrix<#= glMatrixDimension #>(location, transpose, value);
-		return true;
 	}
 
 <#
 }
 #>
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
@@ -426,23 +260,6 @@ namespace Nusantara.OpenGL;
 
 public partial class Program
 {
-	private int GetUniformLocationUnsafeChecked(string name)
-	{
-		int location = GetUniformLocationUnsafe(name);
-		if (location is < 0)
-		{
-			ThrowKeyNotFoundException();
-		}
-
-		[DoesNotReturn]
-		static void ThrowKeyNotFoundException()
-		{
-			throw new KeyNotFoundException();
-		}
-
-		return location;
-	}
-
 <#
 	Uniform("int");
 	Uniform("uint");
@@ -453,8 +270,8 @@ public partial class Program
 	Uniform("double");
 
 	UniformMatrix("float");
-	UniformMatrix("double");
 	UniformMatrixD("float", "Matrix3x2", "3x2");
 	UniformMatrixD("float", "Matrix4x4", "4");
+	UniformMatrix("double");
 #>
 }
