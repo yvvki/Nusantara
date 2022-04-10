@@ -10,10 +10,12 @@ namespace Nusantara.OpenGL;
 public class SKTexture : Texture
 {
 	internal SKTexture(GL gl, uint handle) : base(gl, handle) { }
+	internal SKTexture(GL gl, Silk.NET.OpenGL.Texture texture) : base(gl, texture) { }
 
+	internal SKTexture(GL gl, TextureTarget target) : base(gl, target) { }
 	internal SKTexture(GL gl, GLEnum target) : base(gl, target) { }
 
-	public SKTexture(GL gl) : base(gl, GLEnum.Texture2D) { }
+	public SKTexture(GL gl) : base(gl, TextureTarget.Texture2D) { }
 
 	public static SKTexture FromBitmap(
 		GL gl,
@@ -26,11 +28,6 @@ public class SKTexture : Texture
 	{
 		SKTexture texture = new(gl);
 		ArgumentNullException.ThrowIfNull(bitmap);
-
-		ThrowIfInvalidEnum(wrapS);
-		ThrowIfInvalidEnum(wrapT);
-		ThrowIfInvalidEnum(minFiler);
-		ThrowIfInvalidEnum(magFiler);
 
 		if (flipVertically)
 		{
@@ -140,8 +137,8 @@ public class SKTexture : Texture
 			yoffset,
 			(uint)bitmap.Width,
 			(uint)bitmap.Height,
-			(GLEnum)format,
-			type,
+			format,
+			(PixelType)type,
 			(void*)bitmap.GetPixels());
 	}
 }
