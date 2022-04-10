@@ -35,32 +35,28 @@ public class GLException : Exception
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ThrowIfError(GL gl)
 	{
-		static GLEnum[] GetErrors(GL gl)
+		ErrorCode firstError = (ErrorCode)gl.GetError();
+		if (firstError is ErrorCode.NoError) return;
+
+		IEnumerable<ErrorCode> GetErrors()
 		{
-			List<GLEnum> errors = new();
+			yield return firstError;
 
 			while (true)
 			{
-				GLEnum error = gl.GetError();
+				ErrorCode error = (ErrorCode)gl.GetError();
+				if (error is ErrorCode.NoError) break;
 
-				if (error is GLEnum.NoError) break;
-
-				errors.Add(error);
+				yield return error;
 			}
-
-			return errors.ToArray();
 		}
 
-		GLEnum[] errors = GetErrors(gl);
+		ErrorCode[] errors = GetErrors().ToArray();
 
-		if (errors.Length is 0) return;
+		if (errors.Length is 1)
+			Throw(GetMessage(firstError));
 		else
-		{
-			if (errors.Length is 1)
-				Throw(GetMessage(errors[0]));
-			else
-				Throw(string.Join(", ", errors));
-		}
+			Throw(string.Join(", ", errors));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
