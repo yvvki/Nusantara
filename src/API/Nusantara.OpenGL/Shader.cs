@@ -146,4 +146,9 @@ public class Shader : GLObject
 			ThrowIfError();
 		}
 	}
+
+	public static implicit operator Silk.NET.OpenGL.Shader(Shader value)
+	{
+		return new() { Handle = value.Handle };
+	}
 }

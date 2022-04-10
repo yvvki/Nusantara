@@ -172,4 +172,9 @@ public class Texture : GLObject
 			ThrowIfError();
 		}
 	}
+
+	public static implicit operator Silk.NET.OpenGL.Texture(Texture value)
+	{
+		return new() { Handle = value.Handle };
+	}
 }

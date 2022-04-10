@@ -124,7 +124,11 @@ public class Buffer : GLObject
 
 	protected sealed override void Delete()
 	{
-		GL.DeleteBuffer(Handle);
+		lock (GL)
+		{
+			GL.DeleteBuffer(Handle);
+			ThrowIfError();
+		}
 	}
 
 	public static implicit operator Silk.NET.OpenGL.Buffer(Buffer value)
