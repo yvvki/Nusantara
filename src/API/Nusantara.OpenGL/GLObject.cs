@@ -67,9 +67,13 @@ public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 	protected abstract void Delete();
 
 	public static bool ThrowOnError { get; set; } = true;
-	protected void ThrowIfError()
+	internal static void ThrowIfError(GL gl)
 	{
 		if (ThrowOnError is false) return;
-		GLException.ThrowIfError(GL);
+		GLException.ThrowIfError(gl);
+	}
+	protected void ThrowIfError()
+	{
+		ThrowIfError(GL);
 	}
 }

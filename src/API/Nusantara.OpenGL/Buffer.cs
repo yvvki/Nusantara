@@ -17,11 +17,6 @@ public class Buffer : GLObject
 
 	public Buffer(GL gl) : this(gl, Create(gl)) { }
 
-	private static uint Create(GL gl)
-	{
-		return gl.CreateBuffer();
-	}
-
 	#region Constructors
 
 	public static Buffer CreateData<T>(GL gl, ReadOnlySpan<T> data, VertexBufferObjectUsage usage)
@@ -47,6 +42,16 @@ public class Buffer : GLObject
 	#endregion
 
 	#region Wrapper
+
+	private static uint Create(GL gl)
+	{
+		lock (gl)
+		{
+			uint result = gl.CreateBuffer();
+			ThrowIfError(gl);
+			return result;
+		}
+	}
 
 	public void GetParameter(BufferPNameARB pname, out int @params)
 	{

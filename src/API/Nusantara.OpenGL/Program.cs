@@ -18,11 +18,6 @@ public partial class Program : GLObject
 
 	public Program(GL gl) : this(gl, Create(gl)) { }
 
-	private static uint Create(GL gl)
-	{
-		return gl.CreateProgram();
-	}
-
 	#region Constructors
 
 	public static Program CreateFromShaders(GL gl, params Shader[] shaders)
@@ -52,6 +47,16 @@ public partial class Program : GLObject
 	#endregion
 
 	#region Wrapper
+
+	private static uint Create(GL gl)
+	{
+		lock (gl)
+		{
+			uint result = gl.CreateProgram();
+			ThrowIfError(gl);
+			return result;
+		}
+	}
 
 	public void Get(ProgramPropertyARB pname, out int @params)
 	{
@@ -122,12 +127,19 @@ public partial class Program : GLObject
 
 	#region Helper
 
+	public bool LinkStatus
+	{
+		get
+		{
+			Get(ProgramPropertyARB.LinkStatus, out int linkStatus);
+			return linkStatus is not 0;
+		}
+	}
+
 	public void LinkAndThrowOnFail()
 	{
 		Link();
-		Get(ProgramPropertyARB.LinkStatus, out int linkStatus);
-
-		if (linkStatus is 0)
+		if (LinkStatus is false)
 		{
 			ThrowFail();
 		}
