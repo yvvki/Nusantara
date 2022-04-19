@@ -2,6 +2,7 @@
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 using Silk.NET.OpenGL;
 
@@ -75,7 +76,7 @@ public class Buffer : GLObject
 	{
 		lock (GL)
 		{
-			GL.NamedBufferData(Handle, (nuint)data.Length, data, usage);
+			GL.NamedBufferData(Handle, (nuint)data.Length * (nuint)Unsafe.SizeOf<T>(), data, usage);
 			ThrowIfError();
 		}
 	}
@@ -85,7 +86,7 @@ public class Buffer : GLObject
 	{
 		lock (GL)
 		{
-			GL.NamedBufferSubData(Handle, offset, (nuint)data.Length, data);
+			GL.NamedBufferSubData(Handle, offset, (nuint)data.Length * (nuint)Unsafe.SizeOf<T>(), data);
 			ThrowIfError();
 		}
 	}
