@@ -1344,7 +1344,7 @@ public partial class Program
 		Uniform4(location, value);
 	}
 
-	public void UniformMatrix2(int location, bool transpose, ReadOnlySpan<Matrix2X2<float>> value)
+	public void UniformMatrix2(int location, ReadOnlySpan<Matrix2X2<float>> value)
 	{
 		lock (GL)
 		{
@@ -1352,29 +1352,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix2X2<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix2(string name, bool transpose, ReadOnlySpan<Matrix2X2<float>> value)
+	public unsafe void UniformMatrix2(string name, ReadOnlySpan<Matrix2X2<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2(location, transpose, value);
+		UniformMatrix2(location, value);
 	}
 
-	public unsafe void UniformMatrix2(int location, bool transpose = false, params Matrix2X2<float>[] value)
+	public unsafe void UniformMatrix2(int location, params Matrix2X2<float>[] value)
 	{
-		UniformMatrix2(location, transpose, value.AsSpan());
+		UniformMatrix2(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix2(string name, bool transpose = false, params Matrix2X2<float>[] value)
+	public unsafe void UniformMatrix2(string name, params Matrix2X2<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2(location, transpose, value);
+		UniformMatrix2(location, value);
 	}
 
-	public void UniformMatrix2x3(int location, bool transpose, ReadOnlySpan<Matrix2X3<float>> value)
+	public void UniformMatrix2x3(int location, ReadOnlySpan<Matrix2X3<float>> value)
 	{
 		lock (GL)
 		{
@@ -1382,29 +1382,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix2X3<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix2x3(string name, bool transpose, ReadOnlySpan<Matrix2X3<float>> value)
+	public unsafe void UniformMatrix2x3(string name, ReadOnlySpan<Matrix2X3<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2x3(location, transpose, value);
+		UniformMatrix2x3(location, value);
 	}
 
-	public unsafe void UniformMatrix2x3(int location, bool transpose = false, params Matrix2X3<float>[] value)
+	public unsafe void UniformMatrix2x3(int location, params Matrix2X3<float>[] value)
 	{
-		UniformMatrix2x3(location, transpose, value.AsSpan());
+		UniformMatrix2x3(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix2x3(string name, bool transpose = false, params Matrix2X3<float>[] value)
+	public unsafe void UniformMatrix2x3(string name, params Matrix2X3<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2x3(location, transpose, value);
+		UniformMatrix2x3(location, value);
 	}
 
-	public void UniformMatrix2x4(int location, bool transpose, ReadOnlySpan<Matrix2X4<float>> value)
+	public void UniformMatrix2x4(int location, ReadOnlySpan<Matrix2X4<float>> value)
 	{
 		lock (GL)
 		{
@@ -1412,29 +1412,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix2X4<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix2x4(string name, bool transpose, ReadOnlySpan<Matrix2X4<float>> value)
+	public unsafe void UniformMatrix2x4(string name, ReadOnlySpan<Matrix2X4<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2x4(location, transpose, value);
+		UniformMatrix2x4(location, value);
 	}
 
-	public unsafe void UniformMatrix2x4(int location, bool transpose = false, params Matrix2X4<float>[] value)
+	public unsafe void UniformMatrix2x4(int location, params Matrix2X4<float>[] value)
 	{
-		UniformMatrix2x4(location, transpose, value.AsSpan());
+		UniformMatrix2x4(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix2x4(string name, bool transpose = false, params Matrix2X4<float>[] value)
+	public unsafe void UniformMatrix2x4(string name, params Matrix2X4<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2x4(location, transpose, value);
+		UniformMatrix2x4(location, value);
 	}
 
-	public void UniformMatrix3x2(int location, bool transpose, ReadOnlySpan<Matrix3X2<float>> value)
+	public void UniformMatrix3x2(int location, ReadOnlySpan<Matrix3X2<float>> value)
 	{
 		lock (GL)
 		{
@@ -1442,29 +1442,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix3X2<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix3x2(string name, bool transpose, ReadOnlySpan<Matrix3X2<float>> value)
+	public unsafe void UniformMatrix3x2(string name, ReadOnlySpan<Matrix3X2<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3x2(location, transpose, value);
+		UniformMatrix3x2(location, value);
 	}
 
-	public unsafe void UniformMatrix3x2(int location, bool transpose = false, params Matrix3X2<float>[] value)
+	public unsafe void UniformMatrix3x2(int location, params Matrix3X2<float>[] value)
 	{
-		UniformMatrix3x2(location, transpose, value.AsSpan());
+		UniformMatrix3x2(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix3x2(string name, bool transpose = false, params Matrix3X2<float>[] value)
+	public unsafe void UniformMatrix3x2(string name, params Matrix3X2<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3x2(location, transpose, value);
+		UniformMatrix3x2(location, value);
 	}
 
-	public void UniformMatrix3(int location, bool transpose, ReadOnlySpan<Matrix3X3<float>> value)
+	public void UniformMatrix3(int location, ReadOnlySpan<Matrix3X3<float>> value)
 	{
 		lock (GL)
 		{
@@ -1472,29 +1472,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix3X3<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix3(string name, bool transpose, ReadOnlySpan<Matrix3X3<float>> value)
+	public unsafe void UniformMatrix3(string name, ReadOnlySpan<Matrix3X3<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3(location, transpose, value);
+		UniformMatrix3(location, value);
 	}
 
-	public unsafe void UniformMatrix3(int location, bool transpose = false, params Matrix3X3<float>[] value)
+	public unsafe void UniformMatrix3(int location, params Matrix3X3<float>[] value)
 	{
-		UniformMatrix3(location, transpose, value.AsSpan());
+		UniformMatrix3(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix3(string name, bool transpose = false, params Matrix3X3<float>[] value)
+	public unsafe void UniformMatrix3(string name, params Matrix3X3<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3(location, transpose, value);
+		UniformMatrix3(location, value);
 	}
 
-	public void UniformMatrix3x4(int location, bool transpose, ReadOnlySpan<Matrix3X4<float>> value)
+	public void UniformMatrix3x4(int location, ReadOnlySpan<Matrix3X4<float>> value)
 	{
 		lock (GL)
 		{
@@ -1502,29 +1502,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix3X4<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix3x4(string name, bool transpose, ReadOnlySpan<Matrix3X4<float>> value)
+	public unsafe void UniformMatrix3x4(string name, ReadOnlySpan<Matrix3X4<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3x4(location, transpose, value);
+		UniformMatrix3x4(location, value);
 	}
 
-	public unsafe void UniformMatrix3x4(int location, bool transpose = false, params Matrix3X4<float>[] value)
+	public unsafe void UniformMatrix3x4(int location, params Matrix3X4<float>[] value)
 	{
-		UniformMatrix3x4(location, transpose, value.AsSpan());
+		UniformMatrix3x4(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix3x4(string name, bool transpose = false, params Matrix3X4<float>[] value)
+	public unsafe void UniformMatrix3x4(string name, params Matrix3X4<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3x4(location, transpose, value);
+		UniformMatrix3x4(location, value);
 	}
 
-	public void UniformMatrix4x2(int location, bool transpose, ReadOnlySpan<Matrix4X2<float>> value)
+	public void UniformMatrix4x2(int location, ReadOnlySpan<Matrix4X2<float>> value)
 	{
 		lock (GL)
 		{
@@ -1532,29 +1532,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix4X2<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix4x2(string name, bool transpose, ReadOnlySpan<Matrix4X2<float>> value)
+	public unsafe void UniformMatrix4x2(string name, ReadOnlySpan<Matrix4X2<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x2(location, transpose, value);
+		UniformMatrix4x2(location, value);
 	}
 
-	public unsafe void UniformMatrix4x2(int location, bool transpose = false, params Matrix4X2<float>[] value)
+	public unsafe void UniformMatrix4x2(int location, params Matrix4X2<float>[] value)
 	{
-		UniformMatrix4x2(location, transpose, value.AsSpan());
+		UniformMatrix4x2(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix4x2(string name, bool transpose = false, params Matrix4X2<float>[] value)
+	public unsafe void UniformMatrix4x2(string name, params Matrix4X2<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x2(location, transpose, value);
+		UniformMatrix4x2(location, value);
 	}
 
-	public void UniformMatrix4x3(int location, bool transpose, ReadOnlySpan<Matrix4X3<float>> value)
+	public void UniformMatrix4x3(int location, ReadOnlySpan<Matrix4X3<float>> value)
 	{
 		lock (GL)
 		{
@@ -1562,29 +1562,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix4X3<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix4x3(string name, bool transpose, ReadOnlySpan<Matrix4X3<float>> value)
+	public unsafe void UniformMatrix4x3(string name, ReadOnlySpan<Matrix4X3<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x3(location, transpose, value);
+		UniformMatrix4x3(location, value);
 	}
 
-	public unsafe void UniformMatrix4x3(int location, bool transpose = false, params Matrix4X3<float>[] value)
+	public unsafe void UniformMatrix4x3(int location, params Matrix4X3<float>[] value)
 	{
-		UniformMatrix4x3(location, transpose, value.AsSpan());
+		UniformMatrix4x3(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix4x3(string name, bool transpose = false, params Matrix4X3<float>[] value)
+	public unsafe void UniformMatrix4x3(string name, params Matrix4X3<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x3(location, transpose, value);
+		UniformMatrix4x3(location, value);
 	}
 
-	public void UniformMatrix4(int location, bool transpose, ReadOnlySpan<Matrix4X4<float>> value)
+	public void UniformMatrix4(int location, ReadOnlySpan<Matrix4X4<float>> value)
 	{
 		lock (GL)
 		{
@@ -1592,89 +1592,29 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<Matrix4X4<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix4(string name, bool transpose, ReadOnlySpan<Matrix4X4<float>> value)
+	public unsafe void UniformMatrix4(string name, ReadOnlySpan<Matrix4X4<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4(location, transpose, value);
+		UniformMatrix4(location, value);
 	}
 
-	public unsafe void UniformMatrix4(int location, bool transpose = false, params Matrix4X4<float>[] value)
+	public unsafe void UniformMatrix4(int location, params Matrix4X4<float>[] value)
 	{
-		UniformMatrix4(location, transpose, value.AsSpan());
+		UniformMatrix4(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix4(string name, bool transpose = false, params Matrix4X4<float>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix4(location, transpose, value);
-	}
-
-	public void UniformMatrix3x2(int location, bool transpose, ReadOnlySpan<Matrix3x2> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix3x2(
-				Handle,
-				location,
-				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix3x2, float>(value));
-		}
-	}
-
-	public unsafe void UniformMatrix3x2(string name, bool transpose, ReadOnlySpan<Matrix3x2> value)
+	public unsafe void UniformMatrix4(string name, params Matrix4X4<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3x2(location, transpose, value);
+		UniformMatrix4(location, value);
 	}
 
-	public unsafe void UniformMatrix3x2(int location, bool transpose = false, params Matrix3x2[] value)
-	{
-		UniformMatrix3x2(location, transpose, value.AsSpan());
-	}
-
-	public unsafe void UniformMatrix3x2(string name, bool transpose = false, params Matrix3x2[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix3x2(location, transpose, value);
-	}
-
-	public void UniformMatrix4(int location, bool transpose, ReadOnlySpan<Matrix4x4> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix4(
-				Handle,
-				location,
-				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix4x4, float>(value));
-		}
-	}
-
-	public unsafe void UniformMatrix4(string name, bool transpose, ReadOnlySpan<Matrix4x4> value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix4(location, transpose, value);
-	}
-
-	public unsafe void UniformMatrix4(int location, bool transpose = false, params Matrix4x4[] value)
-	{
-		UniformMatrix4(location, transpose, value.AsSpan());
-	}
-
-	public unsafe void UniformMatrix4(string name, bool transpose = false, params Matrix4x4[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix4(location, transpose, value);
-	}
-
-	public void UniformMatrix2(int location, bool transpose, ReadOnlySpan<Matrix2X2<double>> value)
+	public void UniformMatrix2Transpose(int location, ReadOnlySpan<Matrix2X2<float>> value)
 	{
 		lock (GL)
 		{
@@ -1682,89 +1622,28 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix2X2<double>, double>(value));
+				true,
+				MemoryMarshal.Cast<Matrix2X2<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix2(string name, bool transpose, ReadOnlySpan<Matrix2X2<double>> value)
+	public unsafe void UniformMatrix2Transpose(string name, ReadOnlySpan<Matrix2X2<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2(location, transpose, value);
+		UniformMatrix2Transpose(location, value);
 	}
 
-	public unsafe void UniformMatrix2(int location, bool transpose = false, params Matrix2X2<double>[] value)
+	public unsafe void UniformMatrix2Transpose(int location, params Matrix2X2<float>[] value)
 	{
-		UniformMatrix2(location, transpose, value.AsSpan());
+		UniformMatrix2Transpose(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix2(string name, bool transpose = false, params Matrix2X2<double>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix2(location, transpose, value);
-	}
-
-	public void UniformMatrix2x3(int location, bool transpose, ReadOnlySpan<Matrix2X3<double>> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix2x3(
-				Handle,
-				location,
-				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix2X3<double>, double>(value));
-		}
-	}
-
-	public unsafe void UniformMatrix2x3(string name, bool transpose, ReadOnlySpan<Matrix2X3<double>> value)
+	public unsafe void UniformMatrix2Transpose(string name, params Matrix2X2<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix2x3(location, transpose, value);
+		UniformMatrix2Transpose(location, value);
 	}
-
-	public unsafe void UniformMatrix2x3(int location, bool transpose = false, params Matrix2X3<double>[] value)
-	{
-		UniformMatrix2x3(location, transpose, value.AsSpan());
-	}
-
-	public unsafe void UniformMatrix2x3(string name, bool transpose = false, params Matrix2X3<double>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix2x3(location, transpose, value);
-	}
-
-	public void UniformMatrix2x4(int location, bool transpose, ReadOnlySpan<Matrix2X4<double>> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix2x4(
-				Handle,
-				location,
-				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix2X4<double>, double>(value));
-		}
-	}
-
-	public unsafe void UniformMatrix2x4(string name, bool transpose, ReadOnlySpan<Matrix2X4<double>> value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix2x4(location, transpose, value);
-	}
-
-	public unsafe void UniformMatrix2x4(int location, bool transpose = false, params Matrix2X4<double>[] value)
-	{
-		UniformMatrix2x4(location, transpose, value.AsSpan());
-	}
-
-	public unsafe void UniformMatrix2x4(string name, bool transpose = false, params Matrix2X4<double>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix2x4(location, transpose, value);
-	}
-
-	public void UniformMatrix3x2(int location, bool transpose, ReadOnlySpan<Matrix3X2<double>> value)
+	public void UniformMatrix3x2Transpose(int location, ReadOnlySpan<Matrix2X3<float>> value)
 	{
 		lock (GL)
 		{
@@ -1772,89 +1651,28 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix3X2<double>, double>(value));
+				true,
+				MemoryMarshal.Cast<Matrix2X3<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix3x2(string name, bool transpose, ReadOnlySpan<Matrix3X2<double>> value)
+	public unsafe void UniformMatrix3x2Transpose(string name, ReadOnlySpan<Matrix2X3<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3x2(location, transpose, value);
+		UniformMatrix3x2Transpose(location, value);
 	}
 
-	public unsafe void UniformMatrix3x2(int location, bool transpose = false, params Matrix3X2<double>[] value)
+	public unsafe void UniformMatrix3x2Transpose(int location, params Matrix2X3<float>[] value)
 	{
-		UniformMatrix3x2(location, transpose, value.AsSpan());
+		UniformMatrix3x2Transpose(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix3x2(string name, bool transpose = false, params Matrix3X2<double>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix3x2(location, transpose, value);
-	}
-
-	public void UniformMatrix3(int location, bool transpose, ReadOnlySpan<Matrix3X3<double>> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix3(
-				Handle,
-				location,
-				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix3X3<double>, double>(value));
-		}
-	}
-
-	public unsafe void UniformMatrix3(string name, bool transpose, ReadOnlySpan<Matrix3X3<double>> value)
+	public unsafe void UniformMatrix3x2Transpose(string name, params Matrix2X3<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix3(location, transpose, value);
+		UniformMatrix3x2Transpose(location, value);
 	}
-
-	public unsafe void UniformMatrix3(int location, bool transpose = false, params Matrix3X3<double>[] value)
-	{
-		UniformMatrix3(location, transpose, value.AsSpan());
-	}
-
-	public unsafe void UniformMatrix3(string name, bool transpose = false, params Matrix3X3<double>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix3(location, transpose, value);
-	}
-
-	public void UniformMatrix3x4(int location, bool transpose, ReadOnlySpan<Matrix3X4<double>> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix3x4(
-				Handle,
-				location,
-				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix3X4<double>, double>(value));
-		}
-	}
-
-	public unsafe void UniformMatrix3x4(string name, bool transpose, ReadOnlySpan<Matrix3X4<double>> value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix3x4(location, transpose, value);
-	}
-
-	public unsafe void UniformMatrix3x4(int location, bool transpose = false, params Matrix3X4<double>[] value)
-	{
-		UniformMatrix3x4(location, transpose, value.AsSpan());
-	}
-
-	public unsafe void UniformMatrix3x4(string name, bool transpose = false, params Matrix3X4<double>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformMatrix3x4(location, transpose, value);
-	}
-
-	public void UniformMatrix4x2(int location, bool transpose, ReadOnlySpan<Matrix4X2<double>> value)
+	public void UniformMatrix4x2Transpose(int location, ReadOnlySpan<Matrix2X4<float>> value)
 	{
 		lock (GL)
 		{
@@ -1862,29 +1680,86 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix4X2<double>, double>(value));
+				true,
+				MemoryMarshal.Cast<Matrix2X4<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix4x2(string name, bool transpose, ReadOnlySpan<Matrix4X2<double>> value)
+	public unsafe void UniformMatrix4x2Transpose(string name, ReadOnlySpan<Matrix2X4<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x2(location, transpose, value);
+		UniformMatrix4x2Transpose(location, value);
 	}
 
-	public unsafe void UniformMatrix4x2(int location, bool transpose = false, params Matrix4X2<double>[] value)
+	public unsafe void UniformMatrix4x2Transpose(int location, params Matrix2X4<float>[] value)
 	{
-		UniformMatrix4x2(location, transpose, value.AsSpan());
+		UniformMatrix4x2Transpose(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix4x2(string name, bool transpose = false, params Matrix4X2<double>[] value)
+	public unsafe void UniformMatrix4x2Transpose(string name, params Matrix2X4<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x2(location, transpose, value);
+		UniformMatrix4x2Transpose(location, value);
+	}
+	public void UniformMatrix2x3Transpose(int location, ReadOnlySpan<Matrix3X2<float>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x3(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix3X2<float>, float>(value));
+		}
 	}
 
-	public void UniformMatrix4x3(int location, bool transpose, ReadOnlySpan<Matrix4X3<double>> value)
+	public unsafe void UniformMatrix2x3Transpose(string name, ReadOnlySpan<Matrix3X2<float>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(int location, params Matrix3X2<float>[] value)
+	{
+		UniformMatrix2x3Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(string name, params Matrix3X2<float>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3Transpose(location, value);
+	}
+	public void UniformMatrix3Transpose(int location, ReadOnlySpan<Matrix3X3<float>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix3X3<float>, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3Transpose(string name, ReadOnlySpan<Matrix3X3<float>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix3Transpose(int location, params Matrix3X3<float>[] value)
+	{
+		UniformMatrix3Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3Transpose(string name, params Matrix3X3<float>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3Transpose(location, value);
+	}
+	public void UniformMatrix4x3Transpose(int location, ReadOnlySpan<Matrix3X4<float>> value)
 	{
 		lock (GL)
 		{
@@ -1892,29 +1767,86 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
-				MemoryMarshal.Cast<Matrix4X3<double>, double>(value));
+				true,
+				MemoryMarshal.Cast<Matrix3X4<float>, float>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix4x3(string name, bool transpose, ReadOnlySpan<Matrix4X3<double>> value)
+	public unsafe void UniformMatrix4x3Transpose(string name, ReadOnlySpan<Matrix3X4<float>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x3(location, transpose, value);
+		UniformMatrix4x3Transpose(location, value);
 	}
 
-	public unsafe void UniformMatrix4x3(int location, bool transpose = false, params Matrix4X3<double>[] value)
+	public unsafe void UniformMatrix4x3Transpose(int location, params Matrix3X4<float>[] value)
 	{
-		UniformMatrix4x3(location, transpose, value.AsSpan());
+		UniformMatrix4x3Transpose(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix4x3(string name, bool transpose = false, params Matrix4X3<double>[] value)
+	public unsafe void UniformMatrix4x3Transpose(string name, params Matrix3X4<float>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4x3(location, transpose, value);
+		UniformMatrix4x3Transpose(location, value);
+	}
+	public void UniformMatrix2x4Transpose(int location, ReadOnlySpan<Matrix4X2<float>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x4(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix4X2<float>, float>(value));
+		}
 	}
 
-	public void UniformMatrix4(int location, bool transpose, ReadOnlySpan<Matrix4X4<double>> value)
+	public unsafe void UniformMatrix2x4Transpose(string name, ReadOnlySpan<Matrix4X2<float>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix2x4Transpose(int location, params Matrix4X2<float>[] value)
+	{
+		UniformMatrix2x4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x4Transpose(string name, params Matrix4X2<float>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x4Transpose(location, value);
+	}
+	public void UniformMatrix3x4Transpose(int location, ReadOnlySpan<Matrix4X3<float>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3x4(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix4X3<float>, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3x4Transpose(string name, ReadOnlySpan<Matrix4X3<float>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix3x4Transpose(int location, params Matrix4X3<float>[] value)
+	{
+		UniformMatrix3x4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3x4Transpose(string name, params Matrix4X3<float>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x4Transpose(location, value);
+	}
+	public void UniformMatrix4Transpose(int location, ReadOnlySpan<Matrix4X4<float>> value)
 	{
 		lock (GL)
 		{
@@ -1922,26 +1854,674 @@ public partial class Program
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				true,
+				MemoryMarshal.Cast<Matrix4X4<float>, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4Transpose(string name, ReadOnlySpan<Matrix4X4<float>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix4Transpose(int location, params Matrix4X4<float>[] value)
+	{
+		UniformMatrix4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4Transpose(string name, params Matrix4X4<float>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4Transpose(location, value);
+	}
+	public void UniformMatrix3x2(int location, ReadOnlySpan<Matrix3x2> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3x2(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix3x2, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3x2(string name, ReadOnlySpan<Matrix3x2> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x2(location, value);
+	}
+
+	public unsafe void UniformMatrix3x2(int location, params Matrix3x2[] value)
+	{
+		UniformMatrix3x2(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3x2(string name, params Matrix3x2[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x2(location, value);
+	}
+
+	public void UniformMatrix2x3Transpose(int location, ReadOnlySpan<Matrix3x2> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x3(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix3x2, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(string name, ReadOnlySpan<Matrix3x2> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(int location, params Matrix3x2[] value)
+	{
+		UniformMatrix2x3Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(string name, params Matrix3x2[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3Transpose(location, value);
+	}
+	public void UniformMatrix4(int location, ReadOnlySpan<Matrix4x4> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix4x4, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4(string name, ReadOnlySpan<Matrix4x4> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4(location, value);
+	}
+
+	public unsafe void UniformMatrix4(int location, params Matrix4x4[] value)
+	{
+		UniformMatrix4(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4(string name, params Matrix4x4[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4(location, value);
+	}
+
+	public void UniformMatrix4Transpose(int location, ReadOnlySpan<Matrix4x4> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix4x4, float>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4Transpose(string name, ReadOnlySpan<Matrix4x4> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix4Transpose(int location, params Matrix4x4[] value)
+	{
+		UniformMatrix4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4Transpose(string name, params Matrix4x4[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4Transpose(location, value);
+	}
+	public void UniformMatrix2(int location, ReadOnlySpan<Matrix2X2<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix2X2<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2(string name, ReadOnlySpan<Matrix2X2<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2(location, value);
+	}
+
+	public unsafe void UniformMatrix2(int location, params Matrix2X2<double>[] value)
+	{
+		UniformMatrix2(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2(string name, params Matrix2X2<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2(location, value);
+	}
+
+	public void UniformMatrix2x3(int location, ReadOnlySpan<Matrix2X3<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x3(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix2X3<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2x3(string name, ReadOnlySpan<Matrix2X3<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3(location, value);
+	}
+
+	public unsafe void UniformMatrix2x3(int location, params Matrix2X3<double>[] value)
+	{
+		UniformMatrix2x3(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x3(string name, params Matrix2X3<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3(location, value);
+	}
+
+	public void UniformMatrix2x4(int location, ReadOnlySpan<Matrix2X4<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x4(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix2X4<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2x4(string name, ReadOnlySpan<Matrix2X4<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x4(location, value);
+	}
+
+	public unsafe void UniformMatrix2x4(int location, params Matrix2X4<double>[] value)
+	{
+		UniformMatrix2x4(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x4(string name, params Matrix2X4<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x4(location, value);
+	}
+
+	public void UniformMatrix3x2(int location, ReadOnlySpan<Matrix3X2<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3x2(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix3X2<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3x2(string name, ReadOnlySpan<Matrix3X2<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x2(location, value);
+	}
+
+	public unsafe void UniformMatrix3x2(int location, params Matrix3X2<double>[] value)
+	{
+		UniformMatrix3x2(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3x2(string name, params Matrix3X2<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x2(location, value);
+	}
+
+	public void UniformMatrix3(int location, ReadOnlySpan<Matrix3X3<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix3X3<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3(string name, ReadOnlySpan<Matrix3X3<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3(location, value);
+	}
+
+	public unsafe void UniformMatrix3(int location, params Matrix3X3<double>[] value)
+	{
+		UniformMatrix3(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3(string name, params Matrix3X3<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3(location, value);
+	}
+
+	public void UniformMatrix3x4(int location, ReadOnlySpan<Matrix3X4<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3x4(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix3X4<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3x4(string name, ReadOnlySpan<Matrix3X4<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x4(location, value);
+	}
+
+	public unsafe void UniformMatrix3x4(int location, params Matrix3X4<double>[] value)
+	{
+		UniformMatrix3x4(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3x4(string name, params Matrix3X4<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x4(location, value);
+	}
+
+	public void UniformMatrix4x2(int location, ReadOnlySpan<Matrix4X2<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4x2(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix4X2<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4x2(string name, ReadOnlySpan<Matrix4X2<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x2(location, value);
+	}
+
+	public unsafe void UniformMatrix4x2(int location, params Matrix4X2<double>[] value)
+	{
+		UniformMatrix4x2(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4x2(string name, params Matrix4X2<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x2(location, value);
+	}
+
+	public void UniformMatrix4x3(int location, ReadOnlySpan<Matrix4X3<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4x3(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
+				MemoryMarshal.Cast<Matrix4X3<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4x3(string name, ReadOnlySpan<Matrix4X3<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x3(location, value);
+	}
+
+	public unsafe void UniformMatrix4x3(int location, params Matrix4X3<double>[] value)
+	{
+		UniformMatrix4x3(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4x3(string name, params Matrix4X3<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x3(location, value);
+	}
+
+	public void UniformMatrix4(int location, ReadOnlySpan<Matrix4X4<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4(
+				Handle,
+				location,
+				(uint)value.Length,
+				false,
 				MemoryMarshal.Cast<Matrix4X4<double>, double>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix4(string name, bool transpose, ReadOnlySpan<Matrix4X4<double>> value)
+	public unsafe void UniformMatrix4(string name, ReadOnlySpan<Matrix4X4<double>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4(location, transpose, value);
+		UniformMatrix4(location, value);
 	}
 
-	public unsafe void UniformMatrix4(int location, bool transpose = false, params Matrix4X4<double>[] value)
+	public unsafe void UniformMatrix4(int location, params Matrix4X4<double>[] value)
 	{
-		UniformMatrix4(location, transpose, value.AsSpan());
+		UniformMatrix4(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix4(string name, bool transpose = false, params Matrix4X4<double>[] value)
+	public unsafe void UniformMatrix4(string name, params Matrix4X4<double>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix4(location, transpose, value);
+		UniformMatrix4(location, value);
 	}
 
+	public void UniformMatrix2Transpose(int location, ReadOnlySpan<Matrix2X2<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix2X2<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2Transpose(string name, ReadOnlySpan<Matrix2X2<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix2Transpose(int location, params Matrix2X2<double>[] value)
+	{
+		UniformMatrix2Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2Transpose(string name, params Matrix2X2<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2Transpose(location, value);
+	}
+	public void UniformMatrix3x2Transpose(int location, ReadOnlySpan<Matrix2X3<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3x2(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix2X3<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3x2Transpose(string name, ReadOnlySpan<Matrix2X3<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x2Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix3x2Transpose(int location, params Matrix2X3<double>[] value)
+	{
+		UniformMatrix3x2Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3x2Transpose(string name, params Matrix2X3<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x2Transpose(location, value);
+	}
+	public void UniformMatrix4x2Transpose(int location, ReadOnlySpan<Matrix2X4<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4x2(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix2X4<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4x2Transpose(string name, ReadOnlySpan<Matrix2X4<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x2Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix4x2Transpose(int location, params Matrix2X4<double>[] value)
+	{
+		UniformMatrix4x2Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4x2Transpose(string name, params Matrix2X4<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x2Transpose(location, value);
+	}
+	public void UniformMatrix2x3Transpose(int location, ReadOnlySpan<Matrix3X2<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x3(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix3X2<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(string name, ReadOnlySpan<Matrix3X2<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(int location, params Matrix3X2<double>[] value)
+	{
+		UniformMatrix2x3Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x3Transpose(string name, params Matrix3X2<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x3Transpose(location, value);
+	}
+	public void UniformMatrix3Transpose(int location, ReadOnlySpan<Matrix3X3<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix3X3<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3Transpose(string name, ReadOnlySpan<Matrix3X3<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix3Transpose(int location, params Matrix3X3<double>[] value)
+	{
+		UniformMatrix3Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3Transpose(string name, params Matrix3X3<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3Transpose(location, value);
+	}
+	public void UniformMatrix4x3Transpose(int location, ReadOnlySpan<Matrix3X4<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4x3(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix3X4<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4x3Transpose(string name, ReadOnlySpan<Matrix3X4<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x3Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix4x3Transpose(int location, params Matrix3X4<double>[] value)
+	{
+		UniformMatrix4x3Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4x3Transpose(string name, params Matrix3X4<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4x3Transpose(location, value);
+	}
+	public void UniformMatrix2x4Transpose(int location, ReadOnlySpan<Matrix4X2<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix2x4(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix4X2<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix2x4Transpose(string name, ReadOnlySpan<Matrix4X2<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix2x4Transpose(int location, params Matrix4X2<double>[] value)
+	{
+		UniformMatrix2x4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix2x4Transpose(string name, params Matrix4X2<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix2x4Transpose(location, value);
+	}
+	public void UniformMatrix3x4Transpose(int location, ReadOnlySpan<Matrix4X3<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix3x4(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix4X3<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix3x4Transpose(string name, ReadOnlySpan<Matrix4X3<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix3x4Transpose(int location, params Matrix4X3<double>[] value)
+	{
+		UniformMatrix3x4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix3x4Transpose(string name, params Matrix4X3<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix3x4Transpose(location, value);
+	}
+	public void UniformMatrix4Transpose(int location, ReadOnlySpan<Matrix4X4<double>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix4(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<Matrix4X4<double>, double>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix4Transpose(string name, ReadOnlySpan<Matrix4X4<double>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix4Transpose(int location, params Matrix4X4<double>[] value)
+	{
+		UniformMatrix4Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix4Transpose(string name, params Matrix4X4<double>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix4Transpose(location, value);
+	}
 }

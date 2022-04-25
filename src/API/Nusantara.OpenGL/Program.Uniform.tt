@@ -211,12 +211,24 @@ void UniformMatrix(string type)
 	UniformMatrixD(type, $"Matrix4X2<{type}>", "4x2");
 	UniformMatrixD(type, $"Matrix4X3<{type}>", "4x3");
 	UniformMatrixD(type, $"Matrix4X4<{type}>", "4");
+
+	UniformMatrixDTranspose(type, $"Matrix2X2<{type}>", "2");
+	UniformMatrixDTranspose(type, $"Matrix2X3<{type}>", "3x2");
+	UniformMatrixDTranspose(type, $"Matrix2X4<{type}>", "4x2");
+
+	UniformMatrixDTranspose(type, $"Matrix3X2<{type}>", "2x3");
+	UniformMatrixDTranspose(type, $"Matrix3X3<{type}>", "3");
+	UniformMatrixDTranspose(type, $"Matrix3X4<{type}>", "4x3");
+
+	UniformMatrixDTranspose(type, $"Matrix4X2<{type}>", "2x4");
+	UniformMatrixDTranspose(type, $"Matrix4X3<{type}>", "3x4");
+	UniformMatrixDTranspose(type, $"Matrix4X4<{type}>", "4");
 }
 
 void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 {
 #>
-	public void UniformMatrix<#= glMatrixDimension #>(int location, bool transpose, ReadOnlySpan<<#= matrixType #>> value)
+	public void UniformMatrix<#= glMatrixDimension #>(int location, ReadOnlySpan<<#= matrixType #>> value)
 	{
 		lock (GL)
 		{
@@ -224,28 +236,63 @@ void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 				Handle,
 				location,
 				(uint)value.Length,
-				transpose,
+				false,
 				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
 		}
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, bool transpose, ReadOnlySpan<<#= matrixType #>> value)
+	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, ReadOnlySpan<<#= matrixType #>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix<#= glMatrixDimension #>(location, transpose, value);
+		UniformMatrix<#= glMatrixDimension #>(location, value);
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(int location, bool transpose = false, params <#= matrixType #>[] value)
+	public unsafe void UniformMatrix<#= glMatrixDimension #>(int location, params <#= matrixType #>[] value)
 	{
-		UniformMatrix<#= glMatrixDimension #>(location, transpose, value.AsSpan());
+		UniformMatrix<#= glMatrixDimension #>(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, bool transpose = false, params <#= matrixType #>[] value)
+	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, params <#= matrixType #>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix<#= glMatrixDimension #>(location, transpose, value);
+		UniformMatrix<#= glMatrixDimension #>(location, value);
 	}
 
+<#
+}
+
+void UniformMatrixDTranspose(string type, string matrixType, string glMatrixDimension)
+{
+#>
+	public void UniformMatrix<#= glMatrixDimension #>Transpose(int location, ReadOnlySpan<<#= matrixType #>> value)
+	{
+		lock (GL)
+		{
+			GL.ProgramUniformMatrix<#= glMatrixDimension #>(
+				Handle,
+				location,
+				(uint)value.Length,
+				true,
+				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
+		}
+	}
+
+	public unsafe void UniformMatrix<#= glMatrixDimension #>Transpose(string name, ReadOnlySpan<<#= matrixType #>> value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix<#= glMatrixDimension #>Transpose(location, value);
+	}
+
+	public unsafe void UniformMatrix<#= glMatrixDimension #>Transpose(int location, params <#= matrixType #>[] value)
+	{
+		UniformMatrix<#= glMatrixDimension #>Transpose(location, value.AsSpan());
+	}
+
+	public unsafe void UniformMatrix<#= glMatrixDimension #>Transpose(string name, params <#= matrixType #>[] value)
+	{
+		int location = GetUniformLocation(name);
+		UniformMatrix<#= glMatrixDimension #>Transpose(location, value);
+	}
 <#
 }
 #>
@@ -271,7 +318,9 @@ public partial class Program
 
 	UniformMatrix("float");
 	UniformMatrixD("float", "Matrix3x2", "3x2");
+	UniformMatrixDTranspose("float", "Matrix3x2", "2x3");
 	UniformMatrixD("float", "Matrix4x4", "4");
+	UniformMatrixDTranspose("float", "Matrix4x4", "4");
 	UniformMatrix("double");
 #>
 }
