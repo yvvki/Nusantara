@@ -17,7 +17,7 @@ public class SKTexture : Texture
 
 	public SKTexture(GL gl) : base(gl, TextureTarget.Texture2D) { }
 
-	public static SKTexture FromBitmap(
+	public static SKTexture CreateFromBitmap(
 		GL gl,
 		SKBitmap bitmap,
 		bool flipVertically = true,
