@@ -89,6 +89,12 @@ public static class VertexArrayExtensions
 		bool normalized = false,
 		uint relativeoffset = 0)
 	{
+		if (AttribHelper.IsSupported(type))
+		{
+			@this.AttribFormat(attribindexoffset, type, normalized, relativeoffset);
+			return;
+		}
+
 		FieldInfo[] typeFields = type.GetFields();
 
 		for (uint i = 0; i < typeFields.Length; i++)
@@ -96,7 +102,7 @@ public static class VertexArrayExtensions
 			@this.AttribFormat(
 				attribindexoffset + i,
 				typeFields[i].FieldType,
-				false,
+				normalized,
 				(uint)Marshal.OffsetOf(type, typeFields[i].Name));
 		}
 	}
