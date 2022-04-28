@@ -24,6 +24,7 @@ void Uniform1(string type)
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, v0);
+			ThrowIfError();
 		}
 	}
 
@@ -38,6 +39,7 @@ void Uniform1(string type)
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, value);
+			ThrowIfError();
 		}
 	}
 
@@ -114,6 +116,7 @@ void UniformD(string type, int count)
 		lock (GL)
 		{
 			GL.ProgramUniform<#= count #>(Handle, location, <#= vParameterInvoke #>);
+			ThrowIfError();
 		}
 	}
 
@@ -128,6 +131,7 @@ void UniformD(string type, int count)
 		lock (GL)
 		{
 			GL.ProgramUniform<#= count #>(Handle, location, (uint)value.Length, MemoryMarshal.Cast<<#= ValueTupleType #>, <#= type #>>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -238,6 +242,7 @@ void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -274,6 +279,7 @@ void UniformMatrixDTranspose(string type, string matrixType, string glMatrixDime
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
+			ThrowIfError();
 		}
 	}
 

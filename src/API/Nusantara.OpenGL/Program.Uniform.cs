@@ -17,6 +17,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, v0);
+			ThrowIfError();
 		}
 	}
 
@@ -31,6 +32,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, value);
+			ThrowIfError();
 		}
 	}
 
@@ -83,6 +85,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, v0, v1);
+			ThrowIfError();
 		}
 	}
 
@@ -97,6 +100,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<int, int>, int>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -160,6 +164,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, v0, v1, v2);
+			ThrowIfError();
 		}
 	}
 
@@ -174,6 +179,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<int, int, int>, int>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -239,6 +245,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, v0, v1, v2, v3);
+			ThrowIfError();
 		}
 	}
 
@@ -253,6 +260,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<int, int, int, int>, int>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -320,6 +328,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, v0);
+			ThrowIfError();
 		}
 	}
 
@@ -334,6 +343,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, value);
+			ThrowIfError();
 		}
 	}
 
@@ -386,6 +396,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, v0, v1);
+			ThrowIfError();
 		}
 	}
 
@@ -400,6 +411,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<uint, uint>, uint>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -463,6 +475,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, v0, v1, v2);
+			ThrowIfError();
 		}
 	}
 
@@ -477,6 +490,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<uint, uint, uint>, uint>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -542,6 +556,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, v0, v1, v2, v3);
+			ThrowIfError();
 		}
 	}
 
@@ -556,6 +571,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<uint, uint, uint, uint>, uint>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -623,6 +639,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, v0);
+			ThrowIfError();
 		}
 	}
 
@@ -637,6 +654,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, value);
+			ThrowIfError();
 		}
 	}
 
@@ -689,6 +707,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, v0, v1);
+			ThrowIfError();
 		}
 	}
 
@@ -703,6 +722,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<float, float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -766,6 +786,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, v0, v1, v2);
+			ThrowIfError();
 		}
 	}
 
@@ -780,6 +801,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<float, float, float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -845,6 +867,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, v0, v1, v2, v3);
+			ThrowIfError();
 		}
 	}
 
@@ -859,6 +882,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<float, float, float, float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1046,6 +1070,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, v0);
+			ThrowIfError();
 		}
 	}
 
@@ -1060,6 +1085,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform1(Handle, location, value);
+			ThrowIfError();
 		}
 	}
 
@@ -1112,6 +1138,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, v0, v1);
+			ThrowIfError();
 		}
 	}
 
@@ -1126,6 +1153,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform2(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<double, double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1189,6 +1217,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, v0, v1, v2);
+			ThrowIfError();
 		}
 	}
 
@@ -1203,6 +1232,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform3(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<double, double, double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1268,6 +1298,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, v0, v1, v2, v3);
+			ThrowIfError();
 		}
 	}
 
@@ -1282,6 +1313,7 @@ public partial class Program
 		lock (GL)
 		{
 			GL.ProgramUniform4(Handle, location, (uint)value.Length, MemoryMarshal.Cast<ValueTuple<double, double, double, double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1354,6 +1386,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix2X2<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1384,6 +1417,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix2X3<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1414,6 +1448,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix2X4<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1444,6 +1479,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3X2<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1474,6 +1510,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3X3<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1504,6 +1541,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3X4<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1534,6 +1572,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4X2<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1564,6 +1603,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4X3<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1594,6 +1634,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4X4<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1624,6 +1665,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix2X2<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1653,6 +1695,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix2X3<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1682,6 +1725,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix2X4<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1711,6 +1755,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3X2<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1740,6 +1785,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3X3<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1769,6 +1815,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3X4<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1798,6 +1845,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4X2<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1827,6 +1875,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4X3<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1856,6 +1905,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4X4<float>, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1885,6 +1935,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3x2, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1915,6 +1966,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3x2, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1944,6 +1996,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4x4, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -1974,6 +2027,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4x4, float>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2003,6 +2057,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix2X2<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2033,6 +2088,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix2X3<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2063,6 +2119,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix2X4<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2093,6 +2150,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3X2<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2123,6 +2181,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3X3<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2153,6 +2212,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix3X4<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2183,6 +2243,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4X2<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2213,6 +2274,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4X3<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2243,6 +2305,7 @@ public partial class Program
 				(uint)value.Length,
 				false,
 				MemoryMarshal.Cast<Matrix4X4<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2273,6 +2336,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix2X2<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2302,6 +2366,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix2X3<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2331,6 +2396,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix2X4<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2360,6 +2426,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3X2<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2389,6 +2456,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3X3<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2418,6 +2486,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix3X4<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2447,6 +2516,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4X2<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2476,6 +2546,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4X3<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
@@ -2505,6 +2576,7 @@ public partial class Program
 				(uint)value.Length,
 				true,
 				MemoryMarshal.Cast<Matrix4X4<double>, double>(value));
+			ThrowIfError();
 		}
 	}
 
