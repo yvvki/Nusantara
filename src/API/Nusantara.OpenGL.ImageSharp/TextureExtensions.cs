@@ -37,7 +37,7 @@ public static class TextureExtensions
 					0,
 					y,
 					(uint)image.Width,
-					(uint)image.Height,
+					1,
 					PixelFormat.Rgba,
 					PixelType.UnsignedByte,
 					row);
