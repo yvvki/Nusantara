@@ -19,7 +19,7 @@ void Uniform(string type)
 void Uniform1(string type)
 {
 #>
-	public void Uniform1(int location, <#= type #> v0)
+	public void Uniform(int location, <#= type #> v0)
 	{
 		lock (GL)
 		{
@@ -28,13 +28,13 @@ void Uniform1(string type)
 		}
 	}
 
-	public void Uniform1(string name, <#= type #> v0)
+	public void Uniform(string name, <#= type #> v0)
 	{
 		int location = GetUniformLocation(name);
-		Uniform1(location, v0);
+		Uniform(location, v0);
 	}
 
-	public void Uniform1(int location, ReadOnlySpan<<#= type #>> value)
+	public void Uniform(int location, ReadOnlySpan<<#= type #>> value)
 	{
 		lock (GL)
 		{
@@ -43,48 +43,48 @@ void Uniform1(string type)
 		}
 	}
 
-	public void Uniform1(string name, ReadOnlySpan<<#= type #>> value)
+	public void Uniform(string name, ReadOnlySpan<<#= type #>> value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform1(location, value);
+		Uniform(location, value);
 	}
 
-	public void Uniform1(int location, params <#= type #>[] value)
+	public void Uniform(int location, params <#= type #>[] value)
 	{
-		Uniform1(location, value.AsSpan());
+		Uniform(location, value.AsSpan());
 	}
 
-	public void Uniform1(string name, params <#= type #>[] value)
+	public void Uniform(string name, params <#= type #>[] value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform1(location, value);
+		Uniform(location, value);
 	}
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public void Uniform1(int location, ReadOnlySpan<ValueTuple<<#= type #>>> value)
+	public void Uniform(int location, ReadOnlySpan<ValueTuple<<#= type #>>> value)
 	{
 		ReadOnlySpan<<#= type #>> value1 = MemoryMarshal.Cast<ValueTuple<<#= type #>>, <#= type #>>(value);
-		Uniform1(location, value1);
+		Uniform(location, value1);
 	}
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public void Uniform1(string name, ReadOnlySpan<ValueTuple<<#= type #>>> value)
+	public void Uniform(string name, ReadOnlySpan<ValueTuple<<#= type #>>> value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform1(location, value);
+		Uniform(location, value);
 	}
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public void Uniform1(int location, params ValueTuple<<#= type #>>[] value)
+	public void Uniform(int location, params ValueTuple<<#= type #>>[] value)
 	{
-		Uniform1(location, value.AsSpan());
+		Uniform(location, value.AsSpan());
 	}
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public void Uniform1(string name, params ValueTuple<<#= type #>>[] value)
+	public void Uniform(string name, params ValueTuple<<#= type #>>[] value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform1(location, value);
+		Uniform(location, value);
 	}
 
 <#
@@ -111,7 +111,7 @@ void UniformD(string type, int count)
 
 	string ValueTupleType = GetValueTupleType(type, count);
 #>
-	public void Uniform<#= count #>(int location, <#= vParameterDeclare #>)
+	public void Uniform(int location, <#= vParameterDeclare #>)
 	{
 		lock (GL)
 		{
@@ -120,13 +120,13 @@ void UniformD(string type, int count)
 		}
 	}
 
-	public void Uniform<#= count #>(string name, <#= vParameterDeclare #>)
+	public void Uniform(string name, <#= vParameterDeclare #>)
 	{
 		int location = GetUniformLocation(name);
-		Uniform<#= count #>(location, <#= vParameterInvoke #>);
+		Uniform(location, <#= vParameterInvoke #>);
 	}
 
-	public void Uniform<#= count #>(int location, ReadOnlySpan<<#= ValueTupleType #>> value)
+	public void Uniform(int location, ReadOnlySpan<<#= ValueTupleType #>> value)
 	{
 		lock (GL)
 		{
@@ -135,21 +135,21 @@ void UniformD(string type, int count)
 		}
 	}
 
-	public void Uniform<#= count #>(string name, ReadOnlySpan<<#= ValueTupleType #>> value)
+	public void Uniform(string name, ReadOnlySpan<<#= ValueTupleType #>> value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform<#= count #>(location, value);
+		Uniform(location, value);
 	}
 
-	public void Uniform<#= count #>(int location, params <#= ValueTupleType #>[] value)
+	public void Uniform(int location, params <#= ValueTupleType #>[] value)
 	{
-		Uniform<#= count #>(location, value.AsSpan());
+		Uniform(location, value.AsSpan());
 	}
 
-	public void Uniform<#= count #>(string name, params <#= ValueTupleType #>[] value)
+	public void Uniform(string name, params <#= ValueTupleType #>[] value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform<#= count #>(location, value);
+		Uniform(location, value);
 	}
 
 <#
@@ -161,42 +161,42 @@ void UniformVector(int count, string type, string vectorName)
 	string ValueTupleType = GetValueTupleType(type, count);
 
 #>
-	public void Uniform<#= count #>(int location, <#= vectorName #> vector)
+	public void Uniform(int location, <#= vectorName #> vector)
 	{
-		Uniform<#= count #>(
+		Uniform(
 			location,
 			<#= string.Join(@",
 			", GetSymbols(_symbols, 0, count).Select(symbol => $"vector.{symbol}"))#>);
 	}
 
-	public void Uniform<#= count #>(string name, <#= vectorName #> vector)
+	public void Uniform(string name, <#= vectorName #> vector)
 	{
-		Uniform<#= count #>(
+		Uniform(
 			name,
 			<#= string.Join(@",
 			", GetSymbols(_symbols, 0, count).Select(symbol => $"vector.{symbol}"))#>);
 	}
 
-	public void Uniform<#= count #>(int location, ReadOnlySpan<<#= vectorName #>> value)
+	public void Uniform(int location, ReadOnlySpan<<#= vectorName #>> value)
 	{
-		Uniform<#= count #>(location, MemoryMarshal.Cast<<#= vectorName #>, <#= ValueTupleType #>>(value));
+		Uniform(location, MemoryMarshal.Cast<<#= vectorName #>, <#= ValueTupleType #>>(value));
 	}
 
-	public void Uniform<#= count #>(string name, ReadOnlySpan<<#= vectorName #>> value)
+	public void Uniform(string name, ReadOnlySpan<<#= vectorName #>> value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform<#= count #>(location, value);
+		Uniform(location, value);
 	}
 
-	public void Uniform<#= count #>(int location, params <#= vectorName #>[] value)
+	public void Uniform(int location, params <#= vectorName #>[] value)
 	{
-		Uniform<#= count #>(location, value.AsSpan());
+		Uniform(location, value.AsSpan());
 	}
 
-	public void Uniform<#= count #>(string name, params <#= vectorName #>[] value)
+	public void Uniform(string name, params <#= vectorName #>[] value)
 	{
 		int location = GetUniformLocation(name);
-		Uniform<#= count #>(location, value);
+		Uniform(location, value);
 	}
 
 <#
@@ -215,52 +215,60 @@ void UniformMatrix(string type)
 	UniformMatrixD(type, $"Matrix4X2<{type}>", "4x2");
 	UniformMatrixD(type, $"Matrix4X3<{type}>", "4x3");
 	UniformMatrixD(type, $"Matrix4X4<{type}>", "4");
-
-	UniformMatrixDTranspose(type, $"Matrix2X2<{type}>", "2");
-	UniformMatrixDTranspose(type, $"Matrix2X3<{type}>", "3x2");
-	UniformMatrixDTranspose(type, $"Matrix2X4<{type}>", "4x2");
-
-	UniformMatrixDTranspose(type, $"Matrix3X2<{type}>", "2x3");
-	UniformMatrixDTranspose(type, $"Matrix3X3<{type}>", "3");
-	UniformMatrixDTranspose(type, $"Matrix3X4<{type}>", "4x3");
-
-	UniformMatrixDTranspose(type, $"Matrix4X2<{type}>", "2x4");
-	UniformMatrixDTranspose(type, $"Matrix4X3<{type}>", "3x4");
-	UniformMatrixDTranspose(type, $"Matrix4X4<{type}>", "4");
 }
 
 void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 {
+	string[] glMatrixDimensions = glMatrixDimension.Split('x');
+	string glMatrixDimensionTransposed = string.Join("x", glMatrixDimensions.Reverse());
 #>
-	public void UniformMatrix<#= glMatrixDimension #>(int location, ReadOnlySpan<<#= matrixType #>> value)
+	public void Uniform(int location, bool transpose, ReadOnlySpan<<#= matrixType #>> value)
 	{
+		glProgramUniformMatrix<<#= type #>> glProgramUniformMatrix =
+<#
+		if (glMatrixDimension != glMatrixDimensionTransposed)
+		{
+#>
+			transpose is false
+			? GL.ProgramUniformMatrix<#= glMatrixDimension #>
+			: GL.ProgramUniformMatrix<#= glMatrixDimensionTransposed #>;
+<#
+		}
+		else
+		{
+#>
+			GL.ProgramUniformMatrix<#= glMatrixDimension #>;
+<#
+		}
+#>
+
 		lock (GL)
 		{
-			GL.ProgramUniformMatrix<#= glMatrixDimension #>(
+			glProgramUniformMatrix(
 				Handle,
 				location,
 				(uint)value.Length,
-				false,
+				transpose,
 				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
 			ThrowIfError();
 		}
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, ReadOnlySpan<<#= matrixType #>> value)
+	public unsafe void Uniform(string name, bool transpose, ReadOnlySpan<<#= matrixType #>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix<#= glMatrixDimension #>(location, value);
+		Uniform(location, transpose, value);
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(int location, params <#= matrixType #>[] value)
+	public unsafe void Uniform(int location, bool transpose = false, params <#= matrixType #>[] value)
 	{
-		UniformMatrix<#= glMatrixDimension #>(location, value.AsSpan());
+		Uniform(location, transpose, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>(string name, params <#= matrixType #>[] value)
+	public unsafe void Uniform(string name, bool transpose = false, params <#= matrixType #>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix<#= glMatrixDimension #>(location, value);
+		Uniform(location, transpose, value);
 	}
 
 <#
@@ -269,7 +277,7 @@ void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 void UniformMatrixDTranspose(string type, string matrixType, string glMatrixDimension)
 {
 #>
-	public void UniformMatrix<#= glMatrixDimension #>Transpose(int location, ReadOnlySpan<<#= matrixType #>> value)
+	public void UniformTranspose(int location, ReadOnlySpan<<#= matrixType #>> value)
 	{
 		lock (GL)
 		{
@@ -283,21 +291,21 @@ void UniformMatrixDTranspose(string type, string matrixType, string glMatrixDime
 		}
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>Transpose(string name, ReadOnlySpan<<#= matrixType #>> value)
+	public unsafe void UniformTranspose(string name, ReadOnlySpan<<#= matrixType #>> value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix<#= glMatrixDimension #>Transpose(location, value);
+		UniformTranspose(location, value);
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>Transpose(int location, params <#= matrixType #>[] value)
+	public unsafe void UniformTranspose(int location, params <#= matrixType #>[] value)
 	{
-		UniformMatrix<#= glMatrixDimension #>Transpose(location, value.AsSpan());
+		UniformTranspose(location, value.AsSpan());
 	}
 
-	public unsafe void UniformMatrix<#= glMatrixDimension #>Transpose(string name, params <#= matrixType #>[] value)
+	public unsafe void UniformTranspose(string name, params <#= matrixType #>[] value)
 	{
 		int location = GetUniformLocation(name);
-		UniformMatrix<#= glMatrixDimension #>Transpose(location, value);
+		UniformTranspose(location, value);
 	}
 <#
 }
@@ -313,6 +321,8 @@ namespace Nusantara.OpenGL;
 
 public partial class Program
 {
+	private delegate void glProgramUniformMatrix<T>(uint program, int location, uint count, bool transpose, ReadOnlySpan<T> value);
+
 <#
 	Uniform("int");
 	Uniform("uint");
