@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Silk.NET.Assimp" Version="2.14.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.0" />
-    <PackageReference Include="SkiaSharp" Version="2.88.0-preview.232" />
+    <PackageReference Include="Silk.NET.Assimp" Version="2.15.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
+    <PackageReference Include="SkiaSharp" Version="2.88.0-preview.256" />
   </ItemGroup>
 
   <ItemGroup>
