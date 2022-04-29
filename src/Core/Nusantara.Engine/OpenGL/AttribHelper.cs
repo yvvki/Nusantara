@@ -13,6 +13,42 @@ namespace Nusantara.OpenGL;
 // thanks to <https://github.com/Windows10CE> for helping!
 internal static class AttribHelper
 {
+	public static bool IsSupported<T>()
+		where T : struct
+	{
+		return IsSupported(typeof(T));
+	}
+
+	// Only supports primitive, System.Numerics, and Silk.NET.Maths namespaces types.
+	// Subject to change.	
+	public static bool IsSupported(Type? type)
+	{
+		if (type is null)
+		{
+			return false;
+		}
+
+		if (type.IsPrimitive)
+		{
+			return true;
+		}
+		else if (type.IsGenericType)
+		{
+			type = type.GetGenericTypeDefinition();
+		}
+
+		return
+			type == typeof(Vector2) || type == typeof(Vector2D<>) ||
+			type == typeof(Vector3) || type == typeof(Vector3D<>) ||
+			type == typeof(Vector4) || type == typeof(Vector4D<>) ||
+			type == typeof(Matrix2X2<>) ||
+			type == typeof(Matrix2X3<>) || type == typeof(Matrix3X2<>) || type == typeof(Matrix3x2) ||
+			type == typeof(Matrix2X4<>) || type == typeof(Matrix4X2<>) ||
+			type == typeof(Matrix3X3<>) ||
+			type == typeof(Matrix3X4<>) ||
+			type == typeof(Matrix4X4<>) || type == typeof(Matrix4x4);
+	}
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static (int size, VertexAttribType type) GetSizeType<T>()
 		where T : struct
@@ -52,8 +88,6 @@ internal static class AttribHelper
 		return GetSize(typeof(T));
 	}
 
-	// Only supports primitive, System.Numerics, and Silk.NET.Maths namespaces types.
-	// Subject to change.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int GetSize([NotNull] Type type!!)
 	{

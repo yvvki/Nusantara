@@ -48,38 +48,46 @@ public interface IVector<TSelf, TNumber> :
 	static abstract TSelf operator *(TNumber left, TSelf right);
 	static abstract TSelf operator /(TSelf left, TNumber right);
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Add(TSelf left, TSelf right)
 	{
 		return left + right;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Subtract(TSelf left, TSelf right)
 	{
 		return left - right;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Multiply(TSelf left, TSelf right)
 	{
 		return left * right;
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Multiply(TSelf left, TNumber right)
 	{
 		return left * right;
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Multiply(TNumber left, TSelf right)
 	{
 		return left * right;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Divide(TSelf left, TSelf right)
 	{
 		return left / right;
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Divide(TSelf left, TNumber right)
 	{
 		return left / right;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TSelf Min(TSelf left, TSelf right)
 	{
 		TSelf result = left;
@@ -110,6 +118,7 @@ public interface IVector<TSelf, TNumber> :
 		return result;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static TNumber Dot(TSelf left, TSelf right)
 	{
 		TNumber result = TNumber.Zero;
@@ -323,9 +332,16 @@ public interface IVector<TSelf, TNumber> :
 		IEnumerator<TNumber> enumerator = GetEnumerator();
 
 		sb.Append('<');
-		while (PrintComponent())
+		if (enumerator.MoveNext())
 		{
-			sb.Append(separator);
+			while (PrintComponent())
+			{
+				sb.Append(separator);
+				sb.Append(' ');
+			}
+		}
+		else
+		{
 			sb.Append(' ');
 		}
 		sb.Append('>');

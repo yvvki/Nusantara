@@ -34,7 +34,7 @@ public partial class Program : GLObject
 			program.Attach(shader);
 		}
 
-		program.Link();
+		program.LinkAndThrowOnFail();
 
 		foreach (Shader shader in shaders)
 		{

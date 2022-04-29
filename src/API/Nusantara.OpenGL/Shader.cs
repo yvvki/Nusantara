@@ -26,7 +26,7 @@ public class Shader : GLObject
 		Shader shader = new(gl, type);
 
 		shader.Source(@string);
-		shader.Compile();
+		shader.CompileAndThrowOnFail();
 
 		return shader;
 	}

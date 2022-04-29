@@ -67,7 +67,48 @@ public static partial class MathHelper
 
 	#endregion
 
+	#region Smooth Linear Interpolation
+
+	public static Vector2 Slerp(Vector2 value1, Vector2 value2, float amount)
+	{
+		float dot = Vector2.Dot(value1, value2);
+
+		dot = Math.Clamp(dot, -1.0f, 1.0f);
+
+		float theta_0 = MathF.Acos(dot);
+		float theta = theta_0 * amount;
+
+		Vector2 value3 = new(-value1.Y, value1.X);
+
+		return value1 * MathF.Cos(theta) + value3 * MathF.Sin(theta);
+	}
+
+	#endregion
+
 	#region Rectangle
+
+	public static System.Drawing.RectangleF CalculateBounds(ReadOnlySpan<Vector2> vectors)
+	{
+		// Return if empty
+		if (vectors.IsEmpty) return new(System.Drawing.PointF.Empty, System.Drawing.SizeF.Empty);
+
+		Vector2 left_top;
+		Vector2 right_bottom;
+
+		// Assign the first 
+		left_top = right_bottom = vectors[0];
+
+		for (int i = 1; i < vectors.Length; i++)
+		{
+			var vector = vectors[i];
+
+			left_top = Vector2.Min(left_top, vector);
+			right_bottom = Vector2.Max(right_bottom, vector);
+		}
+
+
+		return System.Drawing.RectangleF.FromLTRB(left_top.X, left_top.Y, right_bottom.X, right_bottom.Y);
+	}
 
 	public static Rectangle<T> CalculateBounds<T>(ReadOnlySpan<Vector2D<T>> vectors)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>

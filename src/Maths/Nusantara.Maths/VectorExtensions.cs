@@ -18,7 +18,9 @@ public static partial class VectorExtensions
 		int argb = @this.ToArgb();
 
 		// int as Vector4D<byte>.
-		return Unsafe.As<int, Vector4D<byte>>(ref argb);
+		Vector4D<byte> result = Unsafe.As<int, Vector4D<byte>>(ref argb);
+		// Flip the vector.
+		return result.WZYX();
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
