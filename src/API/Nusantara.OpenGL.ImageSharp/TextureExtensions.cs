@@ -10,14 +10,13 @@ namespace Nusantara.OpenGL.ImageSharp;
 
 public static class TextureExtensions
 {
-	public static Texture CreateFromImage<TPixel>(
+	public static Texture CreateFromImage(
 		GL gl,
 		Image<Rgba32> image!!,
 		TextureWrapMode wrapS = TextureWrapMode.Repeat,
 		TextureWrapMode wrapT = TextureWrapMode.Repeat,
 		TextureMinFilter minFiler = TextureMinFilter.LinearMipmapLinear,
 		TextureMagFilter magFiler = TextureMagFilter.Linear)
-		where TPixel : unmanaged, IPixel<TPixel>
 	{
 		Texture texture = new(gl, TextureTarget.Texture2D);
 
