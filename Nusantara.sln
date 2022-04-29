@@ -42,6 +42,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nusantara.Maths.Experimenta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnOpenGL", "Examples\LearnOpenGL\LearnOpenGL.csproj", "{C5BB5602-E24D-4D99-8FDA-3B06021D61A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nusantara.OpenGL.SkiaSharp", "src\API\Nusantara.OpenGL.SkiaSharp\Nusantara.OpenGL.SkiaSharp.csproj", "{D20E77A5-2BF3-4CB2-AE44-CC6D57FADAC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nusantara.OpenGL.ImageSharp", "src\API\Nusantara.OpenGL.ImageSharp\Nusantara.OpenGL.ImageSharp.csproj", "{8423CAB6-78DE-447D-A2F1-E3085A6A19D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{C5BB5602-E24D-4D99-8FDA-3B06021D61A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5BB5602-E24D-4D99-8FDA-3B06021D61A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5BB5602-E24D-4D99-8FDA-3B06021D61A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D20E77A5-2BF3-4CB2-AE44-CC6D57FADAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D20E77A5-2BF3-4CB2-AE44-CC6D57FADAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D20E77A5-2BF3-4CB2-AE44-CC6D57FADAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D20E77A5-2BF3-4CB2-AE44-CC6D57FADAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8423CAB6-78DE-447D-A2F1-E3085A6A19D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8423CAB6-78DE-447D-A2F1-E3085A6A19D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8423CAB6-78DE-447D-A2F1-E3085A6A19D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8423CAB6-78DE-447D-A2F1-E3085A6A19D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +104,8 @@ Global
 		{D5733B59-A876-444F-8598-A1D3B9AC0163} = {53772A36-B75C-4088-ABAB-DADE052EC133}
 		{94DFB7C0-F136-4557-954A-B8799524274E} = {CA4AC439-F80D-40B3-B99D-A556232B40F9}
 		{C5BB5602-E24D-4D99-8FDA-3B06021D61A0} = {51C20906-A2A4-4057-97BA-1ECC1642D23E}
+		{D20E77A5-2BF3-4CB2-AE44-CC6D57FADAC0} = {53772A36-B75C-4088-ABAB-DADE052EC133}
+		{8423CAB6-78DE-447D-A2F1-E3085A6A19D5} = {53772A36-B75C-4088-ABAB-DADE052EC133}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {244E7E3A-7DC6-4C0B-941C-7C5EFAC0E98F}

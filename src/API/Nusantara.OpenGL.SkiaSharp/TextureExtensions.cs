@@ -5,29 +5,20 @@ using Silk.NET.OpenGL;
 
 using SkiaSharp;
 
-namespace Nusantara.OpenGL;
+namespace Nusantara.OpenGL.SkiaSharp;
 
-public class SKTexture : Texture
+public static class TextureExtensions
 {
-	internal SKTexture(GL gl, uint handle) : base(gl, handle) { }
-	internal SKTexture(GL gl, Silk.NET.OpenGL.Texture texture) : base(gl, texture) { }
-
-	internal SKTexture(GL gl, TextureTarget target) : base(gl, target) { }
-	internal SKTexture(GL gl, GLEnum target) : base(gl, target) { }
-
-	public SKTexture(GL gl) : base(gl, TextureTarget.Texture2D) { }
-
-	public static SKTexture CreateFromBitmap(
+	public static Texture CreateFromBitmap(
 		GL gl,
-		SKBitmap bitmap,
+		SKBitmap bitmap!!,
 		bool flipVertically = true,
 		TextureWrapMode wrapS = TextureWrapMode.Repeat,
 		TextureWrapMode wrapT = TextureWrapMode.Repeat,
 		TextureMinFilter minFiler = TextureMinFilter.LinearMipmapLinear,
 		TextureMagFilter magFiler = TextureMagFilter.Linear)
 	{
-		SKTexture texture = new(gl);
-		ArgumentNullException.ThrowIfNull(bitmap);
+		Texture texture = new(gl, TextureTarget.Texture2D);
 
 		if (flipVertically)
 		{
@@ -60,11 +51,14 @@ public class SKTexture : Texture
 		return texture;
 	}
 
-	public void Storage2D(uint levels, SKImageInfo info)
+	public static void Storage2D(
+		this Texture @this,
+		uint levels,
+		SKImageInfo info)
 	{
-		static SizedInternalFormat Convert(SKColorType colorType)
+		static SizedInternalFormat Convert(SKColorType type)
 		{
-			return colorType switch
+			return type switch
 			{
 				SKColorType.Alpha8 => SizedInternalFormat.Alpha8Ext,
 				SKColorType.Rgb565 => SizedInternalFormat.Rgb565,
@@ -90,14 +84,15 @@ public class SKTexture : Texture
 
 		SizedInternalFormat format = Convert(info.ColorType);
 
-		Storage2D(
+		@this.Storage2D(
 			levels,
 			format,
 			(uint)info.Width,
 			(uint)info.Height);
 	}
 
-	public unsafe void SubImage2D(
+	public static void SubImage2D(
+		this Texture @this,
 		int level,
 		int xoffset,
 		int yoffset,
@@ -131,7 +126,7 @@ public class SKTexture : Texture
 
 		(PixelFormat format, GLEnum type) = Convert(bitmap.ColorType);
 
-		SubImage2D(
+		@this.SubImage2D(
 			level,
 			xoffset,
 			yoffset,
@@ -139,6 +134,6 @@ public class SKTexture : Texture
 			(uint)bitmap.Height,
 			format,
 			(PixelType)type,
-			(void*)bitmap.GetPixels());
+			bitmap.GetPixels());
 	}
 }

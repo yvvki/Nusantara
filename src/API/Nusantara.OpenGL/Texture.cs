@@ -144,6 +144,59 @@ public class Texture : GLObject
 		}
 	}
 
+	public unsafe void SubImage2D(
+		int level,
+		int xoffset,
+		int yoffset,
+		uint width,
+		uint height,
+		PixelFormat format,
+		PixelType type,
+		IntPtr pixels)
+	{
+		lock (GL)
+		{
+			GL.TextureSubImage2D(
+				Handle,
+				level,
+				xoffset,
+				yoffset,
+				width,
+				height,
+				format,
+				type,
+				pixels);
+			ThrowIfError();
+		}
+	}
+
+	public unsafe void SubImage2D<T>(
+		int level,
+		int xoffset,
+		int yoffset,
+		uint width,
+		uint height,
+		PixelFormat format,
+		PixelType type,
+		ReadOnlySpan<T> pixels)
+		where T : unmanaged
+	{
+		lock (GL)
+		{
+			GL.TextureSubImage2D(
+				Handle,
+				level,
+				xoffset,
+				yoffset,
+				width,
+				height,
+				format,
+				type,
+				pixels);
+			ThrowIfError();
+		}
+	}
+
 	public void GenerateMipmap()
 	{
 		lock (GL)
@@ -161,6 +214,19 @@ public class Texture : GLObject
 			ThrowIfError();
 		}
 	}
+
+	#endregion
+
+	#region Helper
+
+	//public TextureTarget Target
+	//{
+	//	get
+	//	{
+	//		GL.GetTextureParameter(Handle, GLEnum.TextureTarget, out int result);
+	//		return (TextureTarget)result;
+	//	}
+	//}
 
 	#endregion
 
