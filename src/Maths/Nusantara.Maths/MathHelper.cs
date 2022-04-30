@@ -67,20 +67,20 @@ public static partial class MathHelper
 
 	#endregion
 
-	#region Smooth Linear Interpolation
+	#region Spherical Linear Interpolation
 
 	public static Vector2 Slerp(Vector2 value1, Vector2 value2, float amount)
 	{
 		float dot = Vector2.Dot(value1, value2);
-
 		dot = Math.Clamp(dot, -1.0f, 1.0f);
 
-		float theta_0 = MathF.Acos(dot);
-		float theta = theta_0 * amount;
+		float theta_1 = MathF.Acos(dot);
+		float theta = theta_1 * amount;
 
-		Vector2 value3 = new(-value1.Y, value1.X);
+		Vector2 relative = value2 - value1 * dot;
+		relative = Vector2.Normalize(relative);
 
-		return value1 * MathF.Cos(theta) + value3 * MathF.Sin(theta);
+		return value1 * MathF.Cos(theta) + relative * MathF.Sin(theta);
 	}
 
 	#endregion
