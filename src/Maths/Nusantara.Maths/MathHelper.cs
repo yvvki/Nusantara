@@ -126,7 +126,7 @@ public static partial class MathHelper
 	public static System.Drawing.RectangleF CalculateBounds(ReadOnlySpan<Vector2> vectors)
 	{
 		// Return if empty
-		if (vectors.IsEmpty) return new(System.Drawing.PointF.Empty, System.Drawing.SizeF.Empty);
+		if (vectors.IsEmpty) return System.Drawing.RectangleF.Empty;
 
 		Vector2 left_top;
 		Vector2 right_bottom;
