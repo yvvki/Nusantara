@@ -69,6 +69,9 @@ public static partial class MathHelper
 
 	#region Spherical Linear Interpolation
 
+	// https://en.wikipedia.org/wiki/Slerp
+	// Implementation based of
+	// https://stackoverflow.com/questions/3039026/edges-on-polygon-outlines-not-always-correct/3058978#3058978
 	public static Vector2 Slerp(Vector2 value1, Vector2 value2, float amount)
 	{
 		float dot = Vector2.Dot(value1, value2);
@@ -77,10 +80,43 @@ public static partial class MathHelper
 		float theta_1 = MathF.Acos(dot);
 		float theta = theta_1 * amount;
 
-		Vector2 relative = value2 - value1 * dot;
-		relative = Vector2.Normalize(relative);
+		Vector2 relative = value2 - (value1 * dot);
+		Vector2 relative_normalized = Vector2.Normalize(relative);
 
-		return value1 * MathF.Cos(theta) + relative * MathF.Sin(theta);
+		(float cos, float sin) = MathF.SinCos(theta);
+
+		return value1 * cos + relative_normalized * sin;
+	}
+
+	#endregion
+
+	#region Line Intersection
+
+	// https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
+	public static Vector2 Intersection(Vector2 value1, Vector2 value2, Vector2 value3, Vector2 value4)
+	{
+		float x1 = value1.X;
+		float y1 = value1.Y;
+		float x2 = value2.X;
+		float y2 = value2.Y;
+		float x3 = value3.X;
+		float y3 = value3.Y;
+		float x4 = value4.X;
+		float y4 = value4.Y;
+
+		float D = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+		if (D is 0)
+		{
+			return new(float.NaN);
+		}
+
+		float x1y2_y1x2 = x1 * y2 - y1 * x2;
+		float x3y4_y3x4 = x3 * y4 - y3 * x4;
+
+		float Px = (x1y2_y1x2 * (x3 - x4) - (x1 - x2) * x3y4_y3x4) / D;
+		float Py = (x1y2_y1x2 * (y3 - y4) - (y1 - y2) * x3y4_y3x4) / D;
+
+		return new(Px, Py);
 	}
 
 	#endregion
