@@ -125,15 +125,12 @@ public static partial class MathHelper
 
 	public static System.Drawing.RectangleF CalculateBounds(ReadOnlySpan<Vector2> vectors)
 	{
-		// Return if empty
 		if (vectors.IsEmpty) return System.Drawing.RectangleF.Empty;
 
 		Vector2 left_top;
 		Vector2 right_bottom;
 
-		// Assign the first 
 		left_top = right_bottom = vectors[0];
-
 		for (int i = 1; i < vectors.Length; i++)
 		{
 			var vector = vectors[i];
@@ -149,15 +146,12 @@ public static partial class MathHelper
 	public static Rectangle<T> CalculateBounds<T>(ReadOnlySpan<Vector2D<T>> vectors)
 		where T : unmanaged, IFormattable, IEquatable<T>, IComparable<T>
 	{
-		// Return early if empty.
 		if (vectors.IsEmpty) return new(Vector2D<T>.Zero, Vector2D<T>.Zero);
 
 		Vector2D<T> left_top;
 		Vector2D<T> right_bottom;
 
-		// Assign the first 
 		left_top = right_bottom = vectors[0];
-
 		for (int i = 1; i < vectors.Length; i++)
 		{
 			var vector = vectors[i];
@@ -177,14 +171,10 @@ public static partial class MathHelper
 	{
 		Matrix4x4 result;
 
-		// Scale
 		Matrix4x4 m_scale = Matrix4x4.CreateScale(scale);
-		// Rotation
 		Matrix4x4 m_rotation = Matrix4x4.CreateFromQuaternion(rotation);
 
 		result = Matrix4x4.Multiply(m_scale, m_rotation);
-
-		// Translation
 		result.Translation = translation;
 
 		return result;
