@@ -83,7 +83,7 @@ public static partial class MathHelper
 		Vector2 relative = value2 - (value1 * dot);
 		Vector2 relative_normalized = Vector2.Normalize(relative);
 
-		(float cos, float sin) = MathF.SinCos(theta);
+		(float sin, float cos) = MathF.SinCos(theta);
 
 		return value1 * cos + relative_normalized * sin;
 	}
