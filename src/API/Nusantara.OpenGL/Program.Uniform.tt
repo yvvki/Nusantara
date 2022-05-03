@@ -273,42 +273,6 @@ void UniformMatrixD(string type, string matrixType, string glMatrixDimension)
 
 <#
 }
-
-void UniformMatrixDTranspose(string type, string matrixType, string glMatrixDimension)
-{
-#>
-	public void UniformTranspose(int location, ReadOnlySpan<<#= matrixType #>> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix<#= glMatrixDimension #>(
-				Handle,
-				location,
-				(uint)value.Length,
-				true,
-				MemoryMarshal.Cast<<#= matrixType #>, <#= type #>>(value));
-			ThrowIfError();
-		}
-	}
-
-	public unsafe void UniformTranspose(string name, ReadOnlySpan<<#= matrixType #>> value)
-	{
-		int location = GetUniformLocation(name);
-		UniformTranspose(location, value);
-	}
-
-	public unsafe void UniformTranspose(int location, params <#= matrixType #>[] value)
-	{
-		UniformTranspose(location, value.AsSpan());
-	}
-
-	public unsafe void UniformTranspose(string name, params <#= matrixType #>[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformTranspose(location, value);
-	}
-<#
-}
 #>
 using System.ComponentModel;
 using System.Numerics;
@@ -334,9 +298,7 @@ public partial class Program
 
 	UniformMatrix("float");
 	UniformMatrixD("float", "Matrix3x2", "3x2");
-	UniformMatrixDTranspose("float", "Matrix3x2", "2x3");
 	UniformMatrixD("float", "Matrix4x4", "4");
-	UniformMatrixDTranspose("float", "Matrix4x4", "4");
 	UniformMatrix("double");
 #>
 }

@@ -1732,36 +1732,6 @@ public partial class Program
 		Uniform(location, transpose, value);
 	}
 
-	public void UniformTranspose(int location, ReadOnlySpan<Matrix3x2> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix2x3(
-				Handle,
-				location,
-				(uint)value.Length,
-				true,
-				MemoryMarshal.Cast<Matrix3x2, float>(value));
-			ThrowIfError();
-		}
-	}
-
-	public unsafe void UniformTranspose(string name, ReadOnlySpan<Matrix3x2> value)
-	{
-		int location = GetUniformLocation(name);
-		UniformTranspose(location, value);
-	}
-
-	public unsafe void UniformTranspose(int location, params Matrix3x2[] value)
-	{
-		UniformTranspose(location, value.AsSpan());
-	}
-
-	public unsafe void UniformTranspose(string name, params Matrix3x2[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformTranspose(location, value);
-	}
 	public void Uniform(int location, bool transpose, ReadOnlySpan<Matrix4x4> value)
 	{
 		glProgramUniformMatrix<float> glProgramUniformMatrix =
@@ -1796,36 +1766,6 @@ public partial class Program
 		Uniform(location, transpose, value);
 	}
 
-	public void UniformTranspose(int location, ReadOnlySpan<Matrix4x4> value)
-	{
-		lock (GL)
-		{
-			GL.ProgramUniformMatrix4(
-				Handle,
-				location,
-				(uint)value.Length,
-				true,
-				MemoryMarshal.Cast<Matrix4x4, float>(value));
-			ThrowIfError();
-		}
-	}
-
-	public unsafe void UniformTranspose(string name, ReadOnlySpan<Matrix4x4> value)
-	{
-		int location = GetUniformLocation(name);
-		UniformTranspose(location, value);
-	}
-
-	public unsafe void UniformTranspose(int location, params Matrix4x4[] value)
-	{
-		UniformTranspose(location, value.AsSpan());
-	}
-
-	public unsafe void UniformTranspose(string name, params Matrix4x4[] value)
-	{
-		int location = GetUniformLocation(name);
-		UniformTranspose(location, value);
-	}
 	public void Uniform(int location, bool transpose, ReadOnlySpan<Matrix2X2<double>> value)
 	{
 		glProgramUniformMatrix<double> glProgramUniformMatrix =
