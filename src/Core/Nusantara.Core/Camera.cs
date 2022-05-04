@@ -18,10 +18,13 @@ public sealed class Camera : ICamera, ITransformable
 		_projection = CalculateProjection();
 	}
 
-	public Vector3 Position { get; set; }
+	private Transform _transform = new();
+	Transform ITransformable.Transform { get => _transform; set => _transform = value; }
+
+	public Vector3 Position { get => _transform.Translation; set => _transform.Translation = value; }
 	Vector3 ITransformable.Translation { get => Position; set => Position = value; }
-	public Quaternion Rotation { get; set; } = Quaternion.Identity;
-	Vector3 ITransformable.Scale { get; set; } // Unused.
+	public Quaternion Rotation { get => _transform.Rotation; set => _transform.Rotation = value; }
+	Vector3 ITransformable.Scale { get => _transform.Scale; set => _transform.Scale = value; }
 
 	// Facing down.
 	public Vector3 Right => Vector3.Transform(Directions.Right, Rotation);

@@ -22,30 +22,30 @@ public struct Transform :
 		Scale = scale;
 	}
 
-	public Transform()
-		: this(
-			Vector3.Zero,
-			Quaternion.Identity,
-			Vector3.One)
-	{ }
-
 	public Transform(Vector3? translation = null, Quaternion? rotation = null, Vector3? scale = null)
-		: this(
-			translation ?? Vector3.Zero,
-			rotation ?? Quaternion.Identity,
-			scale ?? Vector3.One)
-	{ }
+	{
+		Translation = translation ?? Vector3.Zero;
+		Rotation = rotation ?? Quaternion.Identity;
+		Scale = scale ?? Vector3.One;
+	}
+
+	public Transform()
+	{
+		Translation = Vector3.Zero;
+		Rotation = Quaternion.Identity;
+		Scale = Vector3.One;
+	}
 
 	public Transform(ITransformable transformable)
-		: this(
-			transformable.Translation,
-			transformable.Rotation,
-			transformable.Scale)
-	{ }
+	{
+		this = transformable.Transform;
+	}
 
 	public Vector3 Translation;
 	public Quaternion Rotation;
 	public Vector3 Scale;
+
+	Transform ITransformable.Transform { get => this; set => this = value; }
 
 	Vector3 ITransformable.Translation { get => Translation; set => Translation = value; }
 	Quaternion ITransformable.Rotation { get => Rotation; set => Rotation = value; }

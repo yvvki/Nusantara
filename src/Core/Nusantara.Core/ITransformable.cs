@@ -7,9 +7,23 @@ namespace Nusantara;
 
 public interface ITransformable
 {
-	Vector3 Translation { get; set; }
-	Quaternion Rotation { get; set; }
-	Vector3 Scale { get; set; }
+	Transform Transform { get; set; }
+
+	Vector3 Translation
+	{
+		get => Transform.Translation;
+		set => Transform = Transform with { Translation = value };
+	}
+	Quaternion Rotation
+	{
+		get => Transform.Rotation;
+		set => Transform = Transform with { Rotation = value };
+	}
+	Vector3 Scale
+	{
+		get => Transform.Scale;
+		set => Transform = Transform with { Scale = value };
+	}
 
 	Vector3 Right
 		=> Vector3.Transform(Directions.Right, Rotation);
