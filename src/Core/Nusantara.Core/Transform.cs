@@ -101,11 +101,11 @@ public struct Transform :
 	{
 		StringBuilder sb = new();
 		sb.Append('{');
-		sb.Append(Translation.ToString());
+		sb.Append(Translation);
 		sb.Append(' ');
-		sb.Append(Rotation.ToString());
+		sb.Append(Rotation);
 		sb.Append(' ');
-		sb.Append(Scale.ToString());
+		sb.Append(Scale);
 		sb.Append('}');
 		return sb.ToString();
 	}
