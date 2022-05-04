@@ -67,7 +67,40 @@ public static partial class MathHelper
 
 	#endregion
 
-	#region Spherical Linear Interpolation
+	#region Get Rotation
+
+	// https://www.gamedev.net/forums/topic/697501-get-rotation-angle-from-normalized-2d-vector/5382911/
+	public static float GetRotation(Vector2 direction)
+	{
+		if (direction == Vector2.UnitX)
+		{
+			return 0;
+		}
+		else if (direction == Vector2.UnitY)
+		{
+			return MathF.PI / 2;
+		}
+		else if (direction == -Vector2.UnitX)
+		{
+			return MathF.PI;
+		}
+		else if (direction == -Vector2.UnitY)
+		{
+			return -MathF.PI / 2;
+		}
+
+		return MathF.Atan2(direction.Y, direction.X);
+	}
+
+	#endregion
+
+	#region Interpolation
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static float Lerp(float value1, float value2, float amount)
+	{
+		return (value1 * (1 - amount)) + (value2 * amount);
+	}
 
 	// https://en.wikipedia.org/wiki/Slerp
 	// Implementation based of
@@ -175,6 +208,19 @@ public static partial class MathHelper
 		Matrix4x4 m_rotation = Matrix4x4.CreateFromQuaternion(rotation);
 
 		result = Matrix4x4.Multiply(m_scale, m_rotation);
+		result.Translation = translation;
+
+		return result;
+	}
+
+	public static Matrix3x2 CreateTransform(Vector2 translation, float rotation, Vector2 scale)
+	{
+		Matrix3x2 result;
+
+		Matrix3x2 m_scale = Matrix3x2.CreateScale(scale);
+		Matrix3x2 m_rotation = Matrix3x2.CreateRotation(rotation);
+
+		result = Matrix3x2.Multiply(m_scale, m_rotation);
 		result.Translation = translation;
 
 		return result;
