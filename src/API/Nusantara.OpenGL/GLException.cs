@@ -9,7 +9,6 @@ using Silk.NET.OpenGL;
 
 namespace Nusantara.OpenGL;
 
-
 [Serializable]
 public class GLException : Exception
 {

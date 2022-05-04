@@ -89,7 +89,6 @@ public class Texture : GLObject
 				height);
 			ThrowIfError();
 		}
-
 	}
 
 	internal unsafe void SubImage2D(
