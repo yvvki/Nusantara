@@ -91,7 +91,7 @@ public class Buffer : GLObject
 		}
 	}
 
-	public void InvalidateData<T>(nint offset, nint length)
+	public void InvalidateData<T>()
 		where T : unmanaged
 	{
 		lock (GL)
