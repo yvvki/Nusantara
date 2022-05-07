@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
+using Silk.NET.Core.Native;
 using Silk.NET.OpenGL;
 
 namespace Nusantara.OpenGL;
@@ -82,5 +83,28 @@ public class GLException : Exception
 			ErrorCode.TextureTooLargeExt => "The specified texture exceeds the implementation's maximum supported texture size.",
 			_ => throw new ArgumentOutOfRangeException(nameof(errorcode))
 		};
+	}
+
+	// You still need to use debug flags and enable debug output.
+	public static unsafe void HandleDebugMessageCallback(GL gl)
+	{
+		gl.DebugMessageCallback(DebugProc, null);
+	}
+
+	private static unsafe void DebugProc(GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userParam)
+	{
+		DebugSource _source = (DebugSource)source;
+		DebugType _type = (DebugType)type;
+		DebugSeverity _severity = (DebugSeverity)severity;
+		string? _message = SilkMarshal.PtrToString(message);
+
+		if (_severity is DebugSeverity.DebugSeverityHigh)
+		{
+			Throw(_message);
+		}
+		else
+		{
+			Console.WriteLine(_message);
+		}
 	}
 }
