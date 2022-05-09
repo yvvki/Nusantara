@@ -153,23 +153,18 @@ public class Texture : GLObject
 		PixelType type,
 		IntPtr pixels)
 	{
-		lock (GL)
-		{
-			GL.TextureSubImage2D(
-				Handle,
-				level,
-				xoffset,
-				yoffset,
-				width,
-				height,
-				format,
-				type,
-				pixels);
-			ThrowIfError();
-		}
+		SubImage2D(
+			level,
+			xoffset,
+			yoffset,
+			width,
+			height,
+			format,
+			type,
+			pixels.ToPointer());
 	}
 
-	public unsafe void SubImage2D<T>(
+	public void SubImage2D<T>(
 		int level,
 		int xoffset,
 		int yoffset,
