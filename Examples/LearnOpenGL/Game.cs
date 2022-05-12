@@ -16,7 +16,7 @@ using SkiaSharp;
 
 using GLProgram = Nusantara.OpenGL.Program;
 using GLShader = Nusantara.OpenGL.Shader;
-using GLSKTexture = Nusantara.OpenGL.SKTexture;
+using GLTexture = Nusantara.OpenGL.Texture;
 
 namespace LearnOpenGL;
 
@@ -93,8 +93,8 @@ public class Game
 
 	private Mesh mesh;
 
-	private GLSKTexture container2;
-	private GLSKTexture container2_specular;
+	private GLTexture container2;
+	private GLTexture container2_specular;
 
 	private GLProgram shader;
 	private GLProgram lightShader;
@@ -216,11 +216,11 @@ public class Game
 			// Loading Texture.
 			using (SKBitmap container2_bitmap = SKBitmap.Decode(Path.Combine(resourcePath, "container2.png")))
 			{
-				container2 = GLSKTexture.FromBitmap(gl, container2_bitmap);
+				container2 = Nusantara.OpenGL.SkiaSharp.TextureExtensions.CreateFromBitmap(gl, container2_bitmap);
 			}
 			using (SKBitmap container2_specular_bitmap = SKBitmap.Decode(Path.Combine(resourcePath, "container2_specular.png")))
 			{
-				container2_specular = GLSKTexture.FromBitmap(gl, container2_specular_bitmap);
+				container2_specular = Nusantara.OpenGL.SkiaSharp.TextureExtensions.CreateFromBitmap(gl, container2_specular_bitmap);
 			}
 
 			// Compiling Shaders.
@@ -280,15 +280,15 @@ public class Game
 			gl.BindTextureUnit(1, container2_specular.Handle);
 
 			// Material.
-			shader.Uniform1("Material.Diffuse", 0);
-			shader.Uniform1("Material.Specular", 1);
+			shader.Uniform("Material.Diffuse", 0);
+			shader.Uniform("Material.Specular", 1);
 
-			shader.Uniform1("Material.Shininess", 32.0f);
+			shader.Uniform("Material.Shininess", 32.0f);
 
-			shader.UniformMatrix4("ViewProjection", false, view * projection);
+			shader.Uniform("ViewProjection", false, view * projection);
 
 			Vector3 cameraPosition = camera.Position;
-			shader.Uniform3("CameraPosition", cameraPosition);
+			shader.Uniform("CameraPosition", cameraPosition);
 
 			// Light constants.
 			const float constant = 1.0f;
@@ -296,40 +296,40 @@ public class Game
 			const float quadratic = 0.032f;
 
 			// Sun.
-			shader.Uniform3("Sun.Direction", -0.2f, -1.0f, -0.3f);
+			shader.Uniform("Sun.Direction", -0.2f, -1.0f, -0.3f);
 
-			shader.Uniform3("Sun.Ambient", 0.05f, 0.05f, 0.05f);
-			shader.Uniform3("Sun.Diffuse", 0.4f, 0.4f, 0.4f);
-			shader.Uniform3("Sun.Specular", 0.5f, 0.5f, 0.5f);
+			shader.Uniform("Sun.Ambient", 0.05f, 0.05f, 0.05f);
+			shader.Uniform("Sun.Diffuse", 0.4f, 0.4f, 0.4f);
+			shader.Uniform("Sun.Specular", 0.5f, 0.5f, 0.5f);
 
 			// Lamps.
 			for (int i = 0; i < 4; i++)
 			{
-				shader.Uniform3($"Lamps[{i}].Position", LampPositions[i]);
+				shader.Uniform($"Lamps[{i}].Position", LampPositions[i]);
 
-				shader.Uniform3($"Lamps[{i}].Ambient", 0.05f, 0.05f, 0.05f);
-				shader.Uniform3($"Lamps[{i}].Diffuse", 0.8f, 0.8f, 0.8f);
-				shader.Uniform3($"Lamps[{i}].Specular", 1.0f, 1.0f, 1.0f);
+				shader.Uniform($"Lamps[{i}].Ambient", 0.05f, 0.05f, 0.05f);
+				shader.Uniform($"Lamps[{i}].Diffuse", 0.8f, 0.8f, 0.8f);
+				shader.Uniform($"Lamps[{i}].Specular", 1.0f, 1.0f, 1.0f);
 
-				shader.Uniform1($"Lamps[{i}].Constant", constant);
-				shader.Uniform1($"Lamps[{i}].Linear", linear);
-				shader.Uniform1($"Lamps[{i}].Quadratic", quadratic);
+				shader.Uniform($"Lamps[{i}].Constant", constant);
+				shader.Uniform($"Lamps[{i}].Linear", linear);
+				shader.Uniform($"Lamps[{i}].Quadratic", quadratic);
 			}
 
 			// Torch.
-			shader.Uniform3("Torch.Position", cameraPosition);
-			shader.Uniform3("Torch.Direction", camera.Forward);
+			shader.Uniform("Torch.Position", cameraPosition);
+			shader.Uniform("Torch.Direction", camera.Forward);
 
-			shader.Uniform3("Torch.Ambient", 0.0f, 0.0f, 0.0f);
-			shader.Uniform3("Torch.Diffuse", 1.0f, 1.0f, 1.0f);
-			shader.Uniform3("Torch.Specular", 1.0f, 1.0f, 1.0f);
+			shader.Uniform("Torch.Ambient", 0.0f, 0.0f, 0.0f);
+			shader.Uniform("Torch.Diffuse", 1.0f, 1.0f, 1.0f);
+			shader.Uniform("Torch.Specular", 1.0f, 1.0f, 1.0f);
 
-			shader.Uniform1("Torch.Constant", constant);
-			shader.Uniform1("Torch.Linear", linear);
-			shader.Uniform1("Torch.Quadratic", quadratic);
+			shader.Uniform("Torch.Constant", constant);
+			shader.Uniform("Torch.Linear", linear);
+			shader.Uniform("Torch.Quadratic", quadratic);
 
-			shader.Uniform1("Torch.CutOff", MathF.Cos(Scalar.DegreesToRadians(25.0f)));
-			shader.Uniform1("Torch.OuterCutOff", MathF.Cos(Scalar.DegreesToRadians(35.0f)));
+			shader.Uniform("Torch.CutOff", MathF.Cos(Scalar.DegreesToRadians(25.0f)));
+			shader.Uniform("Torch.OuterCutOff", MathF.Cos(Scalar.DegreesToRadians(35.0f)));
 
 			gl.UseProgram(shader.Handle);
 			for (int i = 0; i < cubePositions.Length; i++)
@@ -345,8 +345,8 @@ public class Game
 				Matrix4x4 modelMatrix = model.GetMatrix();
 				if (Matrix4x4.Invert(modelMatrix, out Matrix4x4 normal) is false) throw new InvalidOperationException();
 
-				shader.UniformMatrix4("Model", false, modelMatrix);
-				shader.UniformMatrix3("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
+				shader.Uniform("Model", false, modelMatrix);
+				shader.Uniform("Normal", true, new Matrix3X3<float>(normal.ToGeneric()));
 
 				// Drawing.
 				gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
@@ -354,7 +354,7 @@ public class Game
 
 			// Light:
 			// Uniforms.
-			lightShader.UniformMatrix4("ViewProjection", false, view * projection);
+			lightShader.Uniform("ViewProjection", false, view * projection);
 
 			gl.UseProgram(lightShader.Handle);
 			for (int i = 0; i < LampPositions.Length; i++)
@@ -365,7 +365,7 @@ public class Game
 					Quaternion.Identity,
 					new Vector3(0.2f));
 
-				lightShader.UniformMatrix4("Model", false, lightModel.GetMatrix());
+				lightShader.Uniform("Model", false, lightModel.GetMatrix());
 
 				// Drawing.
 				gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)vertices.Length);

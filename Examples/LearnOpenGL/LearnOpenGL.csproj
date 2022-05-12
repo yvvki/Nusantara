@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\API\Nusantara.OpenGL.SkiaSharp\Nusantara.OpenGL.SkiaSharp.csproj" />
     <ProjectReference Include="..\..\src\Core\Nusantara\Nusantara.csproj" />
   </ItemGroup>
 
