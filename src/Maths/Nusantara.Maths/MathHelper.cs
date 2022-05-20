@@ -69,6 +69,7 @@ public static partial class MathHelper
 
 	#region Get Rotation
 
+	// https://stackoverflow.com/a/13459068/14511192
 	// https://www.gamedev.net/forums/topic/697501-get-rotation-angle-from-normalized-2d-vector/5382911/
 	public static float GetRotation(Vector2 direction)
 	{
