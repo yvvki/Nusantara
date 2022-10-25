@@ -27,7 +27,7 @@ public static partial class VectorExtensions
 	public static Vector3D<byte> RGB(this Color @this)
 	{
 		// ARGB (XYZW) as RGB (YZW).
-		return @this.ARGB().RGB();
+		return @this.ARGB().YZW();
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
