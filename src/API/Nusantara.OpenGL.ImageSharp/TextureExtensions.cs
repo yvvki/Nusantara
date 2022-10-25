@@ -12,12 +12,14 @@ public static class TextureExtensions
 {
 	public static Texture CreateFromImage(
 		GL gl,
-		Image<Rgba32> image!!,
+		Image<Rgba32> image,
 		TextureWrapMode wrapS = TextureWrapMode.Repeat,
 		TextureWrapMode wrapT = TextureWrapMode.Repeat,
 		TextureMinFilter minFiler = TextureMinFilter.LinearMipmapLinear,
 		TextureMagFilter magFiler = TextureMagFilter.Linear)
 	{
+		ArgumentNullException.ThrowIfNull(image);
+		
 		Texture texture = new(gl, TextureTarget.Texture2D);
 
 		texture.Parameter(TextureParameterName.TextureWrapS, (int)wrapS);

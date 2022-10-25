@@ -13,14 +13,21 @@ public class Mesh : IDisposable
 {
 	private readonly VertexArray _vao;
 
-	private readonly Buffer _vbo;
-	private readonly Buffer _ebo;
+	private readonly Buffer? _vbo;
+	private readonly Buffer? _ebo;
 
 	// No need to reference the array, since the data will get copied to the GPU memory.
 	public Mesh(GL gl, ReadOnlySpan<Vertex> vertices, ReadOnlySpan<uint> indices)
 	{
-		_vbo = Buffer.CreateStorage(gl, vertices);
-		_ebo = Buffer.CreateStorage(gl, indices);
+		if (vertices.IsEmpty is false)
+		{
+			_vbo = Buffer.CreateStorage(gl, vertices);
+		}
+
+		if (indices.IsEmpty is false)
+		{
+			_ebo = Buffer.CreateStorage(gl, indices);
+		}
 
 		Type vertexType = typeof(Vertex);
 
@@ -61,7 +68,7 @@ public class Mesh : IDisposable
 	protected virtual void Dispose(bool disposing)
 	{
 		_vao.Dispose();
-		_vbo.Dispose();
-		_ebo.Dispose();
+		_vbo?.Dispose();
+		_ebo?.Dispose();
 	}
 }

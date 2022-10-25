@@ -21,7 +21,7 @@ public interface IVector<TSelf, TNumber> :
 	IAdditiveIdentity<TSelf, TSelf>,
 	IMultiplicativeIdentity<TSelf, TSelf>,
 
-	IEqualityOperators<TSelf, TSelf>,
+	IEqualityOperators<TSelf, TSelf, bool>,
 
 	IUnaryNegationOperators<TSelf, TSelf>,
 	IAdditionOperators<TSelf, TSelf, TSelf>,
@@ -145,7 +145,7 @@ public interface IVector<TSelf, TNumber> :
 		else
 		{
 			double distanceSquaredD = ((IConvertible)distanceSquared).ToDouble(null);
-			return TNumber.Create(Math.Sqrt(distanceSquaredD));
+			return TNumber.CreateChecked(Math.Sqrt(distanceSquaredD));
 		}
 	}
 
@@ -494,8 +494,8 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
 	}
 	public static implicit operator Vector2<T>(Vector2 value)
 	{
-		T x = T.Create(value.X);
-		T y = T.Create(value.Y);
+		T x = T.CreateChecked(value.X);
+		T y = T.CreateChecked(value.Y);
 
 		return new(x, y);
 	}

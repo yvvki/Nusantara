@@ -89,13 +89,15 @@ internal static class AttribHelper
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static int GetSize([NotNull] Type type!!)
+	public static int GetSize(Type type)
 	{
+		ArgumentNullException.ThrowIfNull(type);
+		
 		if (type.IsPrimitive)
 		{
 			return 1;
 		}
-		else if (type.IsGenericType)
+		if (type.IsGenericType)
 		{
 			type = type.GetGenericTypeDefinition();
 		}
@@ -131,8 +133,10 @@ internal static class AttribHelper
 
 	// Only accept primitive and enum type.
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static VertexAttribType GetType([NotNull] Type type!!)
+	public static VertexAttribType GetType(Type type)
 	{
+		ArgumentNullException.ThrowIfNull(type);
+		
 		if (type.IsEnum)
 		{
 			type = Enum.GetUnderlyingType(type);

@@ -10,8 +10,10 @@ namespace Nusantara.OpenGL;
 
 public abstract class GLObject : object, IEquatable<GLObject>, IDisposable
 {
-	protected GLObject([NotNull] GL gl!!, uint handle)
+	protected GLObject(GL gl, uint handle)
 	{
+		ArgumentNullException.ThrowIfNull(gl);
+		
 		Debug.Assert(handle is not default(uint));
 
 		GL = gl;

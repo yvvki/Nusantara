@@ -11,13 +11,14 @@ public static class TextureExtensions
 {
 	public static Texture CreateFromBitmap(
 		GL gl,
-		SKBitmap bitmap!!,
+		SKBitmap bitmap,
 		bool flipVertically = true,
 		TextureWrapMode wrapS = TextureWrapMode.Repeat,
 		TextureWrapMode wrapT = TextureWrapMode.Repeat,
 		TextureMinFilter minFiler = TextureMinFilter.LinearMipmapLinear,
 		TextureMagFilter magFiler = TextureMagFilter.Linear)
 	{
+		ArgumentNullException.ThrowIfNull(bitmap);
 		Texture texture = new(gl, TextureTarget.Texture2D);
 
 		if (flipVertically)
