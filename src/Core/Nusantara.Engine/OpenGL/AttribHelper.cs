@@ -1,4 +1,4 @@
-﻿// <https://github.com/YvvkiRika> wrote this file.
+﻿// <https://github.com/yvvki> wrote this file.
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Diagnostics.CodeAnalysis;
@@ -27,12 +27,11 @@ internal static class AttribHelper
 		{
 			return false;
 		}
-
 		if (type.IsPrimitive)
 		{
 			return true;
 		}
-		else if (type.IsGenericType)
+		if (type.IsGenericType)
 		{
 			type = type.GetGenericTypeDefinition();
 		}
@@ -57,7 +56,7 @@ internal static class AttribHelper
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static (int size, VertexAttribType type) GetSizeType([NotNull] Type type)
+	public static (int size, VertexAttribType type) GetSizeType(Type type)
 	{
 		// Auto checks supported type.
 		int size = GetSize(type);
@@ -149,7 +148,7 @@ internal static class AttribHelper
 			? VertexAttribType.UnsignedByte
 			: type == typeof(short)
 			? VertexAttribType.Short
-			: type == typeof(ushort) || type == typeof(char) // sizeof char is 16 bit and will be marshaled to ushort.
+			: type == typeof(ushort) || type == typeof(char) // sizeof(char) is 16 bit and will be marshaled to ushort.
 			? VertexAttribType.UnsignedShort
 			: type == typeof(int) || type == typeof(long) || type == typeof(nint)
 			? VertexAttribType.Int

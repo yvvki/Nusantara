@@ -1,4 +1,4 @@
-﻿// <https://github.com/YvvkiRika> wrote this file.
+﻿// <https://github.com/yvvki> wrote this file.
 // As long as you retain this notice, you can do whatever you want with this stuff.
 
 using System.Drawing;
@@ -27,7 +27,7 @@ public static partial class VectorExtensions
 	public static Vector3D<byte> RGB(this Color @this)
 	{
 		// ARGB (XYZW) as RGB (YZW).
-		return @this.ARGB().YZW();
+		return @this.ARGB().RGB();
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
